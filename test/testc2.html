@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <script src="scripts/runlatex2.js"></script>
+    
+     <script>
+    preincludes={
+	"pre1": {
+	    "pre2": "test.bib"
+	}
+    }
+     </script>
+     <style>
+       pre {background-color: #EEE;}
+
+      </style>
+ </head>
+  <body>
+    <script>
+      function zz(ifr) {
+	  alert(ifr);
+			ifr.parentElement.removeChild(ifr);
+		       }
+      </script>
+
+    <p>aaa zz this is L<span style="font-variant: small-caps; vertical-align:.5ex;margin-left:-.25em;margin-right:-.05em;">a</span>T<span style="text-transform:uppercase; vertical-align:-.5ex;margin-left:-.1em;">e</span>X</p>
+    <pre>
+      123
+      456
+    </pre>
+    <p>bbb</p>
+    <pre>
+% !TEX lualatex
+\documentclass{article}
+      \begin{document}
+aaa
+
+$\pi \approx \directlua{
+print('##: ' .. math.pi)
+tex.print{math.pi}
+}$
+
+xetex \meaning\XeTeXrevision
+bbb
+
+\section{zzz}
+ one two three   one two three   one two three   one two three   one two three   one two three   one two three  
+ one two three   one two three   one two three   one two three   one two three   one two three  
+ one two three   one two three   one two three   one two three   one two three   one two three  
+
+zzz zzz zzz zzz zzz zzz zzz zzz zzz zzz zzz zzz zzz zzz zzz zzz zzz zzz zzz zzz zzz zzz zzz zzz zzz zzz zzz 
+   zzz zzz zzz zzz zzz zzz zzz zzz zzz zzz zzz zzz zzz zzz zzz zzz zzz zzz zzz zzz zzz zzz zzz zzz zzz zzz 224
+
+
+   xxx \cite{aa}
+   \bibliographystyle{plain}
+   \bibliography{test}
+\end{document}
+
+    </pre>
+    
+
+
+    <p>kkk7k</p>
+
+<pre>
+@book{aa,
+  author = {Author, A.},
+  year = {2001},
+  title = {Title},
+  publisher = {Publisher},
+}
+</pre>
+
+
+an example with no extra files
+
+<pre>
+
+\documentclass{article}
+
+\begin{document}
+
+zzz
+\end{document}
+</pre>
+
