@@ -2,22 +2,27 @@
 use strict;
 use warnings;
 use File::Path ('remove_tree');
+use File::Copy;
 
 # using parts of http://www.users.on.net/~bkgunther/software/multipartforms.html
 
 my(%FORM,@NAMES,$n);
 $FORM{'engine'}="pdflatex";
 
+my($tmpdir);
+#   $tmpdir="/tmp/latexcgi-$$";
+    $tmpdir="/tmp/latexcgi";
+mkdir($tmpdir, 0777) unless (-d $tmpdir);
+
+
 sub parseform
 {
     my ($inform,$boundary,$errstr,$name,$value,$skipblank,$getvalue,
-	$fnum,$tmpdir,$fh);
+	$fnum,$fh,$document);
     $errstr="";
     $skipblank=0;
     $fnum=0;
-#   $tmpdir="/tmp/latexcgi-$$";
-    $tmpdir="/tmp/latexcgi";
-    mkdir($tmpdir, 0777) unless (-d $tmpdir);
+
     
     if(defined $ENV{'REQUEST_METHOD'} && $ENV{'REQUEST_METHOD'} eq 'POST' &&
        $ENV{'CONTENT_TYPE'} =~ /multipart\/form-data;\s*boundary=(\S+)/i ) {
@@ -94,13 +99,21 @@ sub parseform
 
     if(scalar(@NAMES) == $fnum) {
 	my $i=0;
+	$document=0;
 	for $n (@NAMES) {
 	    $i = $i + 1;
+	    $document=1 if $n eq "document.tex";
 	    rename($tmpdir . "/f" . $i, $tmpdir . "/" . $n);
 	}
     } else {
 	$errstr = "Bad Form: mismatched filenames";
     }
+
+    if($document==0) {
+	$errstr = "Bad Form: no main document";
+    }
+
+    $errstr = "Unknown Engine $FORM{'engine'}" unless  ($FORM{'engine'} =~ /^(lua|pdf|xe|up|p)latex$/);
     
     if ($errstr ne "") {
 	print "Content-Type: text/plain; charset=utf-8\n\n";
@@ -108,16 +121,33 @@ sub parseform
 	print $errstr;
 	exit;
     } else {
-	print "Content-Type: text/plain; charset=utf-8\n\n";
-	print "Form good\n";
-	print "Engine: " . $FORM{'engine'} . "\n";
-	print "filenames\n";
-	foreach $n (@NAMES) {
-	    print "  $n\n";
-	}
-	exit;
+	# debugreturn();
+	 dolatex()
     }
-
 }
+
+sub debugreturn {
+    print "Content-Type: text/plain; charset=utf-8\n\n";
+    print "Form good\n";
+    print "Engine: " . $FORM{'engine'} . "\n";
+    print "filenames\n";
+    foreach $n (@NAMES) {
+	print "  $n\n";
+    }
+}
+
+
+sub dolatex () {
+    chdir($tmpdir);
+    $ENV{'PATH'}="/usr/local/texlive/2020/bin/x86_64-linux:" . $ENV{'PATH'};
+    system("$FORM{'engine'} document >out.txt 2>&1");
+    move($tmpdir . "/document.pdf","/var/www/html/latexcgi/document" . "$$" . ".pdf");
+    print "Location: /latexcgi/document" . "$$" . ".pdf\n\n";
+#    print "Content-Type: text/plain; charset=utf-8\n\n";
+#    print "PATH: " .  $ENV{'PATH'} . "\n";
+#    print "Status: $!\n";
+    	
+}
+    
 
 parseform();
