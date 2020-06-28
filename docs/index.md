@@ -47,7 +47,7 @@ The comments are checked in a case insensitive way, any text other than the fina
 ```
 % !TEX lualatex
 %  !TeX  program = LuaLaTeX
-% !tex  ignored commend lualatex
+% !tex  ignored comment lualatex
 ```
 
 The known keywords are
@@ -78,8 +78,9 @@ The known keywords are
 4. The log is searched for requests to run biber or bibtex, or to rerun latex.
 5. If no  rerun messages were found, the PDF is returned and processing stops.
 6. If bibtex or biber is detected the relevant command as exlicitly or implicitly specified in the bibcmd parameter is run.
-7.  If an error occurs in bibte/bibera log is returned (Currently this just has the exit status).
-8.  LaTeX is run twice more, checking for error after each run.
+7. If an error occurs in bibtex/biber, a log is returned (Currently this just has the exit status).
+8. LaTeX is run twice more, checking for error after each run.
+9. The PDF or error log is moved, and the temporary directory is deleted.
 9. A PDF is returned, or the log file in case of error.
 
 
