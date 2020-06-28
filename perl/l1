@@ -1,0 +1,9 @@
+#!/bin/bash
+# set -e
+export PATH=/usr/local/texlive/2020/bin/x86_64-linux:$PATH
+
+rm -f document.log
+/usr/bin/timeout --kill-after=1s 2s $1 $2 > /dev/null
+R=$?
+echo -e "\nTimeout/Error status: $R"  >> document.log
+exit $R

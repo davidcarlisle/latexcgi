@@ -140,12 +140,24 @@ sub debugreturn {
 sub dolatex () {
     chdir($tmpdir);
     $ENV{'PATH'}="/usr/local/texlive/2020/bin/x86_64-linux:" . $ENV{'PATH'};
-    system("$FORM{'engine'} document >out.txt 2>&1");
-    move($tmpdir . "/document.pdf","/var/www/html/latexcgi/document" . "$$" . ".pdf");
-    print "Location: /latexcgi/document" . "$$" . ".pdf\n\n";
-#    print "Content-Type: text/plain; charset=utf-8\n\n";
+
+
+    system("/usr/lib/cgi-bin/l1", "$FORM{'engine'}", "document");
+
+    if($?==0) {
+       	move($tmpdir . "/document.pdf","/var/www/html/latexcgi/document" . "$$" . ".pdf");
+	print "Status: 301\n";
+	print "Location: /latexcgi/document" . "$$" . ".pdf\n\n";
+    } else {
+       	move($tmpdir . "/document.log","/var/www/html/latexcgi/document" . "$$" . ".log");
+	print "Status: 301\n";
+	print "Location: /latexcgi/document" . "$$" . ".log\n\n";
+    }
+
+#     print "Content-Type: text/plain; charset=utf-8\n\n";
 #    print "PATH: " .  $ENV{'PATH'} . "\n";
-#    print "Status: $!\n";
+#     print "Status: $?\n";
+#     print "Status: $!\n";
     	
 }
     
