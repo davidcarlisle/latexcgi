@@ -68,3 +68,23 @@ The known keywords are
  
   If the indexcmd parameter is implemented on the server, a matching comment syntax will be added here.
  
+ 
+
+## Processing Pipeline
+
+1. Assuming the form fields are all validated, the supplied files are unpacked into a new temporary directory.
+2. LaTeX is run on `document.tex` (using whichever engine is specified by engine parameter).
+3. If there was an error, the log is returned and processing stops.
+4. The log is searched for requests to run biber or bibtex, or to rerun latex.
+5. If no  rerun messages were found, the PDF is returned and processing stops.
+6. If bibtex or biber is detected the relevant command as exlicitly or implicitly specified in the bibcmd parameter is run.
+7.  If an error occurs in bibte/bibera log is returned (Currently this just has the exit status).
+8.  LaTeX is run twice more, checking for error after each run.
+9. A PDF is returned, or the log file in case of error.
+
+
+Each system call is guarded by a timeout so "Error" in the above stages may be that teh command was taking too long rather than an actual error.
+
+The PDF document is not  directly returned, the site hosts an instance of [PDF.js](https://mozilla.github.io/pdf.js) and returns `PDF.js?file=document-xxxxx.pdf`
+primarily to ensure rendering in mobile clients that often do not include a PDF renderer by default.
+
