@@ -54,17 +54,17 @@ The known keywords are
 
 * `lulatex`, `pdflatex`, `xelatex`, `uplatex`, `platex`
 
- The `engine` parameter is set to the specified keyword (lowercase).
+   The `engine` parameter is set to the specified keyword (lowercase).
  
- If this is not used then `engine` is set to `pdflatex`, unless `fontspec` appears in the example, in which case it is set to `xelatex`
+   If this is not used then `engine` is set to `pdflatex`, unless `fontspec` appears in the example, in which case it is set to `xelatex`
  
- * `biber`, `bibtex`, `pbibtex`, `bibtex8`
+* `biber`, `bibtex`, `pbibtex`, `bibtex8`
  
-  The `bibcmd` parameter is set to the specified keyword (lowercase).
+   The `bibcmd` parameter is set to the specified keyword (lowercase).
   
-  If this is not used the `bibcmd` parameter is not set and bibtex or biber may be chosen automatically as described above.
+   If this is not used the `bibcmd` parameter is not set and bibtex or biber may be chosen automatically as described above.
   
- * _indexcmd_
+* _indexcmd_
  
- If the indexcmd parameter is implemented on the server, a matching comment syntax will be added here.
+  If the indexcmd parameter is implemented on the server, a matching comment syntax will be added here.
  
