@@ -164,6 +164,9 @@ sub dolatex () {
 		$rerun=1 unless /\.aux\./;
 		$bibcmd='bibtex' if ($FORM{'bibcmd'} eq "" && /\.bbl\./);
 	    }
+	    if(/Warning.*Rerun/) {
+		$rerun=1;
+	    }
 	}
 	close(FHLOG);
 
