@@ -11,8 +11,8 @@ $FORM{'engine'}="pdflatex";
 $FORM{'bibcmd'}="";
 
 my($tmpdir);
-#   $tmpdir="/tmp/latexcgi-$$";
-    $tmpdir="/tmp/latexcgi";
+   $tmpdir="/tmp/latexcgi-$$";
+#    $tmpdir="/tmp/latexcgi";
 mkdir($tmpdir, 0777) unless (-d $tmpdir);
 
 
@@ -84,7 +84,7 @@ sub parseform
 		$value = '';
 		if($name eq "filecontents[]") {
 		    $fnum = $fnum + 1;
-		    open (FH , ">", "/tmp/latexcgi/f$fnum");
+		    open (FH , ">", "$tmpdir/f$fnum");
 		    $skipblank=1;
 		} elsif ($name eq "filename[]") {
 		    $skipblank=1;
@@ -154,15 +154,15 @@ sub dolatex () {
 	while (<FHLOG>) {
 	    if(/Package biblatex Warning: Using fall-back BibTeX/) {
 		$rerun=1;
-		$bibcmd='bibtex' if $bibcmd eq "";
+		$bibcmd='bibtex' if $FORM{'bibcmd'} eq "";
 	    }
-	    if(/Package biblatex Warning: Please (re)run Biber/) {
+	    if(/Package biblatex Warning: Please .re.run Biber/) {
 		$rerun=1;
-		$bibcmd='biber' if $bibcmd eq "";
+		$bibcmd='biber' if $FORM{'bibcmd'} eq "";
 	    }
 	    if(/^No file/) {
 		$rerun=1 unless /\.aux\./;
-		$bibcmd='bibtex' if ($bibcmd eq "" && /\.bbl\./);
+		$bibcmd='bibtex' if ($FORM{'bibcmd'} eq "" && /\.bbl\./);
 	    }
 	}
 	close(FHLOG);
@@ -171,19 +171,31 @@ sub dolatex () {
 	    system("/usr/lib/cgi-bin/l1", "$bibcmd", "document");
 	}
 
-	if($rerun==1) {
+	if($rerun==1 && $?==0) {
 	    system("/usr/lib/cgi-bin/l1", "$FORM{'engine'}", "document");
-	    system("/usr/lib/cgi-bin/l1", "$FORM{'engine'}", "document");
+	    if($?==0){
+		system("/usr/lib/cgi-bin/l1", "$FORM{'engine'}", "document");
+	    }
 	}
     }
+
+ 
+    if($?==0 && $FORM{'engine'}=~/u?platex/){
+	system("/usr/lib/cgi-bin/l1", "dvipdfmx", "document");
+    }
+
     
     if($?==0) {
        	move($tmpdir . "/document.pdf","/var/www/html/latexcgi/document" . "$$" . ".pdf");
+	chdir("..");
+	remove_tree($tmpdir);
 	print "Status: 301\n";
-#        print "Location: /pdfjs/web/viewer.html?file=/latexcgi/document" . "$$" . ".pdf\n\n";
-	print "Location: /latexcgi/document" . "$$" . ".pdf\n\n";
+        print "Location: /pdfjs/web/viewer.html?file=/latexcgi/document" . "$$" . ".pdf\n\n";
+#	print "Location: /latexcgi/document" . "$$" . ".pdf\n\n";
     } else {
        	move($tmpdir . "/document.log","/var/www/html/latexcgi/document" . "$$" . ".log");
+	chdir("..");
+	remove_tree($tmpdir);
 	print "Status: 301\n";
 	print "Location: /latexcgi/document" . "$$" . ".log\n\n";
     }
