@@ -34,7 +34,7 @@ If the form contains unexpected fields, the whole submission is rejected.
  * _makeindex_
  
    It is planned to have parameters controlling indexing but currently not implemented.
-   The `imakeidx` package can be used to call `makeindex` from with LaTeX.
+   The `imakeidx` package can be used to call `makeindex` from within LaTeX.
 
 
 ## The learnlatex Comment Interface.
