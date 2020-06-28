@@ -8,6 +8,7 @@ use File::Copy;
 
 my(%FORM,@NAMES,$n);
 $FORM{'engine'}="pdflatex";
+$FORM{'bibcmd'}="";
 
 my($tmpdir);
 #   $tmpdir="/tmp/latexcgi-$$";
@@ -89,6 +90,8 @@ sub parseform
 		    $skipblank=1;
 		} elsif ($name eq "engine") {
 		    $skipblank=1;
+		} elsif ($name eq "bibcmd") {
+		    $skipblank=1;
 		} else {
 		    $errstr="Unexpected param: " . $name;
 		}
@@ -145,8 +148,39 @@ sub dolatex () {
     system("/usr/lib/cgi-bin/l1", "$FORM{'engine'}", "document");
 
     if($?==0) {
+	open(FHLOG, '<', "document.log") or die $!;
+	my $rerun=0;
+	my $bibcmd=$FORM{'bibcmd'};
+	while (<FHLOG>) {
+	    if(/Package biblatex Warning: Using fall-back BibTeX/) {
+		$rerun=1;
+		$bibcmd='bibtex' if $bibcmd eq "";
+	    }
+	    if(/Package biblatex Warning: Please (re)run Biber/) {
+		$rerun=1;
+		$bibcmd='biber' if $bibcmd eq "";
+	    }
+	    if(/^No file/) {
+		$rerun=1 unless /\.aux\./;
+		$bibcmd='bibtex' if ($bibcmd eq "" && /\.bbl\./);
+	    }
+	}
+	close(FHLOG);
+
+	if($bibcmd=~/^(p?bibtex8?|biber)$/ ) {
+	    system("/usr/lib/cgi-bin/l1", "$bibcmd", "document");
+	}
+
+	if($rerun==1) {
+	    system("/usr/lib/cgi-bin/l1", "$FORM{'engine'}", "document");
+	    system("/usr/lib/cgi-bin/l1", "$FORM{'engine'}", "document");
+	}
+    }
+    
+    if($?==0) {
        	move($tmpdir . "/document.pdf","/var/www/html/latexcgi/document" . "$$" . ".pdf");
 	print "Status: 301\n";
+#        print "Location: /pdfjs/web/viewer.html?file=/latexcgi/document" . "$$" . ".pdf\n\n";
 	print "Location: /latexcgi/document" . "$$" . ".pdf\n\n";
     } else {
        	move($tmpdir . "/document.log","/var/www/html/latexcgi/document" . "$$" . ".log");
