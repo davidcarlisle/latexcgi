@@ -32,14 +32,14 @@
 \documentclass{article}
       \begin{document}
 
-Some Lua mat, and BibTeX.
+Some Lua math, and BibTeX.
 
 $\pi \approx \directlua{
 print('##: ' .. math.pi)
 tex.print{math.pi}
 }$
 
-xetex \meaning\XeTeXrevision\ defined or not?
+xetex defined or not? \meaning\XeTeXrevision
 
 \section{zzz}
  one two three   one two three   one two three   one two three   one two three   one two three   one two three  
@@ -59,7 +59,7 @@ zzz zzz zzz zzz zzz zzz zzz zzz zzz zzz zzz zzz zzz zzz zzz zzz zzz zzz zzz zzz 
     
 
 
-    <p>kkk7k</p>
+<p>Bib file used in teh above</p>
 
 <pre>
 @book{aa,
@@ -87,8 +87,8 @@ zzz
 <p>An error case</p>
 
 <pre>
-\docummmmmentclass{article}
-
+\documentclass{article}
+\undefinedcommandhere
 \begin{document}
 
 zzz
