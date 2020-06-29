@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <script src="scripts/runlatex2.js"></script>
-    
+    <title>latexcgi test</title>    
      <script>
     preincludes={
 	"pre1": {
@@ -13,36 +13,33 @@
      </script>
      <style>
        pre {background-color: #EEE;}
-
+       body {max-width: 80em; margin-left:auto;margin-right:auto; padding:1em;}       
       </style>
  </head>
   <body>
-    <script>
-      function zz(ifr) {
-	  alert(ifr);
-			ifr.parentElement.removeChild(ifr);
-		       }
-      </script>
+<h1>LaTeX CGI Test Page</h1>
+<p>The  L<span style="font-variant: small-caps; vertical-align:.5ex;margin-left:-.25em;margin-right:-.05em;">a</span>T<span style="text-transform:uppercase; vertical-align:-.5ex;margin-left:-.1em;">e</span>X CGI Test Page</p>
 
-    <p>aaa zz this is L<span style="font-variant: small-caps; vertical-align:.5ex;margin-left:-.25em;margin-right:-.05em;">a</span>T<span style="text-transform:uppercase; vertical-align:-.5ex;margin-left:-.1em;">e</span>X</p>
+<p> Unused <code>&lt;pre&gt;</code>
     <pre>
       123
       456
     </pre>
-    <p>bbb</p>
+
+<p>A LuaTeX example, test switching to xetex</p>
     <pre>
 % !TEX lualatex
 \documentclass{article}
       \begin{document}
-aaa
+
+Some Lua mat, and BibTeX.
 
 $\pi \approx \directlua{
 print('##: ' .. math.pi)
 tex.print{math.pi}
 }$
 
-xetex \meaning\XeTeXrevision
-bbb
+xetex \meaning\XeTeXrevision\ defined or not?
 
 \section{zzz}
  one two three   one two three   one two three   one two three   one two three   one two three   one two three  
@@ -74,7 +71,7 @@ zzz zzz zzz zzz zzz zzz zzz zzz zzz zzz zzz zzz zzz zzz zzz zzz zzz zzz zzz zzz 
 </pre>
 
 
-an example with no extra files
+<p>An example with no extra files</p>
 
 <pre>
 
@@ -86,3 +83,16 @@ zzz
 \end{document}
 </pre>
 
+
+<p>An error case</p>
+
+<pre>
+\docummmmmentclass{article}
+
+\begin{document}
+
+zzz
+\end{document}
+</pre>
+
+<p>...</p>
