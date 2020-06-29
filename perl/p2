@@ -145,7 +145,7 @@ sub dolatex () {
     $ENV{'PATH'}="/usr/local/texlive/2020/bin/x86_64-linux:" . $ENV{'PATH'};
 
 
-    system("/usr/lib/cgi-bin/l1", "$FORM{'engine'}", "document");
+    system("/usr/local/bin/l1", "$FORM{'engine'}", "document");
 
     if($?==0) {
 	open(FHLOG, '<', "document.log") or die $!;
@@ -171,20 +171,20 @@ sub dolatex () {
 	close(FHLOG);
 
 	if($bibcmd=~/^(p?bibtex8?|biber)$/ ) {
-	    system("/usr/lib/cgi-bin/l1", "$bibcmd", "document");
+	    system("/usr/local/bin/l1", "$bibcmd", "document");
 	}
 
 	if($rerun==1 && $?==0) {
-	    system("/usr/lib/cgi-bin/l1", "$FORM{'engine'}", "document");
+	    system("/usr/local/bin/l1", "$FORM{'engine'}", "document");
 	    if($?==0){
-		system("/usr/lib/cgi-bin/l1", "$FORM{'engine'}", "document");
+		system("/usr/local/bin/l1", "$FORM{'engine'}", "document");
 	    }
 	}
     }
 
  
     if($?==0 && $FORM{'engine'}=~/u?platex/){
-	system("/usr/lib/cgi-bin/l1", "dvipdfmx", "document");
+	system("/usr/local/bin/l1", "dvipdfmx", "document");
     }
 
     
