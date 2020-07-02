@@ -2,8 +2,31 @@
 # set -e
 export PATH=/usr/local/texlive/2020/bin/x86_64-linux:$PATH
 
-rm -f document.log
-/usr/bin/timeout --kill-after=2s 15s $1 $2 > /dev/null
+echo "" >  document.log
+
+NS=""
+REC=""
+
+if [ "X$1X" == "XlualatexX" ]; then
+    NS="--nosocket"
+fi
+case "X$1" in
+    *latex)
+    REC="--recorder"
+    ;;
+esac
+
+
+/usr/bin/timeout --kill-after=2s 15s $1 $NS $REC $2 > /dev/null
 R=$?
+
+
+if [ "X$REC" == "X--recorder" ]; then
+    if grep -q 'INPUT /[^u]' ${2}.fls; then
+	R=1
+	echo "Bad Input" > document.log
+    fi
+fi
+
 echo -e "\nTimeout/Error status: $R"  >> document.log
 exit $R
