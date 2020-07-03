@@ -187,20 +187,21 @@ sub dolatex () {
 	system("/usr/local/bin/l1", "dvipdfmx", "document");
     }
 
+    my $tmpstr = sprintf("_%04X_$$", rand(0xffff));
     
     if($?==0) {
-       	move($tmpdir . "/document.pdf","/var/www/html/latexcgi/document" . "$$" . ".pdf");
+       	move($tmpdir . "/document.pdf","/var/www/html/latexcgi/document" . "$tmpstr" . ".pdf");
 	chdir("..");
 	remove_tree($tmpdir);
 	print "Status: 301\n";
-        print "Location: /pdfjs/web/viewer.html?file=/latexcgi/document" . "$$" . ".pdf\n\n";
-#	print "Location: /latexcgi/document" . "$$" . ".pdf\n\n";
+        print "Location: /pdfjs/web/viewer.html?file=/latexcgi/document" . "$tmpstr" . ".pdf\n\n";
+#	print "Location: /latexcgi/document" . "$tmpstr" . ".pdf\n\n";
     } else {
-       	move($tmpdir . "/document.log","/var/www/html/latexcgi/document" . "$$" . ".log");
+       	move($tmpdir . "/document.log","/var/www/html/latexcgi/document" . "$tmpstr" . ".log");
 	chdir("..");
 	remove_tree($tmpdir);
 	print "Status: 301\n";
-	print "Location: /latexcgi/document" . "$$" . ".log\n\n";
+	print "Location: /latexcgi/document" . "$tmpstr" . ".log\n\n";
     }
 
 #     print "Content-Type: text/plain; charset=utf-8\n\n";
