@@ -9,8 +9,9 @@ use File::Copy;
 my(%FORM,@NAMES,$n);
 $FORM{'engine'}="pdflatex";
 $FORM{'bibcmd'}="";
+$FORM{'return'}="pdfjs";
 
-my($tmpdir);
+my($tmpdir,$return);
    $tmpdir="/tmp/latexcgi-$$";
 #    $tmpdir="/tmp/latexcgi";
 mkdir($tmpdir, 0777) unless (-d $tmpdir);
@@ -92,6 +93,8 @@ sub parseform
 		    $skipblank=1;
 		} elsif ($name eq "bibcmd") {
 		    $skipblank=1;
+		} elsif ($name eq "return") {
+		    $skipblank=1;
 		} else {
 		    $errstr="Unexpected param: " . $name;
 		}
@@ -151,6 +154,7 @@ sub dolatex () {
 	open(FHLOG, '<', "document.log") or die $!;
 	my $rerun=0;
 	my $bibcmd=$FORM{'bibcmd'};
+	$return=$FORM{'return'};
 	while (<FHLOG>) {
 	    if(/Package biblatex Warning: Using fall-back BibTeX/) {
 		$rerun=1;
@@ -189,13 +193,16 @@ sub dolatex () {
 
     my $tmpstr = sprintf("_%04X_$$", rand(0xffff));
     
-    if($?==0) {
+    if($?==0 && ($return ne "log")) {
        	move($tmpdir . "/document.pdf","/var/www/html/latexcgi/document" . "$tmpstr" . ".pdf");
 	chdir("..");
 	remove_tree($tmpdir);
 	print "Status: 301\n";
-        print "Location: /pdfjs/web/viewer.html?file=/latexcgi/document" . "$tmpstr" . ".pdf\n\n";
-#	print "Location: /latexcgi/document" . "$tmpstr" . ".pdf\n\n";
+	if($return eq 'pdf') {
+	    print "Location: /latexcgi/document" . "$tmpstr" . ".pdf\n\n";
+	} else {
+	    print "Location: /pdfjs/web/viewer.html?file=/latexcgi/document" . "$tmpstr" . ".pdf\n\n";
+	}
     } else {
        	move($tmpdir . "/document.log","/var/www/html/latexcgi/document" . "$tmpstr" . ".log");
 	chdir("..");
