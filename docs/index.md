@@ -31,6 +31,17 @@ If the form contains unexpected fields, the whole submission is rejected.
  
    These multi-line fields contain the contents of the supplied files.
    There must be the same number of `filecontents[]` parameters as `filename[]` parameters.
+
+ * return
+
+   This field is optional but if supplied must be one or `pdfjs`, `pdf` or `log`.
+
+   The default is `pdfjs` meaning the PDF.js is used to render the PDF.
+
+   `pdf` specifies that the PDF document should be returned, so will use your browser's dfault render.
+
+   `log` specifies that the log file should be returned even in non-error cases.
+   
  * _makeindex_
  
    It is planned to have parameters controlling indexing but currently not implemented.
@@ -63,6 +74,12 @@ The known keywords are
    The `bibcmd` parameter is set to the specified keyword (lowercase).
   
    If this is not used the `bibcmd` parameter is not set and bibtex or biber may be chosen automatically as described above.
+
+* `pdfjs`, `pdf`, `log`
+
+   The `return` parameter is set to the specfied keyword (lowercase).
+
+   If this is not used, the `return` parameter is not set and the server will use DF.js as described above.
   
 * _indexcmd_
  
@@ -81,7 +98,7 @@ The known keywords are
 7. If an error occurs in bibtex/biber, a log is returned (Currently this just has the exit status).
 8. LaTeX is run twice more, checking for error after each run.
 9. The PDF or error log is moved, and the temporary directory is deleted.
-9. A PDF is returned, or the log file in case of error.
+9. A PDF is returned, or the log file in case of error (or log requested).
 
 
 Each system call is guarded by a timeout so "Error" in the above
