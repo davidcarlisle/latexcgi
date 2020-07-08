@@ -20,11 +20,11 @@ esac
 /usr/bin/timeout --kill-after=2s 15s $1 $NS $REC $2 > /dev/null
 R=$?
 
-
+# allow /usr and /etc/fonts
 if [ "X$REC" == "X--recorder" ]; then
-    if grep -q 'INPUT /[^u]' ${2}.fls; then
-	R=1
-	echo "Bad Input" > document.log
+    if grep -q 'INPUT /[^ut]...[^f]' ${2}.fls; then
+ R=1
+ echo "Bad Input" > document.log
     fi
 fi
 
