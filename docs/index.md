@@ -38,7 +38,7 @@ If the form contains unexpected fields, the whole submission is rejected.
 
    The default is `pdfjs` meaning the PDF.js is used to render the PDF.
 
-   `pdf` specifies that the PDF document should be returned, so will use your browser's dfault render.
+   `pdf` specifies that the PDF document should be returned, so will use your browser's default PDF renderer.
 
    `log` specifies that the log file should be returned even in non-error cases.
    
