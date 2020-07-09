@@ -79,7 +79,7 @@ The known keywords are
 
    The `return` parameter is set to the specfied keyword (lowercase).
 
-   If this is not used, the `return` parameter is not set and the server will use DF.js as described above.
+   If this is not used, the `return` parameter is not set and the server will use PDF.js as described above.
   
 * _indexcmd_
  
