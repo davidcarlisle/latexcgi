@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>LaTeXCGI tests</title>
+    <meta charset="UTF-8">
+    <script src="https://www.learnlatex.org//scripts/runlatex.js"></script>
+         <style>
+       div.h {background-color: #DDF;}
+       pre {background-color: #EEE;}
+
+      </style>
+
+  </head>
+  <body>
+
+
+    <h3>makeindex</h3>
+
+    <div class="h">
+      <pre>
+	% !TEX   makeindex -s nomencl.ist -o document.nls -t document.nlg documennt.nlo
+
+\documentclass[oneside,12pt]{scrartcl}
+\usepackage[ngerman]{babel}
+%\usepackage{amsmath}
+\usepackage[fixamsmath,disallowspaces]{mathtools}
+
+\usepackage{nomencl}
+\makenomenclature
+
+\begin{document}
+
+TEST
+\begin{equation*}
+s = v * t
+\end{equation*}
+
+\nomenclature{$s$}{Strecke}
+
+\printnomenclature
+
+\end{document}
+</pre>
+</div>
+</body>
+  
