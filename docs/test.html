@@ -20,13 +20,13 @@
 <pre>
   \documentclass{article}
   \usepackage{iftex}
-  \newcommand\test[1]{\par#1 \string#1: true\fi}
+  \newcommand\test[1]{\par\expandafter#1\string#1: true\fi}
   \begin{document}
   \ttfamily
-  \test\ifpdftex,
-  \test\ifluatex,
-  \test\ifxetex,
-  \test\ifptex,
+  \test\ifpdftex
+  \test\ifluatex
+  \test\ifxetex
+  \test\ifptex
   \test\ifuptex
   \end{document}
 </pre>
@@ -36,13 +36,13 @@
 %!TEX lualatex
   \documentclass{article}
   \usepackage{iftex}
-  \newcommand\test[1]{\par#1 \string#1: true\fi}
+  \newcommand\test[1]{\par\expandafter#1\string#1: true\fi}
   \begin{document}
   \ttfamily
-  \test\ifpdftex,
-  \test\ifluatex,
-  \test\ifxetex,
-  \test\ifptex,
+  \test\ifpdftex
+  \test\ifluatex
+  \test\ifxetex
+  \test\ifptex
   \test\ifuptex
   \end{document}
 </pre>
@@ -52,13 +52,13 @@
 %!TEX xelatex
   \documentclass{article}
   \usepackage{iftex}
-  \newcommand\test[1]{\par#1 \string#1: true\fi}
+  \newcommand\test[1]{\par\expandafter#1\string#1: true\fi}
   \begin{document}
   \ttfamily
-  \test\ifpdftex,
-  \test\ifluatex,
-  \test\ifxetex,
-  \test\ifptex,
+  \test\ifpdftex
+  \test\ifluatex
+  \test\ifxetex
+  \test\ifptex
   \test\ifuptex
   \end{document}
 </pre>
@@ -68,13 +68,13 @@
 %!TEX uplatex
   \documentclass{article}
   \usepackage{iftex}
-  \newcommand\test[1]{\par#1 \string#1: true\fi}
+  \newcommand\test[1]{\par\expandafter#1\string#1: true\fi}
   \begin{document}
   \ttfamily
-  \test\ifpdftex,
-  \test\ifluatex,
-  \test\ifxetex,
-  \test\ifptex,
+  \test\ifpdftex
+  \test\ifluatex
+  \test\ifxetex
+  \test\ifptex
   \test\ifuptex
   \end{document}
 </pre>
