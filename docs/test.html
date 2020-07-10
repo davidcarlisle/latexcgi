@@ -20,15 +20,14 @@
 <pre>
   \documentclass{article}
   \usepackage{iftex}
-  \newcommand\test[1]{\par\string#1: \meaning#1}
+  \newcommand\test[1]{\par#1 \string#1: true\fi}
   \begin{document}
-   \ttfamily
-
-\test\ifpdftex,
-\test\ifluatex,
-\test\ifxetex,
-\test\ifptex,
-\test\ifuptex
+  \ttfamily
+  \test\ifpdftex,
+  \test\ifluatex,
+  \test\ifxetex,
+  \test\ifptex,
+  \test\ifuptex
   \end{document}
 </pre>
 </div>
@@ -37,15 +36,14 @@
 %!TEX lualatex
   \documentclass{article}
   \usepackage{iftex}
-  \newcommand\test[1]{\par\string#1: \meaning#1}
+  \newcommand\test[1]{\par#1 \string#1: true\fi}
   \begin{document}
-   \ttfamily
-
-\test\ifpdftex,
-\test\ifluatex,
-\test\ifxetex,
-\test\ifptex,
-\test\ifuptex
+  \ttfamily
+  \test\ifpdftex,
+  \test\ifluatex,
+  \test\ifxetex,
+  \test\ifptex,
+  \test\ifuptex
   \end{document}
 </pre>
 </div>
@@ -54,15 +52,14 @@
 %!TEX xelatex
   \documentclass{article}
   \usepackage{iftex}
-  \newcommand\test[1]{\par\string#1: \meaning#1}
+  \newcommand\test[1]{\par#1 \string#1: true\fi}
   \begin{document}
-   \ttfamily
-
-\test\ifpdftex,
-\test\ifluatex,
-\test\ifxetex,
-\test\ifptex,
-\test\ifuptex
+  \ttfamily
+  \test\ifpdftex,
+  \test\ifluatex,
+  \test\ifxetex,
+  \test\ifptex,
+  \test\ifuptex
   \end{document}
 </pre>
 </div>
@@ -71,15 +68,14 @@
 %!TEX uplatex
   \documentclass{article}
   \usepackage{iftex}
-  \newcommand\test[1]{\par\string#1: \meaning#1}
+  \newcommand\test[1]{\par#1 \string#1: true\fi}
   \begin{document}
-   \ttfamily
-
-\test\ifpdftex,
-\test\ifluatex,
-\test\ifxetex,
-\test\ifptex,
-\test\ifuptex
+  \ttfamily
+  \test\ifpdftex,
+  \test\ifluatex,
+  \test\ifxetex,
+  \test\ifptex,
+  \test\ifuptex
   \end{document}
 </pre>
 </div>
