@@ -20,7 +20,7 @@
 <pre>
   \documentclass{article}
   \usepackage{iftex}
-  \newcommand\test#1{\par\string#1: \meaning#1}
+  \newcommand\test[1]{\par\string#1: \meaning#1}
   \begin{document}
    \ttfamily
 
@@ -37,7 +37,7 @@
 %!TEX lualatex
   \documentclass{article}
   \usepackage{iftex}
-  \newcommand\test#1{\par\string#1: \meaning#1}
+  \newcommand\test[1]{\par\string#1: \meaning#1}
   \begin{document}
    \ttfamily
 
@@ -54,7 +54,7 @@
 %!TEX xelatex
   \documentclass{article}
   \usepackage{iftex}
-  \newcommand\test#1{\par\string#1: \meaning#1}
+  \newcommand\test[1]{\par\string#1: \meaning#1}
   \begin{document}
    \ttfamily
 
@@ -71,7 +71,7 @@
 %!TEX uplatex
   \documentclass{article}
   \usepackage{iftex}
-  \newcommand\test#1{\par\string#1: \meaning#1}
+  \newcommand\test[1]{\par\string#1: \meaning#1}
   \begin{document}
    \ttfamily
 
