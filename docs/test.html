@@ -6,15 +6,57 @@
     <script src="https://www.learnlatex.org//scripts/runlatex.js"></script>
     <style>
       body {margin:auto; max-width: 70em;}
-      div.h {background-color: #EE<F;margin: .5em 0;}
+      div.h {background-color: #EEF;margin: .5em 0;}
       pre {background-color: #EEE;margin:0;padding: .5em;}
     </style>
     
   </head>
   <body>
     
+<h2>Return Parameter</h2>
+<h3>PDF.js</h3>
 
-    <h3>makeindex</h3>
+<div class="h">
+<pre>
+  \documentclass{article}
+  \showoutput
+  \begin{document}
+  Example equation
+  \[e=mc^2\]
+  \end{document}
+</pre>
+</div>
+
+<h3>Browser PDF default</h3>
+
+<div class="h">
+<pre>
+%!TeX pdf    
+  \documentclass{article}
+  \showoutput
+  \begin{document}
+  Example equation
+  \[e=mc^2\]
+  \end{document}
+</pre>
+</div>
+
+<h3>Log file</h3>
+
+<div class="h">
+<pre>
+%!TeX log    
+  \documentclass{article}
+  \showoutput
+  \begin{document}
+  Example equation
+  \[e=mc^2\]
+  \end{document}
+</pre>
+</div>
+
+
+<h2>makeindex</h2>
 
 <div class="h">
 <pre>
