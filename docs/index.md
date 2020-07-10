@@ -17,7 +17,7 @@ If the form contains unexpected fields, the whole submission is rejected.
 
  * engine
  
-   This field is optional, but if supplied must be one of `lulatex`, `pdflatex`, `xelatex`, `uplatex`, `platex`.
+   This field is optional, but if supplied must be one of `lualatex`, `pdflatex`, `xelatex`, `uplatex`, `platex`.
    The default is `pdflatex`.
  * bibcmd
  
@@ -63,21 +63,21 @@ The comments are checked in a case insensitive way, any text other than the fina
 
 The known keywords are
 
-* `lulatex`, `pdflatex`, `xelatex`, `uplatex`, `platex`
+* `lualatex`, `pdflatex`, `xelatex`, `uplatex`, `platex`
 
-   The `engine` parameter is set to the specified keyword (lowercase).
+   The `engine` parameter is set to the specified keyword (lowercased).
  
    If this is not used then `engine` is set to `pdflatex`, unless `fontspec` appears in the example, in which case it is set to `xelatex`
  
 * `biber`, `bibtex`, `pbibtex`, `bibtex8`
  
-   The `bibcmd` parameter is set to the specified keyword (lowercase).
+   The `bibcmd` parameter is set to the specified keyword (lowercased).
   
    If this is not used the `bibcmd` parameter is not set and bibtex or biber may be chosen automatically as described above.
 
 * `pdfjs`, `pdf`, `log`
 
-   The `return` parameter is set to the specfied keyword (lowercase).
+   The `return` parameter is set to the specfied keyword (lowercased).
 
    If this is not used, the `return` parameter is not set and the server will use PDF.js as described above.
   
