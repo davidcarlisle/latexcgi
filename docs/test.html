@@ -12,7 +12,78 @@
     
   </head>
   <body>
-    
+
+<h1>LaTeXCGI Tests</h1>
+
+<h2>Engine Parameter</h2>
+<div class="h">
+<pre>
+  \documentclass{article}
+  \usepackage{iftex}
+  \newcommand\test#1{\par\string#1: \meaning#1}
+  \begin{document}
+   \ttfamily
+
+\test\ifpdftex,
+\test\ifluatex,
+\test\ifxetex,
+\test\ifptex,
+\test\ifuptex
+  \end{document}
+</pre>
+</div>
+<div class="h">
+<pre>
+%!TEX lualatex
+  \documentclass{article}
+  \usepackage{iftex}
+  \newcommand\test#1{\par\string#1: \meaning#1}
+  \begin{document}
+   \ttfamily
+
+\test\ifpdftex,
+\test\ifluatex,
+\test\ifxetex,
+\test\ifptex,
+\test\ifuptex
+  \end{document}
+</pre>
+</div>
+<div class="h">
+<pre>
+%!TEX xelatex
+  \documentclass{article}
+  \usepackage{iftex}
+  \newcommand\test#1{\par\string#1: \meaning#1}
+  \begin{document}
+   \ttfamily
+
+\test\ifpdftex,
+\test\ifluatex,
+\test\ifxetex,
+\test\ifptex,
+\test\ifuptex
+  \end{document}
+</pre>
+</div>
+<div class="h">
+<pre>
+%!TEX uplatex
+  \documentclass{article}
+  \usepackage{iftex}
+  \newcommand\test#1{\par\string#1: \meaning#1}
+  \begin{document}
+   \ttfamily
+
+\test\ifpdftex,
+\test\ifluatex,
+\test\ifxetex,
+\test\ifptex,
+\test\ifuptex
+  \end{document}
+</pre>
+</div>
+
 <h2>Return Parameter</h2>
 <h3>PDF.js</h3>
 
