@@ -90,11 +90,11 @@ The known keywords are
   
 *  `makeindex` _options_
  
-  There may be any number of `% !TEX makeindex` comments, the options
-  are passed to the LaTeX CGI server `makeindex[]` parameters
-  described above.
+   There may be any number of `% !TEX makeindex` comments, the options
+   are passed to the LaTeX CGI server `makeindex[]` parameters
+   described above.
 
-  See <a href="test#makeindex">the makeindex example in the test document</a>.
+   See <a href="test#makeindex">the makeindex example in the test document</a>.
  
  
 
