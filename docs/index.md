@@ -107,9 +107,10 @@ The known keywords are
 5. If no "rerun" messages were found, the PDF is returned and processing stops.
 6. If bibtex or biber is detected the relevant command as explicitly or implicitly specified in the bibcmd parameter is run.
 7. If an error occurs in bibtex/biber, a log is returned (Currently this just has the exit status).
-8. LaTeX is run twice more, checking for error after each run.
-9. The PDF or error log is moved, and the temporary directory is deleted.
-9. A PDF is returned, or the log file in case of error (or log requested).
+8. If any `makeindex[]` calls are specified these are run, if the previous command gave no error.
+9. LaTeX is run twice more, checking for error after each run.
+10. The PDF or error log is moved, and the temporary directory is deleted.
+11. A PDF is returned, or the log file in case of error (or log requested).
 
 
 Each system call is guarded by a timeout so "Error" in the above
