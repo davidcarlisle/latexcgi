@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <script src="scripts/runlatex2.js"></script>
+    <script src="../../../learnlatex.github.io/scripts/runlatex.js"></script>
     <title>latexcgi test</title>    
      <script>
     preincludes={
@@ -17,7 +17,49 @@
       </style>
  </head>
   <body>
-<h1>LaTeX CGI Test Page</h1>
+    <h1>LaTeX CGI Test Page</h1>
+
+
+    <pre>
+
+% !TEX makeindex document
+% !TEX makeindex -s nomencl.ist -o document.nls -t document.nlg document.nlo
+
+\documentclass[oneside,12pt]{article}
+
+\usepackage{makeidx}
+\makeindex
+
+\usepackage{nomencl}
+\makenomenclature
+
+\begin{document}
+
+Testing\index{testing} nomenclature\index{nomenclature}
+\[
+E = mc^2
+\]
+
+\nomenclature{$e$}{Energy}
+\nomenclature{$m$}{Mass}
+\nomenclature{$c$}{Speed of Light}
+
+\begin{center}
+\begin{minipage}[t]{.45\linewidth}
+\printnomenclature    
+  \end{minipage}\hfill
+  \begin{minipage}[t]{.45\linewidth}
+\renewenvironment{theindex}{%
+\section*{\indexname}}{}
+\printindex
+  \end{minipage}
+\end{center}
+
+\end{document}
+</pre>
+      
+
+    
 <p>The  L<span style="font-variant: small-caps; vertical-align:.5ex;margin-left:-.25em;margin-right:-.05em;">a</span>T<span style="text-transform:uppercase; vertical-align:-.5ex;margin-left:-.1em;">e</span>X CGI Test Page</p>
 
 <p> Unused <code>&lt;pre&gt;</code>
