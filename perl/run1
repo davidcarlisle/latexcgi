@@ -16,8 +16,9 @@ case "X$1" in
     ;;
 esac
 
-
-/usr/bin/timeout --kill-after=2s 15s $1 $NS $REC "$2" > /dev/null
+# $2 may contain spaces so multiple arguments eg for makeindex
+# calling script checks no shell characters
+/usr/bin/timeout --kill-after=2s 15s $1 $NS $REC $2 > /dev/null
 R=$?
 
 # allow /usr /tmp and /etc/fonts

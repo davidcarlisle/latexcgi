@@ -4,16 +4,17 @@ use warnings;
 use File::Path ('remove_tree');
 use File::Copy;
 
-# using parts of http://www.users.on.net/~bkgunther/software/multipartforms.html
 
-my(%FORM,@NAMES,$n);
+my(%FORM,@NAMES,@MAKEINDEX,$n,$m);
 $FORM{'engine'}="pdflatex";
 $FORM{'bibcmd'}="";
 $FORM{'return'}="pdfjs";
 
+# currently only support makeindex
+my $makeindexcmd="makeindex";
+
 my($tmpdir,$return);
-   $tmpdir="/tmp/latexcgi-$$";
-#    $tmpdir="/tmp/latexcgi";
+$tmpdir="/tmp/latexcgi-$$";
 mkdir($tmpdir, 0777) unless (-d $tmpdir);
 
 
@@ -30,9 +31,6 @@ sub parseform
        $ENV{'CONTENT_TYPE'} =~ /multipart\/form-data;\s*boundary=(\S+)/i ) {
 	$boundary = $1;
 	$inform=0;
-	#    print "Content-Type: text/plain; charset=utf-8\n\n";
-	#    print "Good form type\n";
-	#    print "bdry", $boundary;
     } else {
 	print "Content-Type: text/plain; charset=utf-8\n\n";
 	print "Bad form type\n";
@@ -69,7 +67,17 @@ sub parseform
 		    }
 		} elsif(/(.*)\r\n$/) {
 		    if($name eq 'filename[]') {
-			push(@NAMES,$1);
+			if ($1 =~ /^[^\.\/][^\/ \t]*$/) {
+			    push(@NAMES,$1);
+			} else {
+			    $errstr="Bad filename";
+			}
+		    } elsif ($name eq 'makeindex[]') {
+			if ($1 =~ /^[a-zA-Z0-9\- ]*$/) {
+			    push(@MAKEINDEX,$1);
+			} else {
+			    $errstr="Bad makeindex option";
+			}
 		    } else {
 			$FORM{$name} = $1;
 		    }
@@ -88,6 +96,8 @@ sub parseform
 		    open (FH , ">", "$tmpdir/f$fnum");
 		    $skipblank=1;
 		} elsif ($name eq "filename[]") {
+		    $skipblank=1;
+		} elsif ($name eq "makeindex[]") {
 		    $skipblank=1;
 		} elsif ($name eq "engine") {
 		    $skipblank=1;
@@ -176,6 +186,14 @@ sub dolatex () {
 
 	if($bibcmd=~/^(p?bibtex8?|biber)$/ ) {
 	    system("/usr/local/bin/run1", "$bibcmd", "document");
+	}
+
+
+	for $m (@MAKEINDEX) {
+	    if($?==0){
+		$rerun=1;
+		system("/usr/local/bin/run1", "$makeindexcmd", "$m");
+	    }
 	}
 
 	if($rerun==1 && $?==0) {
