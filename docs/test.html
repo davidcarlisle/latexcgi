@@ -13,9 +13,9 @@
   </head>
   <body>
 
-<h1>LaTeXCGI Tests</h1>
+<h1 id="ll">LaTeXCGI Tests</h1>
 
-<h2>Engine Parameter</h2>
+<h2 id="engine">Engine Parameter</h2>
 <div class="h">
 <pre>
   \documentclass{article}
@@ -81,8 +81,8 @@
 </pre>
 </div>
 
-<h2>Return Parameter</h2>
-<h3>PDF.js</h3>
+<h2 id="return">Return Parameter</h2>
+<h3 id="pdfjs">PDF.js</h3>
 
 <div class="h">
 <pre>
@@ -95,7 +95,7 @@
 </pre>
 </div>
 
-<h3>Browser PDF default</h3>
+<h3 id="pdf">Browser PDF default</h3>
 
 <div class="h">
 <pre>
@@ -109,7 +109,7 @@
 </pre>
 </div>
 
-<h3>Log file</h3>
+<h3 id="log">Log file</h3>
 
 <div class="h">
 <pre>
@@ -124,31 +124,43 @@
 </div>
 
 
-<h2>makeindex</h2>
+<h2 id="makeindex">makeindex</h2>
 
 <div class="h">
 <pre>
 
-% !TEX   makeindex -s nomencl.ist -o document.nls -t document.nlg document.nlo
+% !TEX makeindex document
+% !TEX makeindex -s nomencl.ist -o document.nls -t document.nlg document.nlo
 
-\documentclass[oneside,12pt]{scrartcl}
-\usepackage[ngerman]{babel}
-%\usepackage{amsmath}
-\usepackage[fixamsmath,disallowspaces]{mathtools}
+\documentclass[oneside,12pt]{article}
+
+\usepackage{makeidx}
+\makeindex
 
 \usepackage{nomencl}
 \makenomenclature
 
 \begin{document}
 
-TEST
-\begin{equation*}
-s = v * t
-\end{equation*}
+Testing\index{testing} nomenclature\index{nomenclature}
+\[
+E = mc^2
+\]
 
-\nomenclature{$s$}{Strecke}
+\nomenclature{$e$}{Energy}
+\nomenclature{$m$}{Mass}
+\nomenclature{$c$}{Speed of Light}
 
-\printnomenclature
+\begin{center}
+\begin{minipage}[t]{.45\linewidth}
+\printnomenclature    
+  \end{minipage}\hfill
+  \begin{minipage}[t]{.45\linewidth}
+\renewenvironment{theindex}{%
+\section*{\indexname}}{}
+\printindex
+  \end{minipage}
+\end{center}
 
 \end{document}
 </pre>

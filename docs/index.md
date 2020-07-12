@@ -46,10 +46,13 @@ If the form contains unexpected fields, the whole submission is rejected.
 
    `log` specifies that the log file should be returned even in non-error cases.
    
- * _makeindex_
+ * makeindex[]
  
-   It is planned to have parameters controlling indexing but currently not implemented.
-   The `imakeidx` package can be used to call `makeindex` from within LaTeX.
+   This field is optional and may be used multiple times.
+
+   The value must be of the form `makindex` _options_
+
+   `options` gives the options for `makeindex` for the document `document.tex` it is currently restricted to `-` and `.` and ASCII letters and digits.
 
 
 ## The learnlatex Comment Interface.
@@ -85,9 +88,13 @@ The known keywords are
 
    If this is not used, the `return` parameter is not set and the server will use PDF.js as described above.
   
-* _indexcmd_
+*  `makeindex` _options_
  
-  If the indexcmd parameter is implemented on the server, a matching comment syntax will be added here.
+  There may be any number of `% !TEX makeindex` comments, the options
+  are passed to the LaTeX CGI server `makeindex[]` parameters
+  described above.
+
+  See <a href="test#makeindex">the makeindex example in the test document</a>.
  
  
 
