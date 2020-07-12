@@ -117,7 +117,7 @@ Each system call is guarded by a timeout so "Error" in the above
 stages may be that the command was taking too long rather than an
 actual error. There are also restrictions on input paths for security
 reasons, attempting to input files out of the allowed area will result
-in `input error` being returned as the log, neiher the TeX log nor the
+in `input error` being returned as the log, neither the TeX log nor the
 generated PDF will be returned.
 
 The PDF document is not directly returned, the site hosts an instance
