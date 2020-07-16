@@ -2,6 +2,17 @@
 <html>
   <head>
     <meta charset="UTF-8">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.min.js"></script>
+    <style type="text/css" media="screen">
+      .ace_editor {
+	  border: 1px solid lightgray;
+	  margin-bottom: 1px !important;
+	  width: 100%;
+      }
+      div.spacer {
+	  margin-top:16px;
+      }
+    </style>
     <script src="../../../learnlatex.github.io/scripts/runlatex.js"></script>
     <title>latexcgi test</title>    
      <script>
@@ -20,7 +31,7 @@
     <h1>LaTeX CGI Test Page</h1>
 
 
-    <pre>
+<pre>
 
 % !TEX makeindex document
 % !TEX makeindex -s nomencl.ist -o document.nls -t document.nlg document.nlo
