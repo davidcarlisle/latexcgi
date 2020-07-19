@@ -10,7 +10,7 @@ It is written as a perl script accepting the post requests via cgi-bin access in
 ## Example Documents
 
 * [Basic Tests](test).
-* [Larger test examples](test).
+* [Larger test examples](test2).
 * [The learnlatex.org tutorial site](https://www.learnlatex.org).
 
 
