@@ -26,6 +26,7 @@
 
 <h1 id="ll">LaTeX CGI Tests</h1>
 
+<p>By default pdftex, or xelatex if <code>fontspec</code> is used.</p>
 <h2 id="engine">Engine Parameter</h2>
 <div class="h">
 <pre>
@@ -42,6 +43,8 @@
   \end{document}
 </pre>
 </div>
+
+<p>lualatex</p>
 <div class="h">
 <pre>
 %!TEX lualatex
@@ -58,6 +61,8 @@
   \end{document}
 </pre>
 </div>
+
+<p>xelatex</p>
 <div class="h">
 <pre>
 %!TEX xelatex
@@ -74,6 +79,8 @@
   \end{document}
 </pre>
 </div>
+
+<p>Multiple engine comments may be used, all but the first are ignored. uplatex is used here.</p>
 <div class="h">
 <pre>
 %!TEX uplatex
@@ -94,6 +101,7 @@
 
 <h2 id="return">Return Parameter</h2>
 <h3 id="pdfjs">PDF.js</h3>
+<p>By default using the PDF.js library to render the PDF.</p>
 
 <div class="h">
 <pre>
@@ -108,6 +116,7 @@
 
 <h3 id="pdf">Browser PDF default</h3>
 
+<p>The browser's default action for PDF files.</p>
 <div class="h">
 <pre>
 %!TeX pdf    
@@ -121,7 +130,7 @@
 </div>
 
 <h3 id="log">Log file</h3>
-
+<p>Returning the log file as plain text.</p>
 <div class="h">
 <pre>
 %!TeX log    
@@ -135,8 +144,9 @@
 </div>
 
 
-<h2 id="makeindex">Makeindex Parameter</h2>
-
+<h2 id="makeindex">Makeindex[] Parameter</h2>
+<p>Multiple <code>!TEX makeindex</code> may be used, each sets a <code>makeindex[]</code>
+  parameter in the form submission.</p>
 <div class="h">
 <pre>
 
