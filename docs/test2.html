@@ -15,7 +15,7 @@
       }
     </style>
     <script src="https://www.learnlatex.org/scripts/runlatex.js"></script>
-<!--    <script src="../../../learnlatex.github.io/scripts/runlatex.js"></script>-->
+    <!--  <script src="../../../learnlatex.github.io/scripts/runlatex.js"></script>-->
     <style>
       body {margin:auto; max-width: 70em;}
       div.h {background-color: #F5F5FF;margin: .5em 0;}
@@ -26,6 +26,7 @@
 preincludes = {
  "pre1": {
     "pre2": "longtable.dtx",
+    "pre3": "latexmkrc",
  }
 }
 </script>
@@ -5278,8 +5279,18 @@ Whom we invite to see us crown'd at Scone.
 
 
 <h2 id="longtable">Longtable</h2>
+<blockquote>
+<p>At the current time the <code>runlatex</code> handler for Overleaf does not
+ handle <code>!TeX makeindex</code> comments however as shown here, inclusion of a simple
+ <code>latexmkrc</code> file achieves the desired effect.</p>
+<p> Probably the JavaScript will be extended here to generate
+the <code>latexmkrc</code> automatically as is already done if platex
+is specified.</p>
+<p>In this example the <code>latexmkrc</code> is also
+submitted to the LaTeX CGI server, but ignored in that case.<p>
+</blockquote>
 
-<div class="h">
+<p>Driver document</p>
 <pre>
 % !TeX makeindex -s gind.ist document
 % !TeX makeindex -s gglo.ist -o document.gls document.glo
@@ -5293,13 +5304,15 @@ Whom we invite to see us crown'd at Scone.
 \RecordChanges
 \begin{document}
 \DocInput{longtable.dtx}
+\clearpage
 \PrintChanges
+\clearpage
 \PrintIndex
 \end{document}
 </pre>
 </div>
 
-
+<p>longtable.dtx</p>
 <div class="h">
 <pre class="noedit" style="height:25em;overflow:scroll">
 % \iffalse meta-comment
@@ -7461,7 +7474,12 @@ Whom we invite to see us crown'd at Scone.
 </pre>
 </div>
 
-
+<p>latexmkrc</p>
+<div class="h" id="latexmkrc">
+<pre class="noedit">
+$makeindex="makeindex -s gind.ist output; makeindex -s gglo.ist -o output.gls output.glo;echo done";
+</pre>
+</div>
 
 
 
