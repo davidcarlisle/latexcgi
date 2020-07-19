@@ -7,8 +7,11 @@ and returns a PDF document or log file in the case of error.
 
 It is written as a perl script accepting the post requests via cgi-bin access in an apache HTTP server.
 
-## Test Document
-[Test Document](test)
+## Example Documents
+
+* [Basic Tests](test).
+* [Larger test examples](test).
+* [The learnlatex.org tutorial site](https://www.learnlatex.org).
 
 
 ## HTTP Requests
