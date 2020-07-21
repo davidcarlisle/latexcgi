@@ -24,7 +24,7 @@ If the form contains unexpected fields, the whole submission is rejected.
 
  * engine
  
-   This field is optional, but if supplied must be one of `lualatex`, `pdflatex`, `xelatex`, `uplatex`, `platex`.
+   This field is optional, but if supplied must be one of `lualatex`, `pdflatex`, `xelatex`, `uplatex`, `platex` or the `-dev` variants such as `lualatex-dev`.
    The default is `pdflatex`.
  * bibcmd
  
@@ -73,7 +73,7 @@ The comments are checked in a case insensitive way, any text other than the fina
 
 The known keywords are
 
-* `lualatex`, `pdflatex`, `xelatex`, `uplatex`, `platex`
+* `lualatex`, `pdflatex`, `xelatex`, `uplatex`, `platex`, `lualatex-dev`, `pdflatex-dev`, `xelatex-dev`, `uplatex-dev`, `platex-dev`
 
    The `engine` parameter is set to the specified keyword (lowercased).
  
