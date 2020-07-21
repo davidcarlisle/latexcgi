@@ -21,7 +21,7 @@ mkdir($tmpdir, 0777) unless (-d $tmpdir);
 sub parseform
 {
     my ($inform,$boundary,$errstr,$name,$value,$skipblank,$getvalue,
-	$fnum,$fh,$document);
+        $fnum,$fh,$document);
     $errstr="";
     $skipblank=0;
     $fnum=0;
@@ -29,118 +29,118 @@ sub parseform
     
     if(defined $ENV{'REQUEST_METHOD'} && $ENV{'REQUEST_METHOD'} eq 'POST' &&
        $ENV{'CONTENT_TYPE'} =~ /multipart\/form-data;\s*boundary=(\S+)/i ) {
-	$boundary = $1;
-	$inform=0;
+        $boundary = $1;
+        $inform=0;
     } else {
-	print "Content-Type: text/plain; charset=utf-8\n\n";
-	print "Bad form type\n";
-	exit;
+        print "Content-Type: text/plain; charset=utf-8\n\n";
+        print "Bad form type\n";
+        exit;
     }
     
-    if($ENV{'CONTENT_LENGTH'} > 10000) {
-	print "Content-Type: text/plain; charset=utf-8\n\n";
-	print "Form data too large\n";
-	exit;
+    if($ENV{'CONTENT_LENGTH'} > 1000000) {
+        print "Content-Type: text/plain; charset=utf-8\n\n";
+        print "Form data too large\n";
+        exit;
     }
     
     
     while (<>) {
-	if (!$inform) {
-	    $inform = /^--$boundary/;
-	} else {
-	    if($skipblank) {
-		if(/^\r\n$/) {
-		    $skipblank=0;
-		    $getvalue=1;
-		} else {
-		    $errstr="Unexpected Form Structure";
-		    last;
-		}
-	    } elsif ($getvalue){
-		if($name eq 'filecontents[]') {
-		    if(/^--$boundary/) {
-			close FH;
-			$getvalue=0;
-		    } else {
-			s/\r\n$//;
-			print FH "$_\n";
-		    }
-		} elsif(/(.*)\r\n$/) {
-		    if($name eq 'filename[]') {
-			$n=$1;
-			if ($n =~ /^[^\.\/][^\/ \t]*$/) {
-			    push(@NAMES,$n);
-			} else {
-			    $errstr="Bad filename [$n]";
-			}
-		    } elsif ($name eq 'makeindex[]') {
-			$m=$1;
-			if ($m =~ /^[a-zA-Z0-9\.\- ]*$/) {
-			    push(@MAKEINDEX,$m);
-			} else {
-			    $errstr="Bad makeindex option [$m]";
-			}
-		    } else {
-			$FORM{$name} = $1;
-		    }
-		    $getvalue=0;
-		}
-	    }
-	    if (/content-disposition:\s*form-data;\s*name=\"([^\"]*)\"/i) {
-		if (/filename=\"([^\"]*)\"/i) {
-		    $errstr="File Upload not supported";
-		    last;
-		}
-		$name = $1;
-		$value = '';
-		if($name eq "filecontents[]") {
-		    $fnum = $fnum + 1;
-		    open (FH , ">", "$tmpdir/f$fnum");
-		    $skipblank=1;
-		} elsif ($name eq "filename[]") {
-		    $skipblank=1;
-		} elsif ($name eq "makeindex[]") {
-		    $skipblank=1;
-		} elsif ($name eq "engine") {
-		    $skipblank=1;
-		} elsif ($name eq "bibcmd") {
-		    $skipblank=1;
-		} elsif ($name eq "return") {
-		    $skipblank=1;
-		} else {
-		    $errstr="Unexpected param: " . $name;
-		}
-	    } else {
-	    }
-	}
+        if (!$inform) {
+            $inform = /^--$boundary/;
+        } else {
+            if($skipblank) {
+                if(/^\r\n$/) {
+                    $skipblank=0;
+                    $getvalue=1;
+                } else {
+                    $errstr="Unexpected Form Structure";
+                    last;
+                }
+            } elsif ($getvalue){
+                if($name eq 'filecontents[]') {
+                    if(/^--$boundary/) {
+                        close FH;
+                        $getvalue=0;
+                    } else {
+                        s/\r\n$//;
+                        print FH "$_\n";
+                    }
+                } elsif(/(.*)\r\n$/) {
+                    if($name eq 'filename[]') {
+                        $n=$1;
+                        if ($n =~ /^[^\.\/][^\/ \t]*$/) {
+                            push(@NAMES,$n);
+                        } else {
+                            $errstr="Bad filename [$n]";
+                        }
+                    } elsif ($name eq 'makeindex[]') {
+                        $m=$1;
+                        if ($m =~ /^[a-zA-Z0-9\.\- ]*$/) {
+                            push(@MAKEINDEX,$m);
+                        } else {
+                            $errstr="Bad makeindex option [$m]";
+                        }
+                    } else {
+                        $FORM{$name} = $1;
+                    }
+                    $getvalue=0;
+                }
+            }
+            if (/content-disposition:\s*form-data;\s*name=\"([^\"]*)\"/i) {
+                if (/filename=\"([^\"]*)\"/i) {
+                    $errstr="File Upload not supported";
+                    last;
+                }
+                $name = $1;
+                $value = '';
+                if($name eq "filecontents[]") {
+                    $fnum = $fnum + 1;
+                    open (FH , ">", "$tmpdir/f$fnum");
+                    $skipblank=1;
+                } elsif ($name eq "filename[]") {
+                    $skipblank=1;
+                } elsif ($name eq "makeindex[]") {
+                    $skipblank=1;
+                } elsif ($name eq "engine") {
+                    $skipblank=1;
+                } elsif ($name eq "bibcmd") {
+                    $skipblank=1;
+                } elsif ($name eq "return") {
+                    $skipblank=1;
+                } else {
+                    $errstr="Unexpected param: " . $name;
+                }
+            } else {
+            }
+        }
     }
 
     if(scalar(@NAMES) == $fnum) {
-	my $i=0;
-	$document=0;
-	for $n (@NAMES) {
-	    $i = $i + 1;
-	    $document=1 if $n eq "document.tex";
-	    rename($tmpdir . "/f" . $i, $tmpdir . "/" . $n);
-	}
+        my $i=0;
+        $document=0;
+        for $n (@NAMES) {
+            $i = $i + 1;
+            $document=1 if $n eq "document.tex";
+            rename($tmpdir . "/f" . $i, $tmpdir . "/" . $n);
+        }
     } else {
-	$errstr = "Bad Form: mismatched filenames";
+        $errstr = "Bad Form: mismatched filenames";
     }
 
     if($document==0) {
-	$errstr = "Bad Form: no main document";
+        $errstr = "Bad Form: no main document";
     }
 
-    $errstr = "Unknown Engine $FORM{'engine'}" unless  ($FORM{'engine'} =~ /^(lua|pdf|xe|up|p)latex$/);
+    $errstr = "Unknown Engine $FORM{'engine'}" unless  ($FORM{'engine'} =~ /^(lua|pdf|xe|up|p)latex(-dev)?$/);
     
     if ($errstr ne "") {
-	print "Content-Type: text/plain; charset=utf-8\n\n";
-	print "Bad form type\n";
-	print $errstr;
-	exit;
+        print "Content-Type: text/plain; charset=utf-8\n\n";
+        print "Bad form type\n";
+        print $errstr;
+        exit;
     } else {
-	# debugreturn();
-	 dolatex()
+        # debugreturn();
+        dolatex()
     }
 }
 
@@ -150,11 +150,11 @@ sub debugreturn {
     print "Engine: " . $FORM{'engine'} . "\n";
     print "filenames\n";
     foreach $n (@NAMES) {
-	print "  $n\n";
+        print "  $n\n";
     }
     print "makeindex:\n";
     foreach $m (@MAKEINDEX) {
-	print "makeindex  $m\n";
+        print "makeindex  $m\n";
     }
 }
 
@@ -167,83 +167,83 @@ sub dolatex () {
     system("/usr/local/bin/run1", "$FORM{'engine'}", "document");
 
     if($?==0) {
-	open(FHLOG, '<', "document.log") or die $!;
-	my $rerun=0;
-	my $bibcmd=$FORM{'bibcmd'};
-	$return=$FORM{'return'};
-	while (<FHLOG>) {
-	    if(/Package biblatex Warning: Using fall-back BibTeX/) {
-		$rerun=1;
-		$bibcmd='bibtex' if $FORM{'bibcmd'} eq "";
-	    }
-	    if(/Package biblatex Warning: Please .re.run Biber/) {
-		$rerun=1;
-		$bibcmd='biber' if $FORM{'bibcmd'} eq "";
-	    }
-	    if(/^No file/) {
-		$rerun=1 unless /\.aux\./;
-		$bibcmd='bibtex' if ($FORM{'bibcmd'} eq "" && /\.bbl\./);
-	    }
+        open(FHLOG, '<', "document.log") or die $!;
+        my $rerun=0;
+        my $bibcmd=$FORM{'bibcmd'};
+        $return=$FORM{'return'};
+        while (<FHLOG>) {
+            if(/Package biblatex Warning: Using fall-back BibTeX/) {
+                $rerun=1;
+                $bibcmd='bibtex' if $FORM{'bibcmd'} eq "";
+            }
+            if(/Package biblatex Warning: Please .re.run Biber/) {
+                $rerun=1;
+                $bibcmd='biber' if $FORM{'bibcmd'} eq "";
+            }
+            if(/^No file/) {
+                $rerun=1 unless /\.aux\./;
+                $bibcmd='bibtex' if ($FORM{'bibcmd'} eq "" && /\.bbl\./);
+            }
             if(/^\(rerunfilecheck.* Rerun/) {
                 $rerun=1;
             }
-	    if(/Warning.*Rerun/) {
-		$rerun=1;
-	    }
-	}
-	close(FHLOG);
+            if(/Warning.*Rerun/) {
+                $rerun=1;
+            }
+        }
+        close(FHLOG);
 
-	if($bibcmd=~/^(p?bibtex8?|biber)$/ ) {
-	    system("/usr/local/bin/run1", "$bibcmd", "document");
-	}
+        if($bibcmd=~/^(p?bibtex8?|biber)$/ ) {
+            system("/usr/local/bin/run1", "$bibcmd", "document");
+        }
 
 
-	for $m (@MAKEINDEX) {
-	    if($?==0){
-		$rerun=1;
-		system("/usr/local/bin/run1", "$makeindexcmd", "$m");
-	    }
-	}
+        for $m (@MAKEINDEX) {
+            if($?==0){
+                $rerun=1;
+                system("/usr/local/bin/run1", "$makeindexcmd", "$m");
+            }
+        }
 
-	if($rerun==1 && $?==0) {
-	    system("/usr/local/bin/run1", "$FORM{'engine'}", "document");
-	    if($?==0){
-		system("/usr/local/bin/run1", "$FORM{'engine'}", "document");
-	    }
-	}
+        if($rerun==1 && $?==0) {
+            system("/usr/local/bin/run1", "$FORM{'engine'}", "document");
+            if($?==0){
+                system("/usr/local/bin/run1", "$FORM{'engine'}", "document");
+            }
+        }
     }
 
- 
+    
     if($?==0 && $FORM{'engine'}=~/u?platex/){
-	system("/usr/local/bin/run1", "dvipdfmx", "document");
+        system("/usr/local/bin/run1", "dvipdfmx", "document");
     }
 
     my $tmpstr = sprintf("_%04X_$$", rand(0xffff));
     
     if($?==0 && ($return ne "log")) {
-       	move($tmpdir . "/document.pdf","/var/www/html/latexcgi/document" . "$tmpstr" . ".pdf");
-	chdir("..");
-	remove_tree($tmpdir);
-	print "Status: 301\n";
-	if($return eq 'pdf') {
-	    print "Location: /latexcgi/document" . "$tmpstr" . ".pdf\n\n";
-	} else {
-	    print "Location: /pdfjs/web/viewer.html?file=/latexcgi/document" . "$tmpstr" . ".pdf\n\n";
-	}
+        move($tmpdir . "/document.pdf","/var/www/html/latexcgi/document" . "$tmpstr" . ".pdf");
+        chdir("..");
+        remove_tree($tmpdir);
+        print "Status: 301\n";
+        if($return eq 'pdf') {
+            print "Location: /latexcgi/document" . "$tmpstr" . ".pdf\n\n";
+        } else {
+            print "Location: /pdfjs/web/viewer.html?file=/latexcgi/document" . "$tmpstr" . ".pdf\n\n";
+        }
     } else {
-       	move($tmpdir . "/document.log","/var/www/html/latexcgi/document" . "$tmpstr" . ".log");
-	chdir("..");
-	remove_tree($tmpdir);
-	print "Status: 301\n";
-	print "Location: /latexcgi/document" . "$tmpstr" . ".log\n\n";
+        move($tmpdir . "/document.log","/var/www/html/latexcgi/document" . "$tmpstr" . ".log");
+        chdir("..");
+        remove_tree($tmpdir);
+        print "Status: 301\n";
+        print "Location: /latexcgi/document" . "$tmpstr" . ".log\n\n";
     }
 
-#     print "Content-Type: text/plain; charset=utf-8\n\n";
-#    print "PATH: " .  $ENV{'PATH'} . "\n";
-#     print "Status: $?\n";
-#     print "Status: $!\n";
-    	
-}
+    #     print "Content-Type: text/plain; charset=utf-8\n\n";
+    #    print "PATH: " .  $ENV{'PATH'} . "\n";
+    #     print "Status: $?\n";
+    #     print "Status: $!\n";
     
+}
+
 
 parseform();
