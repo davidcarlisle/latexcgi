@@ -21,7 +21,7 @@ esac
 /usr/bin/timeout --kill-after=2s 15s $1 $NS $REC $2 > /dev/null 2> /dev/null
 R=$?
 
-# allow /usr /tmp and /etc/fonts
+# allow /usr /tmp and /etc/fonts and /dev/null
 if [ "X$REC" == "X--recorder" ]; then
     if grep -q 'INPUT /[^utd]...[^fn]' ${2}.fls; then
  R=1
