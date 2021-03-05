@@ -128,4 +128,3 @@ The PDF document is not directly returned, the site hosts an instance
 of [PDF.js](https://mozilla.github.io/pdf.js) and returns
 `PDF.js?file=document-xxxxx.pdf` primarily to ensure rendering in
 mobile clients that often do not include a PDF renderer by default.
-
