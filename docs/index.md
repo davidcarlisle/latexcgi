@@ -15,6 +15,7 @@ It is written as a perl script accepting the post requests via cgi-bin access in
 * [Larger test examples](test2).
 * [CJK Font test examples](test3).
 * [Experimental context example](testc)
+* [Experimental Snippet/Document Fragment example](test-sk.html)
 * [The learnlatex.org tutorial site](https://www.learnlatex.org).
 
 
