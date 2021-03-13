@@ -1,4 +1,9 @@
 #!/usr/bin/env perl
+
+# LaTeXCGI cgi-bin http POST endpoint for TeXLive.net LaTeX server.
+# Copyright 2020 2021 David Carlisle
+# Licence: MIT
+
 use strict;
 use warnings;
 use File::Path ('remove_tree');
