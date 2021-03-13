@@ -1,4 +1,6 @@
-
+// runlatex-sk.js for TeXLive.net
+// Copyright 2021 David Carlisle
+// MIT Licence
 
 var editors=[];
 
