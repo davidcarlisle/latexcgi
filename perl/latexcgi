@@ -136,7 +136,7 @@ sub parseform
         $errstr = "Bad Form: no main document";
     }
 
-    $errstr = "Unknown Engine $FORM{'engine'}" unless  ($FORM{'engine'} =~ /^(lua|pdf|xe|up|p)latex(-dev)?$/);
+    $errstr = "Unknown Engine $FORM{'engine'}" unless  ($FORM{'engine'} =~ /^((lua|pdf|xe|up|p)latex(-dev)?|context)$/);
     
     if ($errstr ne "") {
         print "Content-Type: text/plain; charset=utf-8\n\n";
