@@ -9,10 +9,7 @@ function llexamples() {
     var editor;
     for(var i=0;i<p.length;i++) {
 	p[i].setAttribute("id","pre" + i);
-	// class=noedit on pre or {: .class :} after closing ``` in markdown
-	if(!(p[i].classList.contains('noedit') || p[i].parentNode.parentNode.classList.contains('noedit'))) {
-	if(true || p[i].textContent.indexOf("\\documentclass") !== -1 || p[i].textContent.indexOf("\\starttext") !== -1) {
-	    // space
+	// space
 	    var s = document.createElement("div");
 	    s.setAttribute("class",'ace-spacer');
 	    p[i].parentNode.insertBefore(s, p[i].nextSibling);
@@ -25,7 +22,6 @@ function llexamples() {
 	    var f2=document.createElement("span");
 	    f2.innerHTML="<form style=\"display:none\" id=\"form2-pre" + i + "\" name=\"form2-pre" + i +"\" enctype=\"multipart/form-data\" action=\"https://texlive.net/cgi-bin/latexcgi2\" method=\"post\" target=\"pre" + i + "ifr\"></form>";
 	    p[i].parentNode.insertBefore(f2, p[i].nextSibling);
-	}
 	    editor = ace.edit(p[i]);
 	    ace.config.set('basePath', 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12') ;
 	    editor.setTheme("ace/theme/textmate");
@@ -35,7 +31,6 @@ function llexamples() {
 	    editor.setShowPrintMargin(false);
 	    editor.resize();
 	    editors["pre" + i]=editor;
-	}
     }
 }
 
