@@ -136,7 +136,7 @@ sub parseform
         $errstr = "Bad Form: no main document";
     }
 
-    $errstr = "Unknown Engine $FORM{'engine'}" unless  ($FORM{'engine'} =~ /^((lua|pdf|xe|up|p)latex(-dev)?|context)$/);
+    $errstr = "Unknown Engine $FORM{'engine'}" unless  ($FORM{'engine'} =~ /^((lua|pdf|xe|up|p)?latex(-dev)?|context)$/);
     
     if ($errstr ne "") {
         print "Content-Type: text/plain; charset=utf-8\n\n";
@@ -221,6 +221,11 @@ sub dolatex () {
     
     if($?==0 && $FORM{'engine'}=~/u?platex/){
         system("/usr/local/bin/run1", "dvipdfmx", "document");
+    }
+
+    if($?==0 && $FORM{'engine'}=~/^latex(-dev)?/){
+        system("/usr/local/bin/run1", "dvips", "document");
+        system("/usr/local/bin/run1", "ps2pdf", "document.ps");
     }
 
     my $tmpstr = sprintf("_%04X_$$", rand(0xffff));
