@@ -29,7 +29,7 @@ If the form contains unexpected fields, the whole submission is rejected.
 
  * engine
  
-   This field is optional, but if supplied must be one of `lualatex`, `pdflatex`, `xelatex`, `uplatex`, `platex` or the `-dev` variants such as `lualatex-dev`.
+   This field is optional, but if supplied must be one of `lualatex`, `pdflatex`, `xelatex`, `uplatex`, `platex`, `latex` or the `-dev` variants such as `lualatex-dev`, also allowed is `context`.
    The default is `pdflatex`.
  * bibcmd
  
@@ -78,7 +78,7 @@ The comments are checked in a case insensitive way, any text other than the fina
 
 The known keywords are
 
-* `lualatex`, `pdflatex`, `xelatex`, `uplatex`, `platex`, `lualatex-dev`, `pdflatex-dev`, `xelatex-dev`, `uplatex-dev`, `platex-dev`
+* `lualatex`, `pdflatex`, `xelatex`, `uplatex`, `platex`, `latex`, `lualatex-dev`, `pdflatex-dev`, `xelatex-dev`, `uplatex-dev`, `platex-dev`, `latex-dev`, `context`.
 
    The `engine` parameter is set to the specified keyword (lowercased).
  
@@ -117,8 +117,9 @@ The known keywords are
 7. If an error occurs in bibtex/biber, a log is returned (Currently this just has the exit status).
 8. If any `makeindex[]` calls are specified these are run, if the previous command gave no error.
 9. LaTeX is run twice more, checking for error after each run.
-10. The PDF or error log is moved, and the temporary directory is deleted.
-11. A PDF is returned, or the log file in case of error (or log requested).
+10. For pLaTeX variants `dvipdfmx` is called to generate PDF. For latex, `dvips` and `ps2pdf` are called to generate PDF.
+11. The PDF or error log is moved, and the temporary directory is deleted.
+12. A PDF is returned, or the log file in case of error (or log requested).
 
 
 Each system call is guarded by a timeout so "Error" in the above
