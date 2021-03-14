@@ -35,7 +35,7 @@ function llexamples() {
 }
 
 const commentregex = / %.*/;
-const engineregex = /% *!TEX.*[^a-zA-Z](((pdf|xe|lua|u?p)?latex(-dev)?)|context|make4ht) *\n/i;
+const engineregex = /% *!TEX.*[^a-zA-Z](((pdf|xe|lua|u?p)?latex(-dev)?)|context) *\n/i;
 const returnregex = /% *!TEX.*[^a-zA-Z](pdfjs|pdf|log) *\n/i;
 const makeindexregex = /% *!TEX.*[^a-zA-Z]makeindex( [a-z0-9\.\- ]*)\n/ig;
 
@@ -100,20 +100,56 @@ function latexcgi(nd) {
     var eng=t.match(engineregex);
     if(t.indexOf("\\documentclass") == -1 && ( eng == null)) {
      editors[nd].navigateFileStart();
+    if(t.match(/koma|KOMA|addsec|\\scr|scrheadings/)){
+        editors[nd].insert(`
+% Added snippet code
+\\documentclass{scrartcl}
+`);
+    } else {
      editors[nd].insert(`
 % Added snippet code
 \\documentclass{article}
 `);
+    }
 	if(t.match(/\\includegraphics/)){
-	    editors[nd].insert("\\usepackage{graphicx}\n");
+	    editors[nd].insert("\\usepackage[demo]{graphicx}\n");
 	}
 	if(t.match(/\\begin{equation|align|gather|flalign/)){
 	    editors[nd].insert("\\usepackage{amsmath}\n");
 	}
-	if(t.match(/tikz/)){
+	if(t.match(/tikz|pgf/)){
 	    editors[nd].insert("\\usepackage{tikz}\n");
 	}
-     editors[nd].insert(`
+        if(t.match(/fancy/)){
+            editors[nd].insert("\\usepackage{fancyhdr}\n");
+        }
+        if(t.match(/addplot|axis/)){
+            editors[nd].insert("\\usepackage{pgfplots}\n");
+        }
+        if(t.match(/hyper|href|bookmark|\\url/)){
+            editors[nd].insert("\\usepackage{hyperref}\n");
+        }
+        if(t.match(/\\newcolumntype/)){
+            editors[nd].insert("\\usepackage{array}\n");
+        }
+        if(t.match(/listing/)){
+            editors[nd].insert("\\usepackage{listings}\n");
+        }
+        if(t.match(/\\blind/)){
+            editors[nd].insert("\\usepackage{blindtext}\n");
+        }
+        if(t.match(/\\lipsum/)){
+            editors[nd].insert("\\usepackage{lipsum}\n");
+        }
+        if(t.match(/color/)){
+            editors[nd].insert("\\usepackage{xcolor}\n");
+        }
+        if(t.match(/pspicture/)){
+            editors[nd].insert("\\usepackage{pstricks}\n");
+        }
+
+
+        editors[nd].insert(`
 \\begin{document}
 % End of snippet insert
 
@@ -130,7 +166,7 @@ function latexcgi(nd) {
     addinputnoenc(fm,"filename[]","document.tex");
     if(eng != null) {
 	engv=eng[1].toLowerCase();
-    } else if(t.indexOf("fontspec") !== -1) {
+    } else if((t.indexOf("fontspec") !== -1) || (t.indexOf("pstricks")!==-1)) {
 	engv="xelatex";
     }
     addinput(fm,"engine",engv);
