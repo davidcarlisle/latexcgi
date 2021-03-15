@@ -166,7 +166,7 @@ function latexcgi(nd) {
     addinputnoenc(fm,"filename[]","document.tex");
     if(eng != null) {
 	engv=eng[1].toLowerCase();
-    } else if ((t.indexof("\\usepackage{lua" !== -1) || (t.indexof("\\directlua") !== -1)) {
+    } else if ((t.indexof("\\usepackage{lua") !== -1) || (t.indexof("\\directlua") !== -1) ){
 	engv="lualatex";
     } else if((t.indexOf("fontspec") !== -1) || (t.indexOf("pstricks")!==-1)) {
 	engv="xelatex";
