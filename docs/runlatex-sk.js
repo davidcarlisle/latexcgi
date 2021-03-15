@@ -9,8 +9,8 @@ var lltexts ={
     "TeXLive.net":      "TeXLive.net", // or "run latex" or whatever
     "Delete Output":    "Delete Output",
     "Compiling PDF":    "Compiling PDF",
-    "Added Text":       "Added snippet code",
-    "End Added Text":   "End snippet code"
+    "Added Code":       "Added snippet code",
+    "End Added Code":   "End snippet code"
 }
 
 
