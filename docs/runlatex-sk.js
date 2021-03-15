@@ -155,9 +155,9 @@ function latexcgi(nd) {
         }
 
 
-        editors[nd].insert("\n\\begin{document}\n%"  + lltexts["End Added Code"] + "\n\n"));
+        editors[nd].insert("\n\\begin{document}\n%"  + lltexts["End Added Code"] + "\n\n");
         editors[nd].navigateFileEnd();
-        editors[nd].insert(%\n" + lltexts["Added Code"] + "\n\\end{document}\n%"  + lltexts["End Added Code"] + "\n"));
+        editors[nd].insert("\n\n%" + lltexts["Added Code"] + "\n\\end{document}\n%"  + lltexts["End Added Code"] + "\n");
 
      t = editors[nd].getValue();
 }
