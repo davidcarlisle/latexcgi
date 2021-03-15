@@ -113,9 +113,9 @@ function latexcgi(nd) {
     if(t.indexOf("\\documentclass") == -1 && ( eng == null)) {
      editors[nd].navigateFileStart();
 	if(t.match(/koma|KOMA|addsec|\\scr|scrheadings/)){
-            editors[nd].insert("\n%" + lltexts["Added Code"] + "\n\\documentclass{scrartcl}\n");
+            editors[nd].insert("\n% " + lltexts["Added Code"] + "\n\\documentclass{scrartcl}\n");
 	} else {
-	    editors[nd].insert("\n%" + lltexts["Added Code"] + "\n\\documentclass{article}\n");
+	    editors[nd].insert("\n% " + lltexts["Added Code"] + "\n\\documentclass{article}\n");
 	}
 	if(t.match(/\\includegraphics/)){
 	    editors[nd].insert("\\usepackage[demo]{graphicx}\n");
@@ -155,9 +155,9 @@ function latexcgi(nd) {
         }
 
 
-        editors[nd].insert("\n\\begin{document}\n%"  + lltexts["End Added Code"] + "\n\n");
+        editors[nd].insert("\n\\begin{document}\n% "  + lltexts["End Added Code"] + "\n\n");
         editors[nd].navigateFileEnd();
-        editors[nd].insert("\n\n%" + lltexts["Added Code"] + "\n\\end{document}\n%"  + lltexts["End Added Code"] + "\n");
+        editors[nd].insert("\n\n% " + lltexts["Added Code"] + "\n\\end{document}\n% "  + lltexts["End Added Code"] + "\n");
 
      t = editors[nd].getValue();
 }
