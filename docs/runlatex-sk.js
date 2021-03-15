@@ -28,7 +28,7 @@ function llexamples() {
 	    // latexonline
 	    var r = document.createElement("button");
 	    r.innerText=lltexts["TeXLive.net"];
-            r.setAttribute("class","button");
+            r.setAttribute("class","llbutton");
 	    r.setAttribute("onclick",'latexcgi("pre' + i + '")');
 	    r.setAttribute("id","lo-pre" + i);
 	    p[i].parentNode.insertBefore(r, p[i].nextSibling);
