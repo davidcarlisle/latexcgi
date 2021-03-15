@@ -2,6 +2,18 @@
 // Copyright 2021 David Carlisle
 // MIT Licence
 
+// set here but local versions can be redefined after
+// loading this file
+
+var lltexts ={
+    "TeXLive.net":      "TeXLive.net", // or "run latex" or whatever
+    "Delete Output":    "Delete Output",
+    "Compiling PDF":    "Compiling PDF"
+    "Added Text":       "Added snippet code"
+    "End Added Text":   "End snippet code"
+}
+
+
 var editors=[];
 
 function llexamples() {
@@ -15,7 +27,7 @@ function llexamples() {
 	    p[i].parentNode.insertBefore(s, p[i].nextSibling);
 	    // latexonline
 	    var r = document.createElement("button");
-	    r.innerText="TeXLive.net";
+	    r.innerText=lltexts["TeXLive.net"];
 	    r.setAttribute("onclick",'latexcgi("pre' + i + '")');
 	    r.setAttribute("id","lo-pre" + i);
 	    p[i].parentNode.insertBefore(r, p[i].nextSibling);
@@ -101,15 +113,9 @@ function latexcgi(nd) {
     if(t.indexOf("\\documentclass") == -1 && ( eng == null)) {
      editors[nd].navigateFileStart();
     if(t.match(/koma|KOMA|addsec|\\scr|scrheadings/)){
-        editors[nd].insert(`
-% Added snippet code
-\\documentclass{scrartcl}
-`);
+        editors[nd].insert("\n%" + lltexts["Added Code"] + "\n\\documentclass{scrartcl}\n"));
     } else {
-     editors[nd].insert(`
-% Added snippet code
-\\documentclass{article}
-`);
+     editors[nd].insert("\n%" + lltexts["Added Code"] + "\n\\documentclass{article}\n"));
     }
 	if(t.match(/\\includegraphics/)){
 	    editors[nd].insert("\\usepackage[demo]{graphicx}\n");
@@ -149,17 +155,10 @@ function latexcgi(nd) {
         }
 
 
-        editors[nd].insert(`
-\\begin{document}
-% End of snippet insert
+        editors[nd].insert("\n\\begin{document}\n%"  + lltexts["End Added Code"] + "\n\n"));
+        editors[nd].navigateFileEnd();
+        editors[nd].insert(%\n" + lltexts["Added Code"] + "\n\\end{document}\n%"  + lltexts["End Added Code"] + "\n"));
 
-`);
-    editors[nd].navigateFileEnd();
-    editors[nd].insert(`
-% Added snippet code
-\\end{document}
-% End of snippet insert
-`);
      t = editors[nd].getValue();
 }
     addtextarea(fm,"filecontents[]",t);
@@ -196,14 +195,14 @@ function latexcgi(nd) {
 	ifr.setAttribute("name",nd + "ifr");
 	p.parentNode.insertBefore(ifr, b.nextSibling);
 	d=document.createElement("button");
-	d.innerText="Delete Output";
+	d.innerText=lltexts["Delete Output"];
 	d.setAttribute("id","del-" + nd);
 	d.setAttribute("onclick",'deleteoutput("' + nd + '")');
 	p.parentNode.insertBefore(d, b.nextSibling);
     }
     var  loading=document.createElement("div");
     loading.id=nd+"load";
-    loading.textContent="Compiling PDF . . .";
+    loading.textContent=lltexts["Compiling PDF] + " . . .";
     p.parentNode.insertBefore(loading, ifr);
     // scroll only if really close to the bottom
     var rect = b.getBoundingClientRect();
