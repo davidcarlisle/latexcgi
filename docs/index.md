@@ -21,8 +21,8 @@ It is written as a perl script accepting the post requests via cgi-bin access in
 * [The learnlatex.org tutorial site](https://www.learnlatex.org).
 
 ### LaTeX Forums using this server (runlatex-sk.js)
-* LaTeX Community Forum (https://latex.org/forum/)
-* TeXWelt German Language TeX Forum (https://texwelt.de/)
+* [LaTeX Community Forum](https://latex.org/forum/)
+* [TeXWelt German Language TeX Forum](https://texwelt.de/)
 
 
 ## HTTP Requests
@@ -136,7 +136,7 @@ pre-validated in the style of a curated set of tutorial examples.
   This preamble may not be completely correct as needed to run the
   example but is a good "first guess" and will save typing boiler plate
   preambles in the online forum editor. If the preamble is edited and
-  re-submitted to the texlive.net server, the boiler plate preambleis
+  re-submitted to the texlive.net server, the boiler plate preamble is
   not re-added.
 
 
