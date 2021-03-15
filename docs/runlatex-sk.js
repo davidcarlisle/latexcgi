@@ -112,11 +112,11 @@ function latexcgi(nd) {
     var eng=t.match(engineregex);
     if(t.indexOf("\\documentclass") == -1 && ( eng == null)) {
      editors[nd].navigateFileStart();
-    if(t.match(/koma|KOMA|addsec|\\scr|scrheadings/)){
-        editors[nd].insert("\n%" + lltexts["Added Code"] + "\n\\documentclass{scrartcl}\n"));
-    } else {
-     editors[nd].insert("\n%" + lltexts["Added Code"] + "\n\\documentclass{article}\n"));
-    }
+	if(t.match(/koma|KOMA|addsec|\\scr|scrheadings/)){
+            editors[nd].insert("\n%" + lltexts["Added Code"] + "\n\\documentclass{scrartcl}\n");
+	} else {
+	    editors[nd].insert("\n%" + lltexts["Added Code"] + "\n\\documentclass{article}\n");
+	}
 	if(t.match(/\\includegraphics/)){
 	    editors[nd].insert("\\usepackage[demo]{graphicx}\n");
 	}
