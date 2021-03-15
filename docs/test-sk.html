@@ -83,11 +83,10 @@ something \includegraphics[height=1cm]{example-image}
 </pre>
 </div>
 
-<h2 id="latex">latex (for pstricks)</h2>
+<h2 id="latex">default latex (for pstricks)</h2>
  <p> An example from <a href="https://texwelt.de/fragen/24448/pstricks-kurve-auf-seite-verschieben">texwelt.de</a>.</p>
 <div class="h">
  <pre>
-%!TeX latex 
 \documentclass[a4paper]{scrartcl}
 
 \usepackage{pstricks} 
@@ -107,6 +106,20 @@ something \includegraphics[height=1cm]{example-image}
 \end{document}
 </pre>
 </div>
-    
+
+<h2 id="latex">default lualatex (for \directlua)</h2>
+ <p> An example from <a href="https://texwelt.de/fragen/24448/pstricks-kurve-auf-seite-verschieben">texwelt.de</a>.</p>
+<div class="h">
+ <pre>
+\documentclass{article}
+
+\begin{document}
+
+$ 2\pi \approx \directlua{ tex.print(2 * math.pi) } $
+
+\end{document}
+</pre>
+</div>
+
 </body>
   

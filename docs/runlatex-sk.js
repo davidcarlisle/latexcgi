@@ -167,8 +167,10 @@ function latexcgi(nd) {
 	engv=eng[1].toLowerCase();
     } else if ((t.indexOf("\\usepackage{lua") !== -1) || (t.indexOf("\\directlua") !== -1) ){
 	engv="lualatex";
-    } else if((t.indexOf("fontspec") !== -1) || (t.indexOf("pstricks")!==-1)) {
+    } else if (t.indexOf("fontspec") !== -1) {
 	engv="xelatex";
+    } else if (t.indexOf("pstricks") !==-1) {
+	engv="latex";
     }
     addinput(fm,"engine",engv);
     var rtn = t.match(returnregex);
@@ -202,7 +204,7 @@ function latexcgi(nd) {
     }
     var  loading=document.createElement("div");
     loading.id=nd+"load";
-    loading.textContent=lltexts["Compiling PDF] + " . . .";
+    loading.textContent=lltexts["Compiling PDF"] + " . . .";
     p.parentNode.insertBefore(loading, ifr);
     // scroll only if really close to the bottom
     var rect = b.getBoundingClientRect();
