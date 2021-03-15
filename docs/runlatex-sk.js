@@ -28,6 +28,7 @@ function llexamples() {
 	    // latexonline
 	    var r = document.createElement("button");
 	    r.innerText=lltexts["TeXLive.net"];
+            r.setAttribute("class","button");
 	    r.setAttribute("onclick",'latexcgi("pre' + i + '")');
 	    r.setAttribute("id","lo-pre" + i);
 	    p[i].parentNode.insertBefore(r, p[i].nextSibling);
@@ -198,6 +199,7 @@ function latexcgi(nd) {
 	p.parentNode.insertBefore(ifr, b.nextSibling);
 	d=document.createElement("button");
 	d.innerText=lltexts["Delete Output"];
+        d.setAttribute("class","llbutton");
 	d.setAttribute("id","del-" + nd);
 	d.setAttribute("onclick",'deleteoutput("' + nd + '")');
 	p.parentNode.insertBefore(d, b.nextSibling);
