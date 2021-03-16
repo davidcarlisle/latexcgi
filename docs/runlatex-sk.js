@@ -37,6 +37,13 @@ function llexamples() {
 	    if(pretext.match(norunregex)) {
 		acemode="ace/mode/text";
 	    } else {
+		// caption
+		if(lltexts["Top Caption"]) {
+		    var cpt = document.createElement("div");
+		    cpt.setAttribute("class",'lltopcaption');
+		    cpt.innerHTML=lltexts["Top Caption"];
+		    p[i].parentNode.insertBefore(cpt, p[i]);
+		}
 		// space
 		var s = document.createElement("div");
 		s.setAttribute("class",'ace-spacer');
