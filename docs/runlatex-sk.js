@@ -32,7 +32,7 @@ function llexamples() {
     for(var i=0;i<p.length;i++) {
 	acemode="ace/mode/latex";
 	p[i].setAttribute("id","pre" + i);
-	var pretext=p[i].textContent;
+	var pretext=p[i].innerText;
 	if(!pretext.match(noeditregex)) {
 	    if(pretext.match(norunregex)) {
 		acemode="ace/mode/text";
