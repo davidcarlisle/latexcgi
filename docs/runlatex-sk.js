@@ -26,11 +26,15 @@ const makeindexregex = /% *!TEX.*[^a-zA-Z]makeindex( [a-z0-9\.\- ]*)\n/ig;
 function llexamples() {
     var p = document.getElementsByTagName("pre");
     var editor;
+    var acemode;
     for(var i=0;i<p.length;i++) {
+	acemode="ace/mode/latex";
 	p[i].setAttribute("id","pre" + i);
 	var pretext=p[i].textContent;
 	if(!pretext.match(noeditregex)) {
-	if(!pretext.match(norunregex)) {
+	    if(pretext.match(norunregex)) {
+		acemode="ace/mode/text";
+	    } else {
 	// space
 	    var s = document.createElement("div");
 	    s.setAttribute("class",'ace-spacer');
@@ -50,7 +54,7 @@ function llexamples() {
 	    editor = ace.edit(p[i]);
 	    ace.config.set('basePath', 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12') ;
 	    editor.setTheme("ace/theme/textmate");
-	    editor.getSession().setMode("ace/mode/latex");
+	    editor.getSession().setMode(acemode);
 	    editor.setOption("minLines",2);
 	    editor.setOption("maxLines",40);
 	    editor.setShowPrintMargin(false);
