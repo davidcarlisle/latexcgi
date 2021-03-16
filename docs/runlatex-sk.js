@@ -16,11 +16,21 @@ var lltexts ={
 
 var editors=[];
 
+const noeditregex = /^\s*[/%#\*]+ *!TEX.*[^a-zA-Z]noedit *\n/i;
+const norunregex = /^\s*[/%#\*]+ *!TEX.*[^a-zA-Z]none *\n/i;
+const commentregex = / %.*/;
+const engineregex = /% *!TEX.*[^a-zA-Z](((pdf|xe|lua|u?p)?latex(-dev)?)|context) *\n/i;
+const returnregex = /% *!TEX.*[^a-zA-Z](pdfjs|pdf|log) *\n/i;
+const makeindexregex = /% *!TEX.*[^a-zA-Z]makeindex( [a-z0-9\.\- ]*)\n/ig;
+
 function llexamples() {
     var p = document.getElementsByTagName("pre");
     var editor;
     for(var i=0;i<p.length;i++) {
 	p[i].setAttribute("id","pre" + i);
+	var pretext=p[i].textContent;
+	if(!pretext.match(noeditregex)) {
+	if(!pretext.match(norunregex)) {
 	// space
 	    var s = document.createElement("div");
 	    s.setAttribute("class",'ace-spacer');
@@ -35,6 +45,7 @@ function llexamples() {
 	    var f2=document.createElement("span");
 	    f2.innerHTML="<form style=\"display:none\" id=\"form2-pre" + i + "\" name=\"form2-pre" + i +"\" enctype=\"multipart/form-data\" action=\"https://texlive.net/cgi-bin/latexcgi\" method=\"post\" target=\"pre" + i + "ifr\"></form>";
 	    p[i].parentNode.insertBefore(f2, p[i].nextSibling);
+	}
 	    editor = ace.edit(p[i]);
 	    ace.config.set('basePath', 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12') ;
 	    editor.setTheme("ace/theme/textmate");
@@ -44,13 +55,10 @@ function llexamples() {
 	    editor.setShowPrintMargin(false);
 	    editor.resize();
 	    editors["pre" + i]=editor;
+	}
     }
 }
 
-const commentregex = / %.*/;
-const engineregex = /% *!TEX.*[^a-zA-Z](((pdf|xe|lua|u?p)?latex(-dev)?)|context) *\n/i;
-const returnregex = /% *!TEX.*[^a-zA-Z](pdfjs|pdf|log) *\n/i;
-const makeindexregex = /% *!TEX.*[^a-zA-Z]makeindex( [a-z0-9\.\- ]*)\n/ig;
 
 // https://www.overleaf.com/devs
 function addinput(f,n,v) {

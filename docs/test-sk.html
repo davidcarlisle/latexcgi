@@ -122,5 +122,29 @@ $ 2\pi \approx \directlua{ tex.print(2 * math.pi) } $
 </pre>
 </div>
 
+
+<h2 id="latex">Editor but no texlive button</h2>
+<div class="h">
+ <pre>
+# !TEX none
+
+# Editable bash script
+export TEXINPUTS=zzzz
+export PATH=somewhere
+</pre>
+</div>
+
+
+<h2 id="latex">Raw pre, no editing</h2>
+<div class="h">
+ <pre>
+/* !TEX noedit
+*/
+
+void noneEditC(int x);
+
+</pre>
+</div>
+
 </body>
   
