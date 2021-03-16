@@ -16,6 +16,7 @@ It is written as a perl script accepting the post requests via cgi-bin access in
 * [CJK Font test examples](test3).
 * [Experimental context example](testc)
 * [Snippet/Document Fragment examples (runlatex-sk)](test-sk.html)
+* [Snippet/Document Fragment test cases (runlatex-sk)](test2-sk.html)
 
 ### Tutorial site using this server (runlatex.js)
 * [The learnlatex.org tutorial site](https://www.learnlatex.org).
@@ -127,8 +128,8 @@ pre-validated in the style of a curated set of tutorial examples.
 
 * If the `% !TEX ...` comment is not used to specify the engine, then
   the engine parameter is defaulted depending on the content of the
-  example, currently use of `fontspec` or `pstricks` causing the
-  engine to default to `xelatex`.
+  example, currently use of `fontspec` defaulting to `xelatex` and
+  use of `pstricks` causing the  engine to default to `xelatex`.
   
 * If `\documentclass` does not appear in the example then a default
   preamble is constructed (based on the commands seen in the example)
@@ -139,6 +140,21 @@ pre-validated in the style of a curated set of tutorial examples.
   re-submitted to the texlive.net server, the boiler plate preamble is
   not re-added.
 
+* Two special `!TEX` comments may be used, which must be on the first
+  line. The comment marker for these does not need to be `%` it can be
+  any combination of `%`, `#`, `/`, `*`.
+
+    - `!TEX noedit` causes the div to be left unchanged
+    - `!TEX none` causes the editor to be used in Text mode, and no
+      texlive.net button is added.
+	  
+  If the the first non-white line does not start with `%` and does not
+  contain a `\ ` then the no-compile, `none` mode is assumed, so that
+  log files, shell scripts etc may be inserted without being
+  interpreted as LaTeX.
+  
+* Optionally a caption may be added above the editor in the cases that
+  a compile button is added below.
 
 
 ## Processing Pipeline
