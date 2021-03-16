@@ -52,7 +52,7 @@ function llexamples() {
 	    editor.setTheme("ace/theme/textmate");
 	    editor.getSession().setMode("ace/mode/latex");
 	    editor.setOption("minLines",2);
-	    editor.setOption("maxLines",100);
+	    editor.setOption("maxLines",40);
 	    editor.setShowPrintMargin(false);
 	    editor.resize();
 	    editors["pre" + i]=editor;
