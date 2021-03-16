@@ -13,6 +13,7 @@ var lltexts ={
     "End Added Code":   "End snippet code"
 }
 
+var latexcgihost="https://texlive.net/cgi-bin/latexcgi";
 
 var editors=[];
 
@@ -35,21 +36,26 @@ function llexamples() {
 	    if(pretext.match(norunregex)) {
 		acemode="ace/mode/text";
 	    } else {
-	// space
-	    var s = document.createElement("div");
-	    s.setAttribute("class",'ace-spacer');
-	    p[i].parentNode.insertBefore(s, p[i].nextSibling);
-	    // latexonline
-	    var r = document.createElement("button");
-	    r.innerText=lltexts["TeXLive.net"];
-            r.setAttribute("class","llbutton");
-	    r.setAttribute("onclick",'latexcgi("pre' + i + '")');
-	    r.setAttribute("id","lo-pre" + i);
-	    p[i].parentNode.insertBefore(r, p[i].nextSibling);
-	    var f2=document.createElement("span");
-	    f2.innerHTML="<form style=\"display:none\" id=\"form2-pre" + i + "\" name=\"form2-pre" + i +"\" enctype=\"multipart/form-data\" action=\"https://texlive.net/cgi-bin/latexcgi\" method=\"post\" target=\"pre" + i + "ifr\"></form>";
-	    p[i].parentNode.insertBefore(f2, p[i].nextSibling);
-	}
+		// space
+		var s = document.createElement("div");
+		s.setAttribute("class",'ace-spacer');
+		p[i].parentNode.insertBefore(s, p[i].nextSibling);
+		// latexonline
+		var r = document.createElement("button");
+		r.innerText=lltexts["TeXLive.net"];
+		r.setAttribute("class","llbutton");
+		r.setAttribute("onclick",'latexcgi("pre' + i + '")');
+		r.setAttribute("id","lo-pre" + i);
+		p[i].parentNode.insertBefore(r, p[i].nextSibling);
+		var f2=document.createElement("span");
+		f2.innerHTML="<form style=\"display:none\" id=\"form2-pre" + i +
+		    "\" name=\"form2-pre" + i +
+		    "\" enctype=\"multipart/form-data\" action=\"" +
+		    latexcgihost +
+		    "\" method=\"post\" target=\"pre" + i +
+		    "ifr\"></form>";
+		p[i].parentNode.insertBefore(f2, p[i].nextSibling);
+	    }
 	    p[i].textContent=p[i].innerText;
 	    editor = ace.edit(p[i]);
 	    ace.config.set('basePath', 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12') ;
@@ -65,7 +71,6 @@ function llexamples() {
 }
 
 
-// https://www.overleaf.com/devs
 function addinput(f,n,v) {
     var inp=document.createElement("input");
     inp.setAttribute("type","text");
@@ -125,7 +130,7 @@ function latexcgi(nd) {
     var engv="pdflatex";
     var eng=t.match(engineregex);
     if(t.indexOf("\\documentclass") == -1 && ( eng == null)) {
-     editors[nd].navigateFileStart();
+	editors[nd].navigateFileStart();
 	if(t.match(/koma|KOMA|addsec|\\scr|scrheadings/)){
             editors[nd].insert("\n% " + lltexts["Added Code"] + "\n\\documentclass{scrartcl}\n");
 	} else {
@@ -171,10 +176,14 @@ function latexcgi(nd) {
 
         editors[nd].insert("\n\\begin{document}\n% "  + lltexts["End Added Code"] + "\n\n");
         editors[nd].navigateFileEnd();
-        editors[nd].insert("\n\n% " + lltexts["Added Code"] + "\n\\end{document}\n% "  + lltexts["End Added Code"] + "\n");
-
-     t = editors[nd].getValue();
-}
+        editors[nd].insert("\n\n% " +
+			   lltexts["Added Code"] +
+			   "\n\\end{document}\n% "  +
+			   lltexts["End Added Code"] +
+			   "\n");
+	
+	t = editors[nd].getValue();
+    }
     addtextarea(fm,"filecontents[]",t);
     addinputnoenc(fm,"filename[]","document.tex");
     if(eng != null) {
