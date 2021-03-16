@@ -17,7 +17,7 @@ var lltexts ={
 var editors=[];
 
 const noeditregex = /^\s*[/%#\*]+ *!TEX.*[^a-zA-Z]noedit *\n/i;
-const norunregex = /^\s*[/%#\*]+ *!TEX.*[^a-zA-Z]none *\n/i;
+const norunregex = /^\s*([/%#\*]+ *!TEX.*[^a-zA-Z]none *|[^% \t\\][^\\]*)\n/i;
 const commentregex = / %.*/;
 const engineregex = /% *!TEX.*[^a-zA-Z](((pdf|xe|lua|u?p)?latex(-dev)?)|context) *\n/i;
 const returnregex = /% *!TEX.*[^a-zA-Z](pdfjs|pdf|log) *\n/i;
