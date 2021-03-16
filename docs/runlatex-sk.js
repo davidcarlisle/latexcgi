@@ -1,5 +1,5 @@
 // runlatex-sk.js for TeXLive.net
-// Copyright 2021 David Carlisle
+// Copyright 2020 2021 David Carlisle
 // MIT Licence
 
 // set here but local versions can be redefined after
@@ -10,7 +10,8 @@ var lltexts ={
     "Delete Output":    "Delete Output",
     "Compiling PDF":    "Compiling PDF",
     "Added Code":       "Added snippet code",
-    "End Added Code":   "End snippet code"
+    "End Added Code":   "End snippet code",
+    "Top Caption":      ""
 }
 
 var latexcgihost="https://texlive.net/cgi-bin/latexcgi";
