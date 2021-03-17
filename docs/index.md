@@ -14,6 +14,7 @@ It is written as a perl script accepting the post requests via cgi-bin access in
 * [Basic tests](test).
 * [Larger test examples](test2).
 * [CJK Font test examples](test3).
+* [plain tex and non interactive examples](test4).
 * [Experimental context example](testc)
 * [Snippet/Document Fragment examples (runlatex-sk)](test-sk.html)
 * [Snippet/Document Fragment test cases (runlatex-sk)](test2-sk.html)
@@ -36,12 +37,21 @@ If the form contains unexpected fields, the whole submission is rejected.
 
  * engine
  
-   This field is optional, but if supplied must be one of `lualatex`, `pdflatex`, `xelatex`, `uplatex`, `platex`, `latex` or the `-dev` variants such as `lualatex-dev`, also allowed is `context`.
+   This field is optional, but if supplied must be one of  
+   `lualatex`, `pdflatex`, `xelatex`, `uplatex`, `platex`, `latex`,  
+   `lualatex-dev`, `pdflatex-dev`, `xelatex-dev`, `uplatex-dev`, `platex-dev`, `latex-dev`,  
+   `luatex`, `pdftex`, `xetex`, `uptex`, `ptex`, `tex`,  
+   `context`.
+   
    The default is `pdflatex`.
  * bibcmd
  
-   This field is optional, but if supplied must be one of `biber`, `bibtex`, `pbibtex`, `bibtex8`.
-   It defaults to empty unless the log of the first run from LaTeX has a biblatex message saying to run biber or bibtex, or if there is a `No file document.bbl` message.
+   This field is optional, but if supplied must be one of  
+   `biber`, `bibtex`, `pbibtex`, `bibtex8`.
+   
+   It defaults to empty unless the log of the first run from LaTeX has
+   a biblatex message saying
+   to run biber or bibtex, or if there is a `No file document.bbl` message.
  * filename[]
  
    There must be at least one of these parameters, each specifying a filename.
@@ -67,7 +77,11 @@ If the form contains unexpected fields, the whole submission is rejected.
 
    The value must be of the form `makindex` _options_
 
-   `options` gives the options for `makeindex` for the document `document.tex` it is currently restricted to `-` and `.` and ASCII letters and digits.
+   `options` gives the options for `makeindex` for the document
+   `document.tex`
+   it is currently restricted to `-` and `.` and ASCII letters and digits.
+
+
 
 
 ## The learnlatex Comment Interface (runlatex.js)
@@ -88,7 +102,10 @@ The comments are checked in a case insensitive way, any text other than the fina
 
 The known keywords are
 
-* `lualatex`, `pdflatex`, `xelatex`, `uplatex`, `platex`, `latex`, `lualatex-dev`, `pdflatex-dev`, `xelatex-dev`, `uplatex-dev`, `platex-dev`, `latex-dev`, `context`.
+* `lualatex`, `pdflatex`, `xelatex`, `uplatex`, `platex`, `latex`,
+  `lualatex-dev`, `pdflatex-dev`, `xelatex-dev`, `uplatex-dev`,
+  `platex-dev`, `latex-dev`, `luatex`, `pdftex`, `xetex`,
+  `uptex`, `ptex`, `tex`, `context`.
 
    The `engine` parameter is set to the specified keyword (lowercased).
  
@@ -114,8 +131,31 @@ The known keywords are
 
    See <a href="test#makeindex">the makeindex example in the test document</a>.
  
+ 
+### No Edit Option
+
+If an HTML `<pre>` element or its parenet `<div>` has the CSS `noedid`
+class then it os not processed by this JavaScript and the original
+`<pre>` is displayed. (In GitHub pages  the markup `{: .noedit :}`
+may be placed after the code block to add this class.) 
+
+### No TeX compilation
+
+If the code block does not contain either `\documentclass` or a `%
+!TEX` comment that specifies a TeX engine, no buttons are added to
+submit the document to an online TeX system.
+
+### Multifile Projects.
+
+Normally just the file corresponding to a single code block is
+submitted but the page may contain a javascript `preincludes` array
+that specifies a mapping of code blocks to filenames to control a
+multi-file submission to either texlive.net or Overleaf.
+
+
 ## The TeXWelt Comment Interface (runlatex-sk.js)
-A modified version of the  `runlatex`  JavaScript, [maintained at this site](https://github.com/davidcarlisle/latexcgi/blob/main/docs/runlatex-sk.js)
+A modified version of the  `runlatex`  JavaScript,
+[maintained at this site](https://github.com/davidcarlisle/latexcgi/blob/main/docs/runlatex-sk.js)
 
 Compared to `runlatex.js`, `runlatex-sk.js` makes some adaptations so
 that it is more suitable for a forum context where there is no access
@@ -129,16 +169,19 @@ pre-validated in the style of a curated set of tutorial examples.
 * If the `% !TEX ...` comment is not used to specify the engine, then
   the engine parameter is defaulted depending on the content of the
   example, currently use of `fontspec` defaulting to `xelatex` and
-  use of `pstricks` causing the  engine to default to `xelatex`.
+  use of `pstricks` causing the  engine to default to
+  `latex`/`dvips/``ps2pdf`.
   
-* If `\documentclass` does not appear in the example then a default
-  preamble is constructed (based on the commands seen in the example)
-  and added to the code block via the ACE editor interface.
-  This preamble may not be completely correct as needed to run the
-  example but is a good "first guess" and will save typing boiler plate
-  preambles in the online forum editor. If the preamble is edited and
-  re-submitted to the texlive.net server, the boiler plate preamble is
-  not re-added.
+* If neither `\documentclass` nor a `% !TeX` engine cooment appears in
+  the example then a default preamble is constructed (based on the
+  commands seen in the example) and added to the code block via the
+  ACE editor interface.  This preamble may not be completely correct
+  as needed to run the example but is a good "first guess" and will
+  save typing boiler plate preambles in the online forum editor. If
+  the preamble is edited and re-submitted to the texlive.net server,
+  the boiler plate preamble is not re-added.
+
+### Code blocks without TeX submission
 
 * Two special `!TEX` comments may be used, which must be on the first
   line. The comment marker for these does not need to be `%` it can be
@@ -153,6 +196,8 @@ pre-validated in the style of a curated set of tutorial examples.
   log files, shell scripts etc may be inserted without being
   interpreted as LaTeX.
   
+### Captions
+
 * Optionally a caption may be added above the editor in the cases that
   a compile button is added below.
 
