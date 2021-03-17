@@ -64,12 +64,12 @@ function llexamples() {
 		    "ifr\"></form>";
 		p[i].parentNode.insertBefore(f2, p[i].nextSibling);
 	    }
-	    p[i].textContent=p[i].innerText;
+	    p[i].textContent=pretext.replace(/\s+$/,'');
 	    editor = ace.edit(p[i]);
 	    ace.config.set('basePath', 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12') ;
 	    editor.setTheme("ace/theme/textmate");
 	    editor.getSession().setMode(acemode);
-	    editor.setOption("minLines",2);
+	    editor.setOption("minLines",1);
 	    editor.setOption("maxLines",40);
 	    editor.setShowPrintMargin(false);
 	    editor.resize();
