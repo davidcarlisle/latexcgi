@@ -9,8 +9,8 @@ var lltexts ={
     "TeXLive.net":      "TeXLive.net", // or "run latex" or whatever
     "Delete Output":    "Delete Output",
     "Compiling PDF":    "Compiling PDF",
-    "Added Code":       "Added snippet code",
-    "End Added Code":   "End snippet code",
+    "Added Code":       "Added code",
+    "End Added Code":   "End Added code",
     "Top Caption":      ""
 }
 
@@ -24,6 +24,22 @@ const commentregex = / %.*/;
 const engineregex = /% *!TEX.*[^a-zA-Z](((pdf|xe|lua|u?p)?latex(-dev)?)|context|(pdf|xe|lua|u?p)?tex) *\n/i;
 const returnregex = /% *!TEX.*[^a-zA-Z](pdfjs|pdf|log) *\n/i;
 const makeindexregex = /% *!TEX.*[^a-zA-Z]makeindex( [a-z0-9\.\- ]*)\n/ig;
+
+
+var packageregex = [
+    [ /\\includegraphics/,                    "\\usepackage[demo]{graphicx}\n"],
+    [ /\\begin{equation|align|gather|flalign/,"\\usepackage{amsmath}\n"       ],
+    [ /tikz|pgf/,                             "\\usepackage{tikz}\n"          ],
+    [ /fancy/,                                "\\usepackage{fancyhdr}\n"      ],
+    [ /addplot|axis/,                         "\\usepackage{pgfplots}\n"      ],
+    [ /hyper|href|bookmark|\\url/,            "\\usepackage{hyperref}\n"      ],
+    [ /\\newcolumntype/,                      "\\usepackage{array}\n"         ],
+    [ /listing/,                              "\\usepackage{listings}\n"      ],
+    [ /\\blind/,                              "\\usepackage{blindtext}\n"     ],
+    [ /\\lipsum/,                             "\\usepackage{lipsum}\n"        ],
+    [ /color/,                                "\\usepackage{xcolor}\n"        ],
+    [ /pspicture/,                            "\\usepackage{pstricks}\n"      ]
+];
 
 function llexamples() {
     var p = document.getElementsByTagName("pre");
@@ -144,44 +160,11 @@ function latexcgi(nd) {
 	} else {
 	    editors[nd].insert("\n% " + lltexts["Added Code"] + "\n\\documentclass{article}\n");
 	}
-	if(t.match(/\\includegraphics/)){
-	    editors[nd].insert("\\usepackage[demo]{graphicx}\n");
-	}
-	if(t.match(/\\begin{equation|align|gather|flalign/)){
-	    editors[nd].insert("\\usepackage{amsmath}\n");
-	}
-	if(t.match(/tikz|pgf/)){
-	    editors[nd].insert("\\usepackage{tikz}\n");
-	}
-        if(t.match(/fancy/)){
-            editors[nd].insert("\\usepackage{fancyhdr}\n");
-        }
-        if(t.match(/addplot|axis/)){
-            editors[nd].insert("\\usepackage{pgfplots}\n");
-        }
-        if(t.match(/hyper|href|bookmark|\\url/)){
-            editors[nd].insert("\\usepackage{hyperref}\n");
-        }
-        if(t.match(/\\newcolumntype/)){
-            editors[nd].insert("\\usepackage{array}\n");
-        }
-        if(t.match(/listing/)){
-            editors[nd].insert("\\usepackage{listings}\n");
-        }
-        if(t.match(/\\blind/)){
-            editors[nd].insert("\\usepackage{blindtext}\n");
-        }
-        if(t.match(/\\lipsum/)){
-            editors[nd].insert("\\usepackage{lipsum}\n");
-        }
-        if(t.match(/color/)){
-            editors[nd].insert("\\usepackage{xcolor}\n");
-        }
-        if(t.match(/pspicture/)){
-            editors[nd].insert("\\usepackage{pstricks}\n");
-        }
 
-
+	for(var i=0;i<packageregex.length; i++){
+	    if(t.match(packageregex[i][0])) editors[nd].insert(packageregex[i][1]);
+	}
+	
         editors[nd].insert("\n\\begin{document}\n% "  + lltexts["End Added Code"] + "\n\n");
         editors[nd].navigateFileEnd();
         editors[nd].insert("\n\n% " +
