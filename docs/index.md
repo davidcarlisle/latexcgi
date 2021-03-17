@@ -134,8 +134,8 @@ The known keywords are
  
 ### No Edit Option
 
-If an HTML `<pre>` element or its parenet `<div>` has the CSS `noedid`
-class then it os not processed by this JavaScript and the original
+If an HTML `<pre>` element or its parenet `<div>` has the CSS `noedit`
+class then it is not processed by this JavaScript and the original
 `<pre>` is displayed. (In GitHub pages  the markup `{: .noedit :}`
 may be placed after the code block to add this class.) 
 
@@ -152,6 +152,7 @@ submitted but the page may contain a javascript `preincludes` array
 that specifies a mapping of code blocks to filenames to control a
 multi-file submission to either texlive.net or Overleaf.
 
+See [Learn LaTeX lesson 13](https://www.learnlatex.org/en/lesson-13)
 
 ## The TeXWelt Comment Interface (runlatex-sk.js)
 A modified version of the  `runlatex`  JavaScript,
