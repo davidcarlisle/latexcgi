@@ -51,7 +51,9 @@ function llexamples() {
 	var pretext=p[i].innerText;
 	if(!pretext.match(noeditregex) && !p[i].classList.contains('noedit')) {
 	    if(pretext.match(norunregex) || p[i].classList.contains('norun')) {
-		acemode="ace/mode/text";
+		if(pretext.match(norunregex)) {
+		    acemode="ace/mode/text";
+		}
 	    } else {
 		// caption
 		if(lltexts["Top Caption"]) {
