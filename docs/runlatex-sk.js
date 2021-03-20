@@ -49,8 +49,8 @@ function llexamples() {
 	acemode="ace/mode/latex";
 	p[i].setAttribute("id","pre" + i);
 	var pretext=p[i].innerText;
-	if(!pretext.match(noeditregex)) {
-	    if(pretext.match(norunregex)) {
+	if(!pretext.match(noeditregex) && !p[i].classList.contains('noedit')) {
+	    if(pretext.match(norunregex) || p[i].classList.contains('norun')) {
 		acemode="ace/mode/text";
 	    } else {
 		// caption
