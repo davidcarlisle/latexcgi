@@ -16,9 +16,9 @@ It is written as a perl script accepting the post requests via cgi-bin access in
 * [CJK Font test examples](test3).
 * [plain tex and non interactive examples](test4).
 * [Experimental context example](testc)
-* [Snippet/Document Fragment examples (runlatex-sk)](test-sk.html)
-* [Snippet/Document Fragment test cases (runlatex-sk)](test2-sk.html)
-* [make4ht HTML examples (runlatex-sk)](test-make4ht.html)
+* [Snippet/Document Fragment examples (runlatex-sk)](test-sk)
+* [Snippet/Document Fragment test cases (runlatex-sk)](test2-sk)
+* [make4ht HTML examples (runlatex-sk)](test-make4ht)
 
 ### Tutorial site using this server (runlatex.js)
 * [The learnlatex.org tutorial site](https://www.learnlatex.org).
