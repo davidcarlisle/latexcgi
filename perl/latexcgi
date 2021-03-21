@@ -10,7 +10,7 @@ use File::Path ('remove_tree');
 use File::Copy;
 
 
-my(%FORM,@NAMES,@MAKEINDEX,$n,$m);
+my(%FORM,@NAMES,@MAKEINDEX,$n,$m,@files,$file);
 $FORM{'engine'}="pdflatex";
 $FORM{'bibcmd'}="";
 $FORM{'return'}="pdfjs";
@@ -136,7 +136,7 @@ sub parseform
         $errstr = "Bad Form: no main document";
     }
 
-    $errstr = "Unknown Engine $FORM{'engine'}" unless  ($FORM{'engine'} =~ /^((lua|pdf|xe|up|p)?latex(-dev)?|context|(lua|pdf|xe|up|p)?tex)$/);
+    $errstr = "Unknown Engine $FORM{'engine'}" unless  ($FORM{'engine'} =~ /^((lua|pdf|xe|up|p)?latex(-dev)?|context|(lua|pdf|xe|up|p)?tex|make4ht)$/);
     
     if ($errstr ne "") {
         print "Content-Type: text/plain; charset=utf-8\n\n";
@@ -230,7 +230,18 @@ sub dolatex () {
 
     my $tmpstr = sprintf("_%04X_$$", rand(0xffff));
     
-    if($?==0 && ($return ne "log")) {
+    if($?==0 && ($FORM{'engine'} eq "make4ht")) {
+        mkdir("/var/www/html/latexcgi/dir" . "$tmpstr",0777);
+        chmod(0777,"/var/www/html/latexcgi/dir" . "$tmpstr");
+	@files = glob($tmpdir . "/outdir/*");
+	foreach $file (@files) {
+	    move($file, "/var/www/html/latexcgi/dir" . "$tmpstr");
+	}
+        chdir("..");
+        remove_tree($tmpdir);
+        print "Status: 301\n";
+        print "Location: /latexcgi/dir" . "$tmpstr" . "/document.html\n\n";
+    } elsif($?==0 && ($return ne "log")) {
         move($tmpdir . "/document.pdf","/var/www/html/latexcgi/document" . "$tmpstr" . ".pdf");
         chdir("..");
         remove_tree($tmpdir);

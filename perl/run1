@@ -1,9 +1,4 @@
 #!/bin/bash
-
-# PATH and timeout control for TeXLive.net LaTeX server.
-# Copyright 2020 2021 David Carlisle
-# Licence: MIT
-
 # set -e
 export PATH=/usr/local/texlive/2020/bin/x86_64-linux:$PATH
 
@@ -11,19 +6,32 @@ echo "" >  document.log
 
 NS=""
 REC=""
+MT=""
 
 if [ "X$1X" == "XlualatexX" ]; then
     NS="--nosocket"
 fi
+
+if [ "X$1X" == "Xmake4htX" ]; then
+    NS="-d outdir"
+    MT=2,mathjax
+fi
+
 case "X$1" in
-    *latex)
+    Xbibtex)
+    REC=""
+    ;;
+    *tex)
+    REC="--recorder"
+    ;;
+    *latex-dev)
     REC="--recorder"
     ;;
 esac
 
 # $2 may contain spaces so multiple arguments eg for makeindex
 # calling script checks no shell characters
-/usr/bin/timeout --kill-after=2s 15s $1 $NS $REC $2 > /dev/null 2> /dev/null
+/usr/bin/timeout --kill-after=2s 15s $1 $NS $REC $2 $MT > /dev/null 2> /dev/null
 R=$?
 
 # allow /usr /tmp and /etc/fonts and /dev/null
@@ -34,5 +42,5 @@ if [ "X$REC" == "X--recorder" ]; then
     fi
 fi
 
-echo -e "\nTimeout/Error status: $R"  >> document.log
+echo -e "\nTimeout/Error status: $R [$1][$2]"  >> document.log
 exit $R
