@@ -5,6 +5,8 @@
 // set here but local versions can be redefined after
 // loading this file
 
+var preincludes={};
+
 var lltexts ={
     "TeXLive.net":      "TeXLive.net", // or "run latex" or whatever
     "Delete Output":    "Delete Output",
@@ -179,6 +181,19 @@ function latexcgi(nd) {
     }
     addtextarea(fm,"filecontents[]",t);
     addinputnoenc(fm,"filename[]","document.tex");
+    if(typeof(preincludes) == "object") {
+	if(typeof(preincludes[nd]) == "object") {
+	    var incl=preincludes[nd];
+	    for(prop in incl) {
+		if(editors[prop]==null) {
+		    addtextarea(fm,"filecontents[]",document.getElementById(prop).textContent);
+		} else {
+		    addtextarea(fm,"filecontents[]",editors[prop].getValue());
+		}
+		addinputnoenc(fm,"filename[]",incl[prop]);
+	    }
+	}
+    }
     if(eng != null) {
 	engv=eng[1].toLowerCase();
     } else if ((t.indexOf("\\usepackage{lua") !== -1) || (t.indexOf("\\directlua") !== -1) ){
