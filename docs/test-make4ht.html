@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>make4ht tests</title>
+    <meta charset="UTF-8">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.min.js"></script>
+    <style type="text/css" media="screen">
+      .ace_editor {
+	  border: 1px solid lightgray;
+	  margin-bottom: 1px !important;
+	  width: 100%;
+      }
+      div.spacer {
+	  margin-top:16px;
+      }
+    </style>
+    <script src="runlatex-sk.js"></script>
+    <script>
+   lltexts ={
+    "TeXLive.net":      "TeXLive.net", // or "run latex" or whatever
+    "Delete Output":    "Delete Output (??)",
+    "Compiling PDF":    "Compiling PDF (or HTML)",
+    "Added Code":       "Added code (??)",
+    "End Added Code":   "End code (??)",
+    "Top Caption":      ""
+   }
+    </script>
+    <style>
+      body {margin:auto; max-width: 70em;}
+      div.h {background-color: #F5F5FF;margin: .5em 0;}
+      pre {background-color: #EEE;margin:0;padding: .5em;}
+      button.llbutton {background-color:#EFE;}
+      iframe {background-color:white}
+    </style>
+    
+  </head>
+  <body>
+
+    <h1 id="ll">Testing make4ht</h1>
+
+<p>Testing a modified version of the runlatex JavaScript including make4ht/MathJax support.
+ Change <code>% !TeX make4ht</code> to see LaTeX typset PDF.
+
+<h2 id="doc1">Graphics and Math</h2>
+<div class="h">
+<pre>
+% !TeX make4ht
+\documentclass{article}
+ 
+\usepackage{graphicx}
+\usepackage{amsmath}
+\begin{document}
+
+\begin{center}
+\includegraphics[scale=.9]{william-shakespeare.jpg}
+\end{center}
+  
+\section{graphics}
+  
+ Something  \includegraphics[height=1cm]{example-image}
+ 
+\section{math}
+
+Equation
+\begin{equation}\frac{-b\pm\sqrt{b^2-4ac}}{2a}\end{equation}
+
+Align
+\begin{align}
+y^2&=ax^2+bx+c\\
+  a&=b+c\\
+  b&=2
+\end{align}
+  \end{document}
+</pre>
+</div>
+
+
+</body>
+</html>
