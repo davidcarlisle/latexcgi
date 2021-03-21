@@ -8,6 +8,7 @@
 var preincludes={};
 
 var lltexts ={
+    "Open in Overleaf": "Open in Overleaf",
     "TeXLive.net":      "TeXLive.net", // or "run latex" or whatever
     "Delete Output":    "Delete Output",
     "Compiling PDF":    "Compiling PDF",
