@@ -83,7 +83,7 @@ function llexamples() {
 		if(overleafhost){
 		    // overleaf
 		    var o = document.createElement("button");
-		    o.innerText=buttons["Open in Overleaf"];
+		    o.innerText=lltexts["Open in Overleaf"];
 		    o.setAttribute("class","llbutton");
 		    o.setAttribute("onclick",'openinoverleaf("pre' + i + '")');
 		    p[i].parentNode.insertBefore(o, p[i].nextSibling);
