@@ -42,7 +42,7 @@ If the form contains unexpected fields, the whole submission is rejected.
    `lualatex`, `pdflatex`, `xelatex`, `uplatex`, `platex`, `latex`,  
    `lualatex-dev`, `pdflatex-dev`, `xelatex-dev`, `uplatex-dev`, `platex-dev`, `latex-dev`,  
    `luatex`, `pdftex`, `xetex`, `uptex`, `ptex`, `tex`,  
-   `context`.
+   `context`, `make4ht`.
    
    The default is `pdflatex`.
  * bibcmd
@@ -71,6 +71,9 @@ If the form contains unexpected fields, the whole submission is rejected.
    `pdf` specifies that the PDF document should be returned, so will use your browser's default PDF renderer.
 
    `log` specifies that the log file should be returned even in non-error cases.
+   
+   If the specified engine does not return PDF (currently just
+   `make4ht`) `pdfjs` and `pdf` return values are ignored.
    
  * makeindex[]
  
@@ -106,7 +109,7 @@ The known keywords are
 * `lualatex`, `pdflatex`, `xelatex`, `uplatex`, `platex`, `latex`,
   `lualatex-dev`, `pdflatex-dev`, `xelatex-dev`, `uplatex-dev`,
   `platex-dev`, `latex-dev`, `luatex`, `pdftex`, `xetex`,
-  `uptex`, `ptex`, `tex`, `context`.
+  `uptex`, `ptex`, `tex`, `context`, `make4ht`.
 
    The `engine` parameter is set to the specified keyword (lowercased).
  
@@ -122,7 +125,8 @@ The known keywords are
 
    The `return` parameter is set to the specfied keyword (lowercased).
 
-   If this is not used, the `return` parameter is not set and the server will use PDF.js as described above.
+   If this is not used, the `return` parameter is not set and the
+   server will use PDF.js for PDF display, as described above.
   
 *  `makeindex` _options_
  
@@ -174,7 +178,7 @@ pre-validated in the style of a curated set of tutorial examples.
   use of `pstricks` causing the  engine to default to
   `latex`/`dvips/``ps2pdf`.
   
-* If neither `\documentclass` nor a `% !TeX` engine cooment appears in
+* If neither `\documentclass` nor a `% !TeX` engine comment appears in
   the example then a default preamble is constructed (based on the
   commands seen in the example) and added to the code block via the
   ACE editor interface.  This preamble may not be completely correct
@@ -189,9 +193,11 @@ pre-validated in the style of a curated set of tutorial examples.
   line. The comment marker for these does not need to be `%` it can be
   any combination of `%`, `#`, `/`, `*`.
 
-    - `!TEX noedit` causes the div to be left unchanged
+    - `!TEX noedit` causes the div to be left unchanged.
+	    (equivalently class=`noedit` on the `<pre>` element).
     - `!TEX none` causes the editor to be used in Text mode, and no
       texlive.net button is added.
+     (equivalently class=`norun` on the `<pre>` element).
 	  
   If the the first non-white line does not start with `%` and does not
   contain a `\ ` then the no-compile, `none` mode is assumed, so that
@@ -216,8 +222,8 @@ pre-validated in the style of a curated set of tutorial examples.
 8. If any `makeindex[]` calls are specified these are run, if the previous command gave no error.
 9. LaTeX is run twice more, checking for error after each run.
 10. For pLaTeX variants `dvipdfmx` is called to generate PDF. For latex, `dvips` and `ps2pdf` are called to generate PDF.
-11. The PDF or error log is moved, and the temporary directory is deleted.
-12. A PDF is returned, or the log file in case of error (or log requested).
+11. The PDF or error log (or for `make4ht` the output directory) is moved, and the temporary directory is deleted.
+12. A PDF (or for `make4ht` the top level HTML file) is returned, or the log file in case of error (or log requested).
 
 
 Each system call is guarded by a timeout so "Error" in the above
