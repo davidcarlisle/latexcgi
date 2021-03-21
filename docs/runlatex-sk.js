@@ -12,6 +12,9 @@ var lltexts ={
     "TeXLive.net":      "TeXLive.net", // or "run latex" or whatever
     "Delete Output":    "Delete Output",
     "Compiling PDF":    "Compiling PDF",
+    // The following not used on learnlatex.org
+    "edit":             "edit",
+    "copy":             "copy",
     "Added Code":       "Added code",
     "End Added Code":   "End Added code",
     "Top Caption":      ""
@@ -19,8 +22,10 @@ var lltexts ={
 
 var lleditorlines=40;
 var lladddefaultpreamble=true;
+var lladddefaultengine=true;
 
-// debug by using https://httpbin.org/post, set to null to omit from interface
+// debug by using https://httpbin.org/post
+// set to null to omit from interface
 var latexcgihost="https://texlive.net/cgi-bin/latexcgi";
 var overleafhost=null; // "https://www.overleaf.com/docs";
 
@@ -240,6 +245,16 @@ function generatepreamble(t,e) {
     return e.getValue();
 }
 
+function defaultengine(t) {
+	if ((t.indexOf("\\usepackage{lua") !== -1) || (t.indexOf("\\directlua") !== -1) ){
+	    return "lualatex";
+	} else if (t.indexOf("fontspec") !== -1) {
+	    return "xelatex";
+	} else if (t.indexOf("pstricks") !==-1) {
+	    return "latex";
+	}
+}
+
 function latexcgi(nd) {
     var fm = document.getElementById('form2-' + nd);
     fm.innerHTML="";
@@ -269,14 +284,8 @@ function latexcgi(nd) {
     }
     if(eng != null) {
 	engv=eng[1].toLowerCase();
-    } else if(lladddefaultpreamble) {
-	if ((t.indexOf("\\usepackage{lua") !== -1) || (t.indexOf("\\directlua") !== -1) ){
-	    engv="lualatex";
-	} else if (t.indexOf("fontspec") !== -1) {
-	    engv="xelatex";
-	} else if (t.indexOf("pstricks") !==-1) {
-	    engv="latex";
-	}
+    } else if(lladddefaultengine) {
+	engv=defaultengine(t);
     }
     addinput(fm,"engine",engv);
     var rtn = t.match(returnregex);
