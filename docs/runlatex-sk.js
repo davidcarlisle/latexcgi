@@ -9,7 +9,7 @@ var preincludes={};
 
 var lltexts ={
     "Open in Overleaf": "Open in Overleaf",
-    "TeXLive.net":      "TeXLive.net", // or "run latex" or whatever
+    "TeXLive.net":      "LaTeX Online", // or "run latex" or whatever
     "Delete Output":    "Delete Output",
     "Compiling PDF":    "Compiling PDF",
     // The following not used on learnlatex.org
@@ -79,7 +79,7 @@ function llexamples() {
 		var s = document.createElement("div");
 		s.setAttribute("class",'ace-spacer');
 		p[i].parentNode.insertBefore(s, p[i].nextSibling);
-		// latexonline
+		// texlive.net
 		var r = document.createElement("button");
 		r.innerText=lltexts["TeXLive.net"];
 		r.setAttribute("class","llbutton");
@@ -252,7 +252,7 @@ function defaultengine(t) {
 	    return "xelatex";
 	} else if (t.indexOf("pstricks") !==-1) {
 	    return "latex";
-	}
+	} else return "pdflatex";
 }
 
 function latexcgi(nd) {
