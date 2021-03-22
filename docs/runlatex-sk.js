@@ -25,6 +25,7 @@ runlatex.editorlines=40;
 runlatex.adddefaultpreamble=true;
 runlatex.adddefaultengine=true;
 runlatex.usecaptions=true;
+runlatex.minfragmentlines=3;
 
 // debug by using https://httpbin.org/post
 // set to null to omit from interface
@@ -71,8 +72,9 @@ function llexamples() {
 	// class=noedit on pre or {: .class :} after closing ``` in markdown
 	if(!pretext.match(noeditregex) && !p[i].classList.contains('noedit')) {
 	    if((runlatex.adddefaultpreamble && pretext.match(norunregex)) ||
-	       (!runlatex.adddefaultpreamble &&  p[i].textContent.indexOf("\\documentclass") == -1 && !pretext.match(engineregex)) ||
-	       p[i].classList.contains('norun')) {
+	       (!runlatex.adddefaultpreamble && pretext.indexOf("\\documentclass") == -1 && !pretext.match(engineregex)) ||
+	       p[i].classList.contains('norun') ||
+	       ((pretext.match(/\n[^\n]/g) || '').length + 1  < runlatex.minfragmentlines )) {
 		if(pretext.match(norunregex)) {
 		    acemode="ace/mode/text";
 		}

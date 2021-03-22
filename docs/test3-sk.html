@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>fragment tests</title>
+    <meta charset="UTF-8">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.min.js"></script>
+    <style type="text/css" media="screen">
+      .ace_editor {
+	  border: 1px solid lightgray;
+	  margin-bottom: 1px !important;
+	  width: 100%;
+      }
+      div.spacer {
+	  margin-top:16px;
+      }
+    </style>
+    <script src="runlatex.js"></script>
+    <script>
+      runlatex.editorlines=40;
+      runlatex.adddefaultpreamble=true;
+      runlatex.adddefaultengine=true;
+      runlatex.usecaptions=true;
+      runlatex.minfragmentlines=3;
+      
+      runlatex.overleafhost=null;
+
+      runlatex.texts ={
+	  "Open in Overleaf": "Open in Overleaf",
+	  "TeXLive.net":      "run latex",// or "run latex" or whatever
+	  "Delete Output":    "Delete Output",
+	  "Compiling PDF":    "Compiling PDF (??)",
+	  "Added Code":       "Added guessed code",
+	  "End Added Code":   "End guessed code",
+	  "Top Caption":      "Compile!"
+       }
+ </script>
+    <style>
+      body {margin:auto; max-width: 70em;}
+      div.h {background-color: #F5F5FF;margin: .5em 0;}
+      pre {background-color: #EEE;margin:0;padding: .5em;}
+      button.llbutton {background-color:#BBBBFF;}
+    </style>
+    
+  </head>
+  <body>
+
+<h2 id="one-tex-no-nl">one TeX line no trailing newline</h2>
+<div class="h">
+<pre>
+\textbf{some text}</pre>
+</div>
+<pre>textbf{some text}</pre>
+</div>
+
+<h2 id="two-tex-no-nl">two TeX lines no trailing newline</h2>
+<div class="h">
+<pre>
+\fbox{this}    
+\textbf{some text}</pre>
+</div>
+<pre>\fbox{this}    
+\textbf{some text}</pre>
+</div>
+
+<h2 id="three-tex-no-nl">three TeX lines no trailing newline</h2>
+<div class="h">
+<pre>
+  \textit{one}
+  \textbf{some text}
+  \textsf{three}</pre>
+</div>
+<div class="h">
+<pre>  \textit{one}
+  \textbf{some text}
+  \textsf{three}</pre>
+</div>
+
+
+<h2 id="one-tex-nl">one TeX line</h2>
+<div class="h">
+<pre>
+\textbf{some text}
+</pre>
+</div>
+
+<h2 id="two-tex-nl">two TeX lines</h2>
+<div class="h">
+<pre>
+\fbox{this}    
+\textbf{some text}
+</pre>
+</div>
+
+<h2 id="three-tex-nl">three TeX lines</h2>
+<div class="h">
+<pre>
+  \textit{one}
+  \textbf{some text}
+  \textsf{three}
+</pre>
+</div>
+
+</body>
+  
