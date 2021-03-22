@@ -16,14 +16,21 @@
     </style>
     <script src="runlatex-sk.js"></script>
     <script>
-   runlatex.texts ={
-    "Open in Overleaf": "Open in Overleaf",
-    "TeXLive.net":      "TeXLive.net (??)", // or "run latex" or whatever
-    "Delete Output":    "Delete Output (??)",
-    "Compiling PDF":    "Compiling PDF (??)",
-    "Added Code":       "Added snippet code (??)",
-    "End Added Code":   "End snippet code (??)",
-    "Top Caption":      "<b>Code</b>: <i>edit</i> and <span style='color:red'>Compile!</span>"
+      runlatex.editorlines=40;
+      runlatex.adddefaultpreamble=true;
+      runlatex.adddefaultengine=true;
+      runlatex.usecaptions=true;
+
+      runlatex.overleafhost=null;
+
+      runlatex.texts ={
+	  "Open in Overleaf": "Open in Overleaf",
+	  "TeXLive.net":      "run latex", // or "run latex" or whatever
+	  "Delete Output":    "Delete Output",
+	  "Compiling PDF":    "Compiling PDF (??)",
+	  "Added Code":       "Added guessed code",
+	  "End Added Code":   "End guessed code",
+	  "Top Caption":      "<b>Code</b>: <i>edit</i> and <span style='color:red'>Compile!</span>"
        }
     </script>
     <style>

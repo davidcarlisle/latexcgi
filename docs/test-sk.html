@@ -14,17 +14,24 @@
 	  margin-top:16px;
       }
     </style>
-    <script src="runlatex-sk.js"></script>
+    <script src="runlatex.js"></script>
     <script>
-   runlatex.texts ={
-    "Open in Overleaf": "Open in Overleaf",
-    "TeXLive.net":      "TeXLive.net (??)", // or "run latex" or whatever
-    "Delete Output":    "Delete Output (??)",
-    "Compiling PDF":    "Compiling PDF (??)",
-    "Added Code":       "Added snippet code (??)",
-    "End Added Code":   "End snippet code (??)",
-    "Top Caption":      ""
-   }
+      runlatex.editorlines=40;
+      runlatex.adddefaultpreamble=true;
+      runlatex.adddefaultengine=true;
+      runlatex.usecaptions=true;
+
+      runlatex.overleafhost=null;
+      
+      runlatex.texts ={
+	  "Open in Overleaf": "Open in Overleaf",
+	  "TeXLive.net":      "TeXLive.net", /// or "run latex" or whatever
+	  "Delete Output":    "Delete Output",
+	  "Compiling PDF":    "Compiling PDF or HTML",
+	  "Added Code":       "Added code (sk preamble)",
+	  "End Added Code":   "End code (sk preamble)",
+	  "Top Caption":      ""
+      }
     </script>
     <style>
       body {margin:auto; max-width: 70em;}
