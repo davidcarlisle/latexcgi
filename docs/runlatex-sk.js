@@ -5,9 +5,10 @@
 // set here but local versions can be redefined after
 // loading this file
 
-var preincludes={};
+// runlatex configuration object
+var runlatex={}
 
-var lltexts ={
+runlatex.texts ={
     "Open in Overleaf": "Open in Overleaf",
     "TeXLive.net":      "LaTeX Online", // or "run latex" or whatever
     "Delete Output":    "Delete Output",
@@ -20,15 +21,20 @@ var lltexts ={
     "Top Caption":      "Edit and run this example:"
 }
 
-var lleditorlines=40;
-var lladddefaultpreamble=true;
-var lladddefaultengine=true;
-var llusecaptions=true;
+runlatex.editorlines=40;
+runlatex.adddefaultpreamble=true;
+runlatex.adddefaultengine=true;
+runlatex.usecaptions=true;
 
 // debug by using https://httpbin.org/post
 // set to null to omit from interface
-var latexcgihost="https://texlive.net/cgi-bin/latexcgi";
-var overleafhost=null; // "https://www.overleaf.com/docs";
+runlatex.latexcgihost="https://texlive.net/cgi-bin/latexcgi";
+runlatex.overleafhost=null; // "https://www.overleaf.com/docs";
+
+// per page setup
+runlatex.preincludes={};
+
+// end of configuration
 
 var editors=[];
 
@@ -64,53 +70,55 @@ function llexamples() {
 	var pretext=p[i].innerText;
 	// class=noedit on pre or {: .class :} after closing ``` in markdown
 	if(!pretext.match(noeditregex) && !p[i].classList.contains('noedit')) {
-	    if((lladddefaultpreamble && pretext.match(norunregex)) ||
-	       (!lladddefaultpreamble &&  p[i].textContent.indexOf("\\documentclass") == -1 && !pretext.match(engineregex)) ||
+	    if((runlatex.adddefaultpreamble && pretext.match(norunregex)) ||
+	       (!runlatex.adddefaultpreamble &&  p[i].textContent.indexOf("\\documentclass") == -1 && !pretext.match(engineregex)) ||
 	       p[i].classList.contains('norun')) {
 		if(pretext.match(norunregex)) {
 		    acemode="ace/mode/text";
 		}
 	    } else {
 		// caption
-		if(llusecaptions && lltexts["Top Caption"]) {
+		if(runlatex.usecaptions && runlatex.texts["Top Caption"]) {
 		    var cpt = document.createElement("div");
 		    cpt.setAttribute("class",'lltopcaption');
-		    cpt.innerHTML=lltexts["Top Caption"];
+		    cpt.innerHTML=runlatex.texts["Top Caption"];
 		    p[i].parentNode.insertBefore(cpt, p[i]);
 		}
 		// space
 		var s = document.createElement("div");
 		s.setAttribute("class",'ace-spacer');
 		p[i].parentNode.insertBefore(s, p[i].nextSibling);
-		// texlive.net
-		var r = document.createElement("button");
-		r.innerText=lltexts["TeXLive.net"];
-		r.setAttribute("class","llbutton");
-		r.setAttribute("onclick",'latexcgi("pre' + i + '")');
-		r.setAttribute("id","lo-pre" + i);
-		p[i].parentNode.insertBefore(r, p[i].nextSibling);
-		if(overleafhost){
+		if(runlatex.latexcgihost){
+		    // texlive.net
+		    var r = document.createElement("button");
+		    r.innerText=runlatex.texts["TeXLive.net"];
+		    r.setAttribute("class","llbutton");
+		    r.setAttribute("onclick",'latexcgi("pre' + i + '")');
+		    r.setAttribute("id","lo-pre" + i);
+		    p[i].parentNode.insertBefore(r, p[i].nextSibling);
+		    var f2=document.createElement("span");
+		    f2.innerHTML="<form style=\"display:none\" id=\"form2-pre" + i +
+			"\" name=\"form2-pre" + i +
+			"\" enctype=\"multipart/form-data\" action=\"" +
+			runlatex.latexcgihost +
+			"\" method=\"post\" target=\"pre" + i +
+			"ifr\"></form>";
+		    p[i].parentNode.insertBefore(f2, p[i].nextSibling);
+		}
+		if(runlatex.overleafhost){
 		    // overleaf
 		    var o = document.createElement("button");
-		    o.innerText=lltexts["Open in Overleaf"];
+		    o.innerText=runlatex.texts["Open in Overleaf"];
 		    o.setAttribute("class","llbutton");
 		    o.setAttribute("onclick",'openinoverleaf("pre' + i + '")');
 		    p[i].parentNode.insertBefore(o, p[i].nextSibling);
 		    var f=document.createElement("span");
 		    f.innerHTML="<form style=\"display:none\" id=\"form-pre" + i +
 			"\" action=\"" +
-			overleafhost +
+			runlatex.overleafhost +
 			"\" method=\"post\" target=\"_blank\"></form>";
 		    p[i].parentNode.insertBefore(f, p[i].nextSibling);
 		}
-		var f2=document.createElement("span");
-		f2.innerHTML="<form style=\"display:none\" id=\"form2-pre" + i +
-		    "\" name=\"form2-pre" + i +
-		    "\" enctype=\"multipart/form-data\" action=\"" +
-		    latexcgihost +
-		    "\" method=\"post\" target=\"pre" + i +
-		    "ifr\"></form>";
-		p[i].parentNode.insertBefore(f2, p[i].nextSibling);
 	    }
 	    p[i].textContent=pretext.replace(/\s+$/,'');
 	    editor = ace.edit(p[i]);
@@ -118,7 +126,7 @@ function llexamples() {
 	    editor.setTheme("ace/theme/textmate");
 	    editor.getSession().setMode(acemode);
 	    editor.setOption("minLines",1);
-	    editor.setOption("maxLines",lleditorlines);
+	    editor.setOption("maxLines",runlatex.editorlines);
 	    editor.setShowPrintMargin(false);
 	    editor.resize();
 	    editors["pre" + i]=editor;
@@ -159,7 +167,7 @@ function openinoverleaf(nd) {
 
     var engv="pdflatex";
     var eng=t.match(engineregex);
-    if(lladddefaultpreamble) {
+    if(runlatex.adddefaultpreamble) {
 	if(t.indexOf("\\documentclass") == -1 && ( eng == null)) {
 	    t=generatepreamble(t,editors[nd]);
 	}
@@ -173,9 +181,9 @@ function openinoverleaf(nd) {
     }
     addinput(fm,"encoded_snip[]","\n" + t);
     addinput(fm,"snip_name[]","document.tex");
-    if(typeof(preincludes) == "object") {
-	if(typeof(preincludes[nd]) == "object") {
-	    var incl=preincludes[nd];
+    if(typeof(runlatex.preincludes) == "object") {
+	if(typeof(runlatex.preincludes[nd]) == "object") {
+	    var incl=runlatex.preincludes[nd];
 	    for(prop in incl) {
 		if(editors[prop]==null) {
 		    addinput(fm,"encoded_snip[]",document.getElementById(prop).textContent);
@@ -231,19 +239,19 @@ function deleteoutput(nd){
 function generatepreamble(t,e) {
     e.navigateFileStart();
     if(t.match(/koma|KOMA|addsec|\\scr|scrheadings/)){
-        e.insert("\n% " + lltexts["Added Code"] + "\n\\documentclass{scrartcl}\n");
+        e.insert("\n% " + runlatex.texts["Added Code"] + "\n\\documentclass{scrartcl}\n");
     } else {
-	e.insert("\n% " + lltexts["Added Code"] + "\n\\documentclass{article}\n");
+	e.insert("\n% " + runlatex.texts["Added Code"] + "\n\\documentclass{article}\n");
     }
     for(var i=0;i<packageregex.length; i++){
 	if(t.match(packageregex[i][0])) e.insert(packageregex[i][1]);
     }
-    e.insert("\n\\begin{document}\n% "  + lltexts["End Added Code"] + "\n\n");
+    e.insert("\n\\begin{document}\n% "  + runlatex.texts["End Added Code"] + "\n\n");
     e.navigateFileEnd();
     e.insert("\n\n% " +
-	     lltexts["Added Code"] +
+	     runlatex.texts["Added Code"] +
 	     "\n\\end{document}\n% "  +
-	     lltexts["End Added Code"] +
+	     runlatex.texts["End Added Code"] +
 	     "\n");
     return e.getValue();
 }
@@ -265,16 +273,16 @@ function latexcgi(nd) {
     var t = editors[nd].getValue();
     var engv="pdflatex";
     var eng=t.match(engineregex);
-    if(lladddefaultpreamble) {
+    if(runlatex.adddefaultpreamble) {
 	if(t.indexOf("\\documentclass") == -1 && ( eng == null)) {
 	    t=generatepreamble(t,editors[nd]);
 	}
     }
     addtextarea(fm,"filecontents[]",t);
     addinputnoenc(fm,"filename[]","document.tex");
-    if(typeof(preincludes) == "object") {
-	if(typeof(preincludes[nd]) == "object") {
-	    var incl=preincludes[nd];
+    if(typeof(runlatex.preincludes) == "object") {
+	if(typeof(runlatex.preincludes[nd]) == "object") {
+	    var incl=runlatex.preincludes[nd];
 	    for(prop in incl) {
 		if(editors[prop]==null) {
 		    addtextarea(fm,"filecontents[]",document.getElementById(prop).textContent);
@@ -287,7 +295,7 @@ function latexcgi(nd) {
     }
     if(eng != null) {
 	engv=eng[1].toLowerCase();
-    } else if(lladddefaultengine) {
+    } else if(runlatex.adddefaultengine) {
 	engv=defaultengine(t);
     }
     addinput(fm,"engine",engv);
@@ -315,7 +323,7 @@ function latexcgi(nd) {
 	ifr.setAttribute("name",nd + "ifr");
 	p.parentNode.insertBefore(ifr, b.nextSibling);
 	d=document.createElement("button");
-	d.innerText=lltexts["Delete Output"];
+	d.innerText=runlatex.texts["Delete Output"];
         d.setAttribute("class","llbutton");
 	d.setAttribute("id","del-" + nd);
 	d.setAttribute("onclick",'deleteoutput("' + nd + '")');
@@ -323,7 +331,7 @@ function latexcgi(nd) {
     }
     var  loading=document.createElement("div");
     loading.id=nd+"load";
-    loading.textContent=lltexts["Compiling PDF"] + " . . .";
+    loading.textContent=runlatex.texts["Compiling PDF"] + " . . .";
     p.parentNode.insertBefore(loading, ifr);
     // scroll only if really close to the bottom
     var rect = b.getBoundingClientRect();
