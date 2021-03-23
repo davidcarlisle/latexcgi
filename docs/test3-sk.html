@@ -44,61 +44,59 @@
   </head>
   <body>
 
-<h2 id="one-tex-no-nl">one TeX line no trailing newline</h2>
+<h2 id="one-tex-no-nl">one TeX line</h2>
 <div class="h">
-<pre>
-\textbf{some text}</pre>
-</div>
 <pre>\textbf{some text}</pre>
 </div>
+<div class="h">
+<pre>
+\textbf{nl some text}</pre>
+</div>
+<div class="h">
+<pre>
+\textbf{nl some text nl}
+</pre>
+</div>
 
-<h2 id="two-tex-no-nl">two TeX lines no trailing newline</h2>
+<h2 id="two-tex-no-nl">two TeX lines</h2>
+<div class="h">
+<pre>\fbox{this}
+\textbf{some text}</pre>
+</div>
 <div class="h">
 <pre>
 \fbox{this}    
-\textbf{some text}</pre>
+\textbf{nl some text}</pre>
 </div>
-<pre>\fbox{this}    
-\textbf{some text}</pre>
-</div>
-
-<h2 id="three-tex-no-nl">three TeX lines no trailing newline</h2>
 <div class="h">
 <pre>
-  \textit{one}
-  \textbf{some text}
-  \textsf{three}</pre>
+\fbox{this}    
+\textbf{nl some text nl}
+</pre>
 </div>
+
+<h2 id="three-tex-no-nl">three TeX lines</h2>
 <div class="h">
 <pre>  \textit{one}
   \textbf{some text}
   \textsf{three}</pre>
 </div>
-
-
-<h2 id="one-tex-nl">one TeX line</h2>
-<div class="h">
-<pre>
-\textbf{some text}
-</pre>
-</div>
-
-<h2 id="two-tex-nl">two TeX lines</h2>
-<div class="h">
-<pre>
-\fbox{this}    
-\textbf{some text}
-</pre>
-</div>
-
-<h2 id="three-tex-nl">three TeX lines</h2>
 <div class="h">
 <pre>
   \textit{one}
-  \textbf{some text}
+  \textbf{nl some text}
+  \textsf{three}</pre>
+</div>
+<div class="h">
+<pre>
+  \textit{one}
+  \textbf{nl some text nl}
   \textsf{three}
 </pre>
 </div>
 
+
 </body>
+</html>
+
   

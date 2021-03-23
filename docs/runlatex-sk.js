@@ -69,12 +69,12 @@ function llexamples() {
 	acemode="ace/mode/latex";
 	p[i].setAttribute("id","pre" + i);
 	var pretext=p[i].innerText;
-	// class=noedit on pre or {: .class :} after closing ``` in markdown
 	if(!pretext.match(noeditregex) && !p[i].classList.contains('noedit')) {
-	    if((runlatex.adddefaultpreamble && pretext.match(norunregex)) ||
-	       (!runlatex.adddefaultpreamble && pretext.indexOf("\\documentclass") == -1 && !pretext.match(engineregex)) ||
-	       p[i].classList.contains('norun') ||
-	       ((pretext.match(/\n[^\n]/g) || '').length + 1  < runlatex.minrunlines )) {
+	    if((runlatex.adddefaultpreamble &&
+		(pretext.match(norunregex) || (pretext.match(/\n[^\n]/g) || '').length + 1  < runlatex.minrunlines )) ||
+	       (!runlatex.adddefaultpreamble &&
+		pretext.indexOf("\\documentclass") == -1 && !pretext.match(engineregex)) ||
+	       p[i].classList.contains('norun')) {
 		if(pretext.match(norunregex)) {
 		    acemode="ace/mode/text";
 		}
