@@ -40,7 +40,7 @@ The document must be supplied by an HTTP POST multipart/form-data request.
 Any other HTTP request is rejected. The allowed form fields are defined below.
 If the form contains unexpected fields, the whole submission is rejected.
 
-## Form Fields
+### Form Fields
 
  * engine
  
@@ -145,16 +145,24 @@ The known keywords are
  
 ### No Edit Option
 
-If an HTML `<pre>` element or its parent `<div>` has the CSS `noedit`
+If an HTML `<pre>` element has the CSS `noedit`
 class then it is not processed by this JavaScript and the original
 `<pre>` is displayed. (In GitHub pages  the markup `{: .noedit :}`
 may be placed after the code block to add this class.) 
 
 ### No TeX compilation
 
-If the code block does not contain either `\documentclass` or a `%
+If an HTML `<pre>` element has the CSS `norun` class
+the buttons to submit the example is not added.
+
+By default, when `adddefaultpreamble` parameter is false
+if the code block does not contain either `\documentclass` or a `%
 !TEX` comment that specifies a TeX engine, no buttons are added to
 submit the document to an online TeX system.
+
+If the `adddefaultpreamble` parameter is true, then the buttons are
+added if the example has more than `minrunlines`, and the first line
+starts with `%` or contains a `\ `. 
 
 ### Multifile Projects.
 
