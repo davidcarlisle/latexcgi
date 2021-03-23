@@ -17,10 +17,12 @@ It is written as a perl script accepting the post requests via cgi-bin access in
 * [CJK Font test examples](test3).
 * [plain tex and non interactive examples](test4).
 * [Experimental context example](testc)
+
 ### Files with parameter settings similar to latex.org or texwelt.de.
-* [Snippet/Document Fragment examples (runlatex-sk)](test-sk)
-* [Snippet/Document Fragment test cases (runlatex-sk)](test2-sk)
+* [Snippet/Document Fragment examples](test-sk)
+* [Snippet/Document Fragment test cases](test2-sk)
 * [minrunlines feature test cases](test3-sk)
+
 ### Files testing HTML output.
 * [make4ht HTML examples](test-make4ht)
 
