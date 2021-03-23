@@ -11,14 +11,18 @@ It is written as a perl script accepting the post requests via cgi-bin access in
 
 ## Example Documents
 
+### Files with default `runlatex` settings, as for learnlatex.org
 * [Basic tests](test).
 * [Larger test examples](test2).
 * [CJK Font test examples](test3).
 * [plain tex and non interactive examples](test4).
 * [Experimental context example](testc)
+### Files with parameter settings similar to latex.org or texwelt.de.
 * [Snippet/Document Fragment examples (runlatex-sk)](test-sk)
 * [Snippet/Document Fragment test cases (runlatex-sk)](test2-sk)
-* [make4ht HTML examples (runlatex-sk)](test-make4ht)
+* [minrunlines feature test cases](test3-sk)
+### Files testing HTML output.
+* [make4ht HTML examples](test-make4ht)
 
 ### Tutorial site using this server (runlatex.js)
 * [The learnlatex.org tutorial site](https://www.learnlatex.org).
@@ -159,26 +163,57 @@ multi-file submission to either texlive.net or Overleaf.
 
 See [LearnLaTeX lesson 13](https://www.learnlatex.org/en/lesson-13).
 
-## The TeXWelt Comment Interface (runlatex-sk.js)
-A modified version of the  `runlatex`  JavaScript,
-[maintained at this site](https://github.com/davidcarlisle/latexcgi/blob/main/docs/runlatex-sk.js)
+### runlatex Parameters
 
-Compared to `runlatex.js`, `runlatex-sk.js` makes some adaptations so
-that it is more suitable for a forum context where there is no access
-to underlying markdown for each page, and where the code blocks are
-entered by end users in questions and answers and so can not be
-pre-validated in the style of a curated set of tutorial examples.
+A page loading `runlatex.js` can set several parameters as fields in
+the `runlatex` configuration. Many of these parameters were added
+to allow customisation for use in forums such as latex.org or
+texwelt.de managed by Stefan Kottwitz. Unlike the situation with
+curated examples in a tutorial such as learnlatex, forums often have
+incomplete or erroneous examples, and a slightly different interaction
+is required.
 
-* Code relating to other servers (eg Overleaf) and to multi-file
-  submission is removed.
 
-* If the `% !TEX ...` comment is not used to specify the engine, then
-  the engine parameter is defaulted depending on the content of the
-  example, currently use of `fontspec` defaulting to `xelatex` and
-  use of `pstricks` causing the  engine to default to
-  `latex`/`dvips/``ps2pdf`.
-  
-* If neither `\documentclass` nor a `% !TeX` engine comment appears in
+## The `runlatex` configuration object.
+
+* `runlatex.texts`
+
+   An array of strings allowing site customisation and localisation.
+   
+   ```
+   runlatex.texts ={
+    "Open in Overleaf": "Overleaf button text",
+    "TeXLive.net":      "texlive.net button text",
+    "Delete Output":    "Delete Outpu button textt",
+    "Compiling PDF":    "Compiling PDF span notiocation of submission",
+    // The following not used on learnlatex.org
+    "edit":             "edit button text",
+    "copy":             "copy button text",
+    "Added Code":       "Added code comment added to inserted code",
+    "End Added Code":   "End Added code comment added to inserted code",
+    "Top Caption":      "inline HTML caption added above the example:"
+     }
+	 ```
+
+* `runlatex.editorlines=100;`
+
+   The number of lines in the Editor.
+   
+*  `runlatex.adddefaultpreamble=false;`
+
+    If set true, a default preamble (using packages based on the
+	content fo the fragment) will be inserted if the document has no
+	`\documentclass`
+	
+* `runlatex.adddefaultengine=false;`
+
+   By default, runlatex will submit the example as `pdflatex` unless
+   there is a `% !TeX luatex` or similar comment. If this is set true
+   then the default engine is chosen based on commands or packages
+   used in the content.
+   
+
+  If neither `\documentclass` nor a `% !TeX` engine comment appears in
   the example then a default preamble is constructed (based on the
   commands seen in the example) and added to the code block via the
   ACE editor interface.  This preamble may not be completely correct
@@ -186,7 +221,21 @@ pre-validated in the style of a curated set of tutorial examples.
   save typing boiler plate preambles in the online forum editor. If
   the preamble is edited and re-submitted to the texlive.net server,
   the boiler plate preamble is not re-added.
+   
+* `runlatex.usecaptions=false;`
 
+   If this is true, and `runlatex.texts['Top Caption']` is non empty
+   the caption will be inserted above each example.
+
+
+* `runlatex.minrunlines=0;`
+
+   If `adddefaultpreamble` is true, interaction is not added if there
+   are fewer than this number of lines. So for example setting this to
+   3 avoids adding a run latex button on 1 or 2 line fragments.
+
+
+  
 ### Code blocks without TeX submission
 
 * Two special `!TEX` comments may be used, which must be on the first
@@ -204,10 +253,6 @@ pre-validated in the style of a curated set of tutorial examples.
   log files, shell scripts etc may be inserted without being
   interpreted as LaTeX.
   
-### Captions
-
-* Optionally a caption may be added above the editor in the cases that
-  a compile button is added below.
 
 
 ## Processing Pipeline
