@@ -25,7 +25,7 @@ runlatex.editorlines=100;
 runlatex.adddefaultpreamble=false;
 runlatex.adddefaultengine=false;
 runlatex.usecaptions=false;
-runlatex.minfragmentlines=0;
+runlatex.minrunlines=0;
 
 // debug by using https://httpbin.org/post
 // set to null to omit from interface
@@ -74,7 +74,7 @@ function llexamples() {
 	    if((runlatex.adddefaultpreamble && pretext.match(norunregex)) ||
 	       (!runlatex.adddefaultpreamble && pretext.indexOf("\\documentclass") == -1 && !pretext.match(engineregex)) ||
 	       p[i].classList.contains('norun') ||
-	       ((pretext.match(/\n[^\n]/g) || '').length + 1  < runlatex.minfragmentlines )) {
+	       ((pretext.match(/\n[^\n]/g) || '').length + 1  < runlatex.minrunlines )) {
 		if(pretext.match(norunregex)) {
 		    acemode="ace/mode/text";
 		}
