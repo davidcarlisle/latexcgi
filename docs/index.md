@@ -26,10 +26,10 @@ It is written as a perl script accepting the post requests via cgi-bin access in
 ### Files testing HTML output.
 * [make4ht HTML examples](test-make4ht)
 
-### Tutorial site using this server (runlatex.js)
+## Tutorial site using this server (runlatex.js)
 * [The learnlatex.org tutorial site](https://www.learnlatex.org).
 
-### LaTeX Forums using this server (runlatex-sk.js)
+## LaTeX Forums using this server (runlatex-sk.js)
 * [LaTeX Community Forum](https://latex.org/forum/)
 * [TeXWelt German Language TeX Forum](https://texwelt.de/)
 
@@ -165,7 +165,8 @@ multi-file submission to either texlive.net or Overleaf.
 
 See [LearnLaTeX lesson 13](https://www.learnlatex.org/en/lesson-13).
 
-### runlatex Parameters
+
+## runlatex Parameters
 
 A page loading `runlatex.js` can set several parameters as fields in
 the `runlatex` configuration. Many of these parameters were added
@@ -176,7 +177,7 @@ incomplete or erroneous examples, and a slightly different interaction
 is required.
 
 
-## The `runlatex` configuration object.
+### The `runlatex` configuration object.
 
 * `runlatex.texts`
 
@@ -238,7 +239,7 @@ is required.
 
 
   
-### Code blocks without TeX submission
+## Code blocks without TeX submission
 
 * Two special `!TEX` comments may be used, which must be on the first
   line. The comment marker for these does not need to be `%` it can be
