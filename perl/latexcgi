@@ -57,8 +57,9 @@ sub parseform
                 if(/^\r\n$/) {
                     $skipblank=0;
                     $getvalue=1;
-                } else {
-                    $errstr="Unexpected Form Structure";
+                } elsif(/^Content-Type: /){
+		    } else {
+                    $errstr="Unexpected Form Structure " . $_;
                     last;
                 }
             } elsif ($getvalue){
@@ -92,10 +93,6 @@ sub parseform
                 }
             }
             if (/content-disposition:\s*form-data;\s*name=\"([^\"]*)\"/i) {
-                if (/filename=\"([^\"]*)\"/i) {
-                    $errstr="File Upload not supported";
-                    last;
-                }
                 $name = $1;
                 $value = '';
                 if($name eq "filecontents[]") {
@@ -129,11 +126,11 @@ sub parseform
             rename($tmpdir . "/f" . $i, $tmpdir . "/" . $n);
         }
     } else {
-        $errstr = "Bad Form: mismatched filenames";
+        $errstr .= " Bad Form: mismatched filenames";
     }
 
     if($document==0) {
-        $errstr = "Bad Form: no main document";
+        $errstr .= " Bad Form: no main document";
     }
 
     $errstr = "Unknown Engine $FORM{'engine'}" unless  ($FORM{'engine'} =~ /^((lua|pdf|xe|up|p)?latex(-dev)?|context|(lua|pdf|xe|up|p)?tex|make4ht)$/);
