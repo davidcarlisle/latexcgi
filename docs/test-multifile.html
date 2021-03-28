@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>multifile projects</title>
+    <meta charset="UTF-8">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.min.js"></script>
+    <style type="text/css" media="screen">
+      .ace_editor {
+	  border: 1px solid lightgray;
+	  margin-bottom: 1px !important;
+	  width: 100%;
+      }
+      div.spacer {
+	  margin-top:16px;
+      }
+    </style>
+    <script src="runlatex.js"></script>
+    <script>
+      runlatex.editorlines=40;
+      runlatex.adddefaultpreamble=true;
+      runlatex.adddefaultengine=true;
+      runlatex.usecaptions=true;
+
+      runlatex.overleafURI=null;
+      
+      runlatex.texts ={
+	  "Open in Overleaf": "",
+	  "TeXLive.net":      "TeXLive.net", 
+	  "Delete Output":    "Delete Output",
+	  "Compiling PDF":    "Compiling PDF or HTML",
+	  "Added Code":       "Added code",
+	  "End Added Code":   "End code",
+	  "Top Caption":      ""
+      }
+      runlatex.preincludes = {
+	  "pre0" : {
+	      "pre1": "matrix.dat"
+	  }
+      }
+    </script>
+    <style>
+      body {margin:auto; max-width: 70em;}
+      div.h {background-color: #F5F5FF;margin: .5em 0;}
+      pre {background-color: #EEE;margin:0;padding: .5em;}
+    </style>
+    
+  </head>
+  <body>
+
+
+<div class="h">
+<pre>
+\documentclass{article}
+\usepackage{pgfplotstable}
+\usepackage{amsmath}
+
+\begin{document}
+
+\pgfplotstableread[header=has colnames]{matrix.dat}\mytable
+\pgfplotstabletypeset[
+  begin table=\begin{pmatrix},
+  end table=\end{pmatrix},
+  skip coltypes,
+  write to macro=\mymatrix,
+  typeset=false
+]{\mytable}
+$\mymatrix$
+
+\end{document}
+</pre>
+</div>
+
+
+<pre class="toggle" style="display:none">
+11 12 13 14  
+21 22 23 24
+31 32 33 34
+</pre>
+
+<p>An example using a hidden data file. Use the optional button below to see the data.</p>
+<script>
+  function togglehidden () {
+      var hlist=document.querySelectorAll("pre.toggle");
+      for (var i=0;i<hlist.length;i++){
+	  if(hlist[i].style.display=="block") {
+	    hlist[i].style.display="none";
+           } else  {
+            hlist[i].style.display="block";
+           }
+         }
+  }
+ </script>
+ 
+<button onclick="togglehidden()">hide/show data</button>
+</body>
+  
