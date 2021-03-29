@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>run tex snippet</title>
+    <meta charset="UTF-8">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.min.js"></script>
+    <style type="text/css" media="screen">
+      .ace_editor {
+	  border: 1px solid lightgray;
+	  margin-bottom: 1px !important;
+	  width: 100%;
+      }
+      div.spacer {
+	  margin-top:16px;
+      }
+    </style>
+    <script src="runlatex.js"></script>
+    <script>
+      runlatex.editorlines=40;
+      runlatex.adddefaultpreamble=true;
+      runlatex.adddefaultengine=true;
+
+      runlatex.overleafURI=null;
+      
+      runlatex.texts ={
+	  "Open in Overleaf": "",
+	  "TeXLive.net":      "TeXLive.net", 
+	  "Delete Output":    "Delete Output",
+	  "Compiling PDF":    "Compiling PDF or HTML",
+	  "Added Code":       "",
+	  "End Added Code":   "",
+	  "Top Caption":      ""
+      }
+  function updateURL () {
+      var t =  editors["pre0"].getValue();
+      var newl="?" + encodeURI(t);
+      // copy to clipboard
+      var nn=document.createElement("textarea");
+      nn.value=document.location.protocol + "//" + document.location.host + document.location.pathname + newl;
+      document.body.appendChild(nn);
+      nn.select();
+      document.execCommand("copy");
+      document.body.removeChild(nn);
+      // update
+      if(newl != document.location.search){
+	  document.location.search = "?" + encodeURI(t);
+      }
+  }
+
+  function fillForm() {
+  if(document.location.search != "") {
+      editors["pre0"].setValue(decodeURI(document.location.search.substring(1)),0);
+      editors["pre0"].clearSelection();
+      latexcgi("pre0");
+  }
+  }
+
+  window.addEventListener('load', fillForm, false);
+
+
+    </script>
+    <style>
+      body {margin:auto; max-width: 70em;}
+      div.h {background-color: #F5F5FF;margin: .5em 0;}
+      pre {background-color: #EEE;margin:0;padding: .5em;}
+    </style>
+    
+  </head>
+  <body>
+
+
+<button onclick="updateURL()">Update/Copy URL</button>
+
+<div class="h">
+<pre id="pre0">\documentclass{article}
+\usepackage{amsmath}
+\begin{document}
+x
+\end{document}</pre>
+</div>
+</body>
+  

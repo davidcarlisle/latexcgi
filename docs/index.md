@@ -27,6 +27,9 @@ It is written as a perl script accepting the post requests via cgi-bin access in
 #### Files testing HTML output.
 * [make4ht HTML examples](test-make4ht)
 
+#### Generate URI corresponding to examples.
+* [run examples and generate URL](run)
+
 ## Tutorial site using this server
 * [The learnlatex.org tutorial site](https://www.learnlatex.org).
 
@@ -229,7 +232,7 @@ is required.
   If neither `\documentclass` nor a `% !TeX` engine comment appears in
   the example then a default preamble is constructed (based on the
   commands seen in the example) and added to the code block via the
-  ACE editor interface.  This preamble may not be completely correct
+p  ACE editor interface.  This preamble may not be completely correct
   as needed to run the example but is a good "first guess" and will
   save typing boiler plate preambles in the online forum editor. If
   the preamble is edited and re-submitted to the texlive.net server,
