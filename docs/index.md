@@ -52,7 +52,7 @@ If the form contains unexpected fields, the whole submission is rejected.
    `lualatex`, `pdflatex`, `xelatex`, `uplatex`, `platex`, `latex`,  
    `lualatex-dev`, `pdflatex-dev`, `xelatex-dev`, `uplatex-dev`, `platex-dev`, `latex-dev`,  
    `luatex`, `pdftex`, `xetex`, `uptex`, `ptex`, `tex`,  
-   `context`, `make4ht`.
+   `context`.
    
    The default is `pdflatex`.
  * bibcmd
@@ -74,7 +74,7 @@ If the form contains unexpected fields, the whole submission is rejected.
 
  * return
 
-   This field is optional but if supplied must be one or `pdfjs`, `pdf` or `log`.
+   This field is optional but if supplied must be one or `pdfjs`, `pdf`, `log` or `make4ht`.
 
    The default is `pdfjs` meaning the PDF.js is used to render the PDF.
 
@@ -82,8 +82,11 @@ If the form contains unexpected fields, the whole submission is rejected.
 
    `log` specifies that the log file should be returned even in non-error cases.
    
-   If the specified engine does not return PDF (currently just
-   `make4ht`) `pdfjs` and `pdf` return values are ignored.
+    `make4ht` specifies that make4ht will be used and HTML
+    returned. If the `engine` is specified as `xelatex` or `lualatex`
+    than the `-x` or `-l` arguments respectively are passed to
+    `make4ht` so that it uses an appropriate TeX engine.
+   
    
  * makeindex[]
  
@@ -120,7 +123,7 @@ The known keywords are
 * `lualatex`, `pdflatex`, `xelatex`, `uplatex`, `platex`, `latex`,
   `lualatex-dev`, `pdflatex-dev`, `xelatex-dev`, `uplatex-dev`,
   `platex-dev`, `latex-dev`, `luatex`, `pdftex`, `xetex`,
-  `uptex`, `ptex`, `tex`, `context`, `make4ht`.
+  `uptex`, `ptex`, `tex`, `context`.
 
    The `engine` parameter is set to the specified keyword (lowercased).
  
@@ -132,7 +135,7 @@ The known keywords are
   
    If this is not used the `bibcmd` parameter is not set and bibtex or biber may be chosen automatically as described above.
 
-* `pdfjs`, `pdf`, `log`
+* `pdfjs`, `pdf`, `log`, `make4ht`
 
    The `return` parameter is set to the specfied keyword (lowercased).
 
