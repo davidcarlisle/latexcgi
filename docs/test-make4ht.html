@@ -22,7 +22,7 @@
       runlatex.usecaptions=true;
 
       runlatex.overleafURI=null;
-      runlatex.latexcgiURI="https://texlive.net/cgi-bin/latexcgi";
+
       runlatex.texts ={
 	  "Open in Overleaf": "Open in Overleaf",
 	  "TeXLive.net":      "TeXLive.net", /// or "run latex" or whatever
@@ -130,7 +130,25 @@ ABC → αβγ → {\cjkfont 你好}
 </pre>
 </div>
 
-<h2 id="luatex">LuaLaTeX</h2>
+<h2 id="luatex">LuaLaTeX fonts</h2>
+<div class="h">
+<pre>
+% !TeX make4ht
+% !TEX lualatex
+\documentclass{article}
+\usepackage{fontspec}
+\setmainfont{texgyretermes-regular.otf}
+\newfontfamily\cjkfont{FandolSong-Regular.otf}
+\begin{document}
+
+ABC → αβγ → {\cjkfont 你好}
+
+\end{document}
+</pre>
+</div>
+
+<h2 id="luatex">LuaLaTeX (Lua)</h2>
+
 <div class="h">
 <pre>
 % !TeX make4ht
