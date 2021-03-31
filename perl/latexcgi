@@ -133,7 +133,7 @@ sub parseform
         $errstr .= " Bad Form: no main document";
     }
 
-    $errstr = "Unknown Engine $FORM{'engine'}" unless  ($FORM{'engine'} =~ /^((lua|pdf|xe|up|p)?latex(-dev)?|context|(lua|pdf|xe|up|p)?tex|make4ht)$/);
+    $errstr = "Unknown Engine $FORM{'engine'}" unless  ($FORM{'engine'} =~ /^((lua|pdf|xe|up|p)?latex(-dev)?|context|(lua|pdf|xe|up|p)?tex)$/);
     
     if ($errstr ne "") {
         print "Content-Type: text/plain; charset=utf-8\n\n";
@@ -165,8 +165,20 @@ sub dolatex () {
     chdir($tmpdir);
     $ENV{'PATH'}="/usr/local/texlive/2020/bin/x86_64-linux:" . $ENV{'PATH'};
 
+    my $engine=$FORM{'engine'};
+    my $document="document";
+    if($FORM{'return'} eq "make4ht"){
+	if($engine eq "xelatex") {
+	    $document="-x document";
+	} elsif($engine eq "lualatex") {
+	    $document="-l document";
+	}
+	$engine="make4ht";
+    }
 
-    system("/usr/local/bin/run1", "$FORM{'engine'}", "document");
+
+
+    system("/usr/local/bin/run1", "$engine", "$document");
 
     if($?==0) {
         open(FHLOG, '<', "document.log") or die $!;
@@ -208,26 +220,26 @@ sub dolatex () {
         }
 
         if($rerun==1 && $?==0) {
-            system("/usr/local/bin/run1", "$FORM{'engine'}", "document");
+            system("/usr/local/bin/run1", "$engine", "$document");
             if($?==0){
-                system("/usr/local/bin/run1", "$FORM{'engine'}", "document");
+                system("/usr/local/bin/run1", "$engine", "$document");
             }
         }
     }
 
     
-    if($?==0 && $FORM{'engine'}=~/^u?p(la)?tex/){
+    if($?==0 && $engine=~/^u?p(la)?tex/){
         system("/usr/local/bin/run1", "dvipdfmx", "document");
     }
 
-    if($?==0 && $FORM{'engine'}=~/^(la)?tex(-dev)?/){
+    if($?==0 && $engine=~/^(la)?tex(-dev)?/){
         system("/usr/local/bin/run1", "dvips", "document");
         system("/usr/local/bin/run1", "ps2pdf", "document.ps");
     }
 
     my $tmpstr = sprintf("_%04X_$$", rand(0xffff));
     
-    if($?==0 && ($FORM{'engine'} eq "make4ht")) {
+    if($?==0 && ($FORM{'return'} eq "make4ht")) {
         mkdir("/var/www/html/latexcgi/dir" . "$tmpstr",0777);
         chmod(0777,"/var/www/html/latexcgi/dir" . "$tmpstr");
 	@files = glob($tmpdir . "/outdir/*");
