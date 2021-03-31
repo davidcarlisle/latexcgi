@@ -238,7 +238,7 @@ sub dolatex () {
         remove_tree($tmpdir);
         print "Status: 301\n";
         print "Location: /latexcgi/dir" . "$tmpstr" . "/document.html\n\n";
-    } elsif($?==0 && ($return ne "log")) {
+    } elsif($?==0 && (-e ($tmpdir . "/document.pdf")) && ($return ne "log")) {
         move($tmpdir . "/document.pdf","/var/www/html/latexcgi/document" . "$tmpstr" . ".pdf");
         chdir("..");
         remove_tree($tmpdir);
