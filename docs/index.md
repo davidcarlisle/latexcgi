@@ -253,7 +253,14 @@ p  ACE editor interface.  This preamble may not be completely correct
    are fewer than this number of lines. So for example setting this to
    3 avoids adding a run latex button on 1 or 2 line fragments.
 
+* `rulatex.usecookies=true;`
 
+   The `runlatex.js` never sets any cookies but provides some helper
+   functions that may be used by hosting sites to set user
+   preferences. By default these cookies woll be read if set to set
+   default return mechanims, default text engine and the theme used by
+   the ACE editor. If this option is set to false the functions just
+   return empty and no cookies will be accesed at all.
   
 ## Code blocks without TeX submission
 
