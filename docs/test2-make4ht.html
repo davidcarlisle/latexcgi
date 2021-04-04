@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>make4ht tests (from learnlatex)</title>
+    <meta charset="UTF-8">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.min.js"></script>
+    <style type="text/css" media="screen">
+      .ace_editor {
+	  border: 1px solid lightgray;
+	  margin-bottom: 1px !important;
+	  width: 100%;
+      }
+      div.spacer {
+	  margin-top:16px;
+      }
+    </style>
+    <script src="runlatex.js"></script>
+    <script>
+      runlatex.editorlines=40;
+      runlatex.adddefaultpreamble=true;
+      runlatex.adddefaultengine=true;
+      runlatex.usecaptions=true;
+
+      runlatex.overleafURI=null;
+
+      runlatex.texts ={
+	  "Open in Overleaf": "Open in Overleaf",
+	  "TeXLive.net":      "TeXLive.net", /// or "run latex" or whatever
+	  "Delete Output":    "Delete Output",
+	  "Compiling PDF":    "Compiling PDF or HTML",
+	  "Added Code":       "Added code",
+	  "End Added Code":   "End code",
+	  "Top Caption":      ""
+      }
+    </script>
+
+    <style>
+      body {margin:auto; max-width: 70em;}
+      div.h {background-color: #F5F5FF;margin: .5em 0;}
+      pre {background-color: #EEE;margin:0;padding: .5em;}
+      button.llbutton {background-color:#EFE;}
+      iframe {background-color:white}
+    </style>
+    
+  </head>
+  <body>
+
+<h1 id="ll">Testing make4ht (from learnlatex)</h1>
+
+
+
+<h2 id="doc1">example-image</h2>
+<div class="h">
+<pre>
+% !TeX make4ht
+\documentclass{article}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+
+\begin{document}
+This picture
+\begin{center}
+  \includegraphics[height=2cm]{example-image}
+\end{center}
+is an imported PDF.
+\end{document}
+</pre>
+</div>
+
+
+<h2 id="doc2">example-image</h2>
+<div class="h">
+<pre>
+% !TeX make4ht
+\documentclass{article}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+
+\begin{document}
+\begin{center}
+  \includegraphics[height = 0.5\textheight]{example-image}
+\end{center}
+Some text
+\begin{center}
+  \includegraphics[width = 0.5\textwidth]{example-image}
+\end{center}
+\end{document}
+</pre>
+</div>
+
+
+<h2 id="doc3">math diff</h2>
+<div class="h">
+<pre>
+% !TeX make4ht
+\documentclass{article}
+\usepackage[T1]{fontenc}
+\newcommand{\diff}{\mathop{}\!d}            % For italic
+% \newcommand{\diff}{\mathop{}\!\mathrm{d}} % For upright
+\begin{document}
+A paragraph about a larger equation
+\[
+\int_{-\infty}^{+\infty} e^{-x^2} \diff x
+\]
+\end{document}
+</pre>
+</div>
+
+
+<h2 id="doc4">math bm</h2>
+<div class="h">
+<pre>
+% !TeX make4ht
+\documentclass[a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{bm}
+
+\begin{document}
+
+$(x+\mathbf{y})(x-\mathbf{y})=x^{2}-{\mathbf{y}}^{2}$
+
+$(x+\bm{y})(x-\bm{y}) \bm{=} x^{2}-{\bm{y}}^{2}$
+
+$\alpha + \bm{\alpha} < \beta + \bm{\beta}$
+
+\end{document}
+</pre>
+</div>
+
+
+<h2 id="doc5">mathtools pmatrix*</h2>
+<div class="h">
+<pre>
+% !TeX make4ht
+\documentclass[a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{mathtools}
+
+\begin{document}
+
+\[
+\begin{pmatrix*}[r]
+  10&11\\
+   1&2\\
+  -5&-6
+\end{pmatrix*}
+\]
+
+\end{document}
+</pre>
+</div>
+
+
+<h2 id="doc6">luatex unicode-math</h2>
+<div class="h">
+<pre>
+% !TeX make4ht
+% !TEX lualatex
+\documentclass[a4paper]{article}
+\usepackage{unicode-math}
+\setmainfont{TeX Gyre Pagella}
+\setmathfont{TeX Gyre Pagella Math}
+
+\begin{document}
+
+One two three
+\[
+\log \alpha + \log \beta = \log(\alpha\beta)
+\]
+
+Unicode Math Alphanumerics
+\[A + \symfrak{A}+\symbf{A}+ \symcal{A} + \symscr{A}+ \symbb{A}\]
+
+\end{document}
+</pre>
+</div>
+
+
+<h2 id="doc7">xetex fonts</h2>
+<div class="h">
+<pre>
+% !TeX make4ht
+% !TEX xelatex
+\documentclass{article}
+\usepackage{fontspec}
+\setmainfont{texgyretermes-regular.otf}
+\newfontfamily\cjkfont{FandolSong-Regular.otf}
+\begin{document}
+
+ABC → αβγ → {\cjkfont 你好}
+
+\end{document}
+</pre>
+</div>
+
+
+<h2 id="doc8">directlua in math</h2>
+<div class="h">
+<pre>
+% !TeX make4ht
+%!TEX lualatex
+\documentclass{article}
+
+\begin{document}
+
+$ 2\pi \approx \directlua{ tex.print(2 * math.pi) } $
+
+\end{document}
+</pre>
+</div>
+
+
+<h2 id="doc9">mhchem</h2>
+<div class="h">
+<pre>
+% !TeX make4ht
+\documentclass{article}
+\usepackage[T1]{fontenc}
+\usepackage{mhchem}
+\begin{document}
+\ce{Hg^2+ ->[I-] HgI2 ->[I-] [Hg^{II}I4]^2-}
+\end{document}
+</pre>
+</div>
+
+
+<h2 id="doc10">forest</h2>
+<div class="h">
+<pre>
+% !TeX make4ht
+\documentclass{article}
+\usepackage[T1]{fontenc}
+\usepackage[linguistics]{forest}
+\begin{document}
+\begin{forest}
+[VP
+  [DP\\John ]
+  [V’
+    [V\\sent ]
+    [DP\\Mary ]
+    [DP[D\\a][NP\\letter]]
+  ]
+]
+\end{forest}
+\end{document}
+</pre>
+</div>
+
+
+<h2 id="doc11">chess</h2>
+<div class="h">
+<pre>
+% !TeX make4ht
+\documentclass{article}
+\usepackage[T1]{fontenc}
+\usepackage{xskak}
+\begin{document}
+\newchessgame
+\mainline{1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6}
+
+\xskakset{moveid=2w}%
+\chessboard[setfen=\xskakget{nextfen}]\\[1ex]
+Position after 2.\,\xskakget{lan}
+\end{document}
+</pre>
+</div>
+
+
+<h2 id="doc12">pgfplots</h2>
+<div class="h">
+<pre>
+% !TeX make4ht
+\documentclass{article}
+\usepackage[T1]{fontenc}
+\usepackage{pgfplots}
+\pgfplotsset{width=7cm,compat=1.17}
+
+\begin{document}
+
+\begin{tikzpicture}
+\begin{axis}[]
+      % density of Normal distribution:
+      \addplot [
+            red,
+            domain=-3e-3:3e-3,
+            samples=201,
+      ]
+            {exp(-x^2 / (2e-3^2)) / (1e-3 * sqrt(2*pi))};
+\end{axis}
+\end{tikzpicture}
+
+\end{document}
+</pre>
+</div>
+
+
+<h2 id="doc13">music</h2>
+<div class="h">
+<pre>
+% !TeX make4ht
+\documentclass{article}
+\usepackage[T1]{fontenc}
+\usepackage{musixtex}
+
+\begin{document}
+
+\begin{music}
+\parindent10mm
+\instrumentnumber{1}
+% a single instrument
+\setname1{Piano}
+% whose name is Piano
+\setstaffs1{2}
+% with two staffs
+\generalmeter{\meterfrac44}
+% 4/4 meter chosen
+\startextract
+% starting real score
+\Notes\ibu0f0\qb0{cge}\tbu0\qb0g|\hl j\en
+\Notes\ibu0f0\qb0{cge}\tbu0\qb0g|\ql l\sk\ql n\en
+\bar
+\Notes\ibu0f0\qb0{dgf}|\qlp i\en
+\notes\tbu0\qb0g|\ibbl1j3\qb1j\tbl1\qb1k\en
+\Notes\ibu0f0\qb0{cge}\tbu0\qb0g|\hl j\en
+\zendextract
+% terminate excerpt
+\end{music}
+
+\end{document}
+</pre>
+</div>
+
+
