@@ -26,6 +26,7 @@ It is written as a perl script accepting the post requests via cgi-bin access in
 
 #### Files testing HTML output.
 * [make4ht HTML examples](test-make4ht)
+* [make4ht HTML examples from Learn LaTeX](test2-make4ht)
 
 #### Generate URI corresponding to examples.
 * [run examples and generate URL](run)
