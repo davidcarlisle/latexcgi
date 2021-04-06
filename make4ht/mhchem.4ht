@@ -1,0 +1,2 @@
+\AtBeginDocument{$\def\relax{}\def\unexpanded{}$}
+\def\ce#1{\ensuremath{\unexpanded{\ce{#1}}}}

@@ -1,0 +1,11 @@
+\newtoks\xsktoks 
+\def\ImageAlt{\afterassignment\setimg\xsktoks} 
+\def\setimg{\Picture*[\HCode{\the\xsktoks}]{}\the\xsktoks\EndPicture} 
+
+\Hinput{musixtex}
+
+\let\htmusic\music
+\let\endhtmusic\endmusic
+\DeclareDocumentEnvironment{music}{b}
+{\ImageAlt{\begin{htmusic}\scantokens{#1}\end{htmusic}}}
+{}
