@@ -1,0 +1,11 @@
+% !TeX make4ht
+%!TEX lualatex
+\documentclass{article}
+
+\begin{document}
+
+$ 2\pi \approx \directlua{ tex.print(2 * math.pi) } $
+
+\directlua{tex.print('$ 4\string\\pi \string\\approx' .. 4 * math.pi .. '$')}
+
+\end{document}
