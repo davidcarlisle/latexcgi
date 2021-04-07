@@ -75,11 +75,10 @@ A paragraph about a larger equation
 \end{document}
 </pre>
 
-<p>The commandline changed to <code>learnlatex4ht,2,mathjax</code> with a
+<p>The commandline changed to <code>learnlatex4ht,2,mathjax,svg</code> with a
     configuration that inserts the current definition
     of <code>\diff</code> at begin document inside math so MathJax
-    sees it. One oddity is that <code>learnlatex4ht.cfg</code> does
-    not appear to be found on the input path, it needs to be copied to
+    sees it. <code>learnlatex4ht.cfg</code> needs to be copied to
     the current directory.</p>
 </div>
 
@@ -245,7 +244,7 @@ $ 2\pi \approx \directlua{ tex.print(2 * math.pi) } $
 \end{forest}
 \end{document}
 </pre>
-<p>Tikz failed me</code>
+<p>This now works using the svg option and <a href="https://github.com/michal-h21/dvisvgm4ht/blob/master/pgfsys-dvisvgm4ht.def">Michal's svg driver</a></p>
 </div>
 
 
@@ -268,11 +267,7 @@ Position after 2.\,\xskakget{lan}
 <p>A <code>xskak.4ht</code> is provided that almost gets this right,
   generating images for the xskak commands The board has
   an <code>alt</code> text that is the fen description of the board
-  position (Ulrike tells me that chess people know what this means).
-  There is supposed to be
-  an indicator white or black box to the right of the board which has
-  mysteriously vanished. While this works the configuration is
-  clearly not correct and dvipng makes lots of warnings.
+  position (Ulrike tells me that chess people know what this means).</p>
 </div>
 
 
@@ -301,7 +296,7 @@ Position after 2.\,\xskakget{lan}
 
 \end{document}
 </pre>
-<p>Tikz bites again.</p>
+<p><p>This now works using the svg option and <a href="https://github.com/michal-h21/dvisvgm4ht/blob/master/pgfsys-dvisvgm4ht.def">Michal's svg driver</a></p>
 </div>
 
 
