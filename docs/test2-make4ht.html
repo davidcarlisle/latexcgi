@@ -262,6 +262,13 @@ $ 2\pi \approx \directlua{ tex.print(2 * math.pi) } $
 \xskakset{moveid=2w}%
 \chessboard[setfen=\xskakget{nextfen}]\\[1ex]
 Position after 2.\,\xskakget{lan}
+
+\chessboard[pgfstyle=cross,
+color=blue,
+setfen=\xskakget{nextfen},
+getpiecelists,
+markfields={\cblistP,\cblistp}]
+
 \end{document}
 </pre>
 <p>A <code>xskak.4ht</code> is provided that almost gets this right,
