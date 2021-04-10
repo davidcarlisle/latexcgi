@@ -1,6 +1,6 @@
 #!/bin/bash
 # set -e
-export PATH=/usr/local/texlive/2020/bin/x86_64-linux:$PATH
+export PATH=/usr/local/texlive/2021/bin/x86_64-linux:$PATH
 
 echo "" >  document.log
 
@@ -13,8 +13,10 @@ if [ "X$1X" == "XlualatexX" ]; then
 fi
 
 if [ "X$1X" == "Xmake4htX" ]; then
+#    NS="-d outdir -a debug"
     NS="-d outdir"
-    MT=2,mathjax
+    MT=learnlatex4ht,2,mathjax,svg
+    cp /usr/local/texlive/texmf-local/tex/generic/tex4ht/learnlatex4ht.cfg .
 fi
 
 case "X$1" in
@@ -31,6 +33,7 @@ esac
 
 # $2 may contain spaces so multiple arguments eg for makeindex
 # calling script checks no shell characters
+# /usr/bin/timeout --kill-after=2s 15s $1 $NS $REC $2 $MT  >> document.log 2> document.err
 /usr/bin/timeout --kill-after=2s 15s $1 $NS $REC $2 $MT > /dev/null 2> /dev/null
 R=$?
 
@@ -43,4 +46,7 @@ if [ "X$REC" == "X--recorder" ]; then
 fi
 
 echo -e "\nTimeout/Error status: $R [$1][$2]"  >> document.log
+
+# cat document.err >> document.log
+
 exit $R
