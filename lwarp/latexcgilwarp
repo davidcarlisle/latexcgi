@@ -13,8 +13,7 @@ if (! `grep -q -F '{lwarp}' ${d}.tex`) ; then
     sed  -i '/\\documentclass.*{[^ {}]*}/a \\\\usepackage[mathjax]{lwarp}' ${d}.tex
 fi
 
-pdflatex $2
-
+$1 $2
 
 lwarpmk html 
 
