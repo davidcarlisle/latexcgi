@@ -199,10 +199,7 @@ $ 2\pi \approx \directlua{ tex.print(2 * math.pi) } $
 
 \end{document}
 </pre>
-<p>This does work if the <code>\directlua</code> is outside the math
-  and writes the whole expression. As math is sent verbatm to MathJax
-  it may be that this is acceptable, although it would be possible
-  (perhaps) to expand tokens one level here.</p>
+<p>This fails if the tex syntax mathjax configuration is used, but passes now with `mathml,mathjax` as the math is expanded by TeX.</p>
 </div>
 
 
