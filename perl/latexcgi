@@ -174,7 +174,9 @@ sub dolatex () {
 	    $document="-l document";
 	}
 	$engine="make4ht";
-    }
+    } elsif($FORM{'return'} eq "latexml") {
+      $engine="latexcgiml";
+} 
 
 
 
@@ -232,14 +234,14 @@ sub dolatex () {
         system("/usr/local/bin/run1", "dvipdfmx", "document");
     }
 
-    if($?==0 && $engine=~/^(la)?tex(-dev)?/){
+    if($?==0 && $engine=~/^(la)?tex(-dev)?$/){
         system("/usr/local/bin/run1", "dvips", "document");
         system("/usr/local/bin/run1", "ps2pdf", "document.ps");
     }
 
     my $tmpstr = sprintf("_%04X_$$", rand(0xffff));
     
-    if($?==0 && ($FORM{'return'} eq "make4ht")) {
+    if($?==0 && ($FORM{'return'} eq "make4ht" || $FORM{'return'} eq "latexml")) {
         mkdir("/var/www/html/latexcgi/dir" . "$tmpstr",0777);
         chmod(0777,"/var/www/html/latexcgi/dir" . "$tmpstr");
 	@files = glob($tmpdir . "/outdir/*");
