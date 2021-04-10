@@ -176,7 +176,9 @@ sub dolatex () {
 	$engine="make4ht";
     } elsif($FORM{'return'} eq "latexml") {
       $engine="latexcgiml";
-} 
+} elsif($FORM{'return'} eq "lwarp") {
+$engine="latexcgilwarp $engine";
+}
 
 
 
@@ -241,7 +243,7 @@ sub dolatex () {
 
     my $tmpstr = sprintf("_%04X_$$", rand(0xffff));
     
-    if($?==0 && ($FORM{'return'} eq "make4ht" || $FORM{'return'} eq "latexml")) {
+    if($?==0 && ($FORM{'return'} eq "make4ht" || $FORM{'return'} eq "latexml" || $FORM{'return'} eq "lwarp")) {
         mkdir("/var/www/html/latexcgi/dir" . "$tmpstr",0777);
         chmod(0777,"/var/www/html/latexcgi/dir" . "$tmpstr");
 	@files = glob($tmpdir . "/outdir/*");

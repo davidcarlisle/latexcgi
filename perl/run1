@@ -20,6 +20,9 @@ if [ "X$1X" == "Xmake4htX" ]; then
 fi
 
 case "X$1" in
+    Xlatexcgilwarp*)
+    REC=""
+    ;;
     Xbibtex)
     REC=""
     ;;
