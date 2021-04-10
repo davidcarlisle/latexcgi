@@ -1,0 +1,24 @@
+#!/bin/bash
+export PATH=/usr/local/texlive/2021/bin/x86_64-linux:$PATH
+
+# $1 engine
+# $2 document
+d=${2/.tex/}
+
+# if {lwarp} appears assume document already configured
+# for lwarp and skip this step otherwise add
+# \usepackage[mathjax]{lwarp}
+
+if (! `grep -q -F '{lwarp}' ${d}.tex`) ; then
+    sed  -i '/\\documentclass.*{[^ {}]*}/a \\\\usepackage[mathjax]{lwarp}' ${d}.tex
+fi
+
+pdflatex $2
+
+
+lwarpmk html 
+
+
+mkdir outdir
+cp *.{html,svg,png,jpg,css,js} outdir || echo copy
+
