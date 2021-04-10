@@ -75,11 +75,12 @@ A paragraph about a larger equation
 \end{document}
 </pre>
 
-<p>The commandline changed to <code>learnlatex4ht,2,mathjax,svg</code> with a
+<p>with <code>learnlatex4ht,2,mathjax,svg</code> with a
     configuration that inserts the current definition
     of <code>\diff</code> at begin document inside math so MathJax
-    sees it. <code>learnlatex4ht.cfg</code> needs to be copied to
-    the current directory.</p>
+    sees it. <code>learnlatex4ht.cfg</code> needed to be copied to
+  the current directory. With current <code>learnlatex4ht,2,mathml,mathjax,svg</code>
+  local definitions are handled by default.</p>
 </div>
 
 
@@ -214,7 +215,9 @@ $ 2\pi \approx \directlua{ tex.print(2 * math.pi) } $
 \ce{Hg^2+ ->[I-] HgI2 ->[I-] [Hg^{II}I4]^2-}
 \end{document}
 </pre>
-<p> A configuration <code>mhchem.4ht</code> redefines <code>\ce</code>
+<p> For the current <code>mathml,mathjax</code> configuration
+  <code>mhchem.4ht</code> wraps itself in <code>\(\)</code> so seen my MathJax TeX input parser.
+  For tex-mathjax configuration <code>mhchem.4ht</code> redefined<code>\ce</code>
   to wrap itself in <code>\ensuremath</code> so it is seen by MathJax
   which has existing <code>mhchem</code> support.</p>
 </div>
