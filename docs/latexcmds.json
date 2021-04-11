@@ -1,0 +1,27 @@
+    
+{
+    latex:[
+	"documentclass",
+        "begin",
+	"begin{document}",
+	"begin{enumerate}",
+	"begin{enumerate}",
+	"begin{itemize}",
+	"begin{figure}",
+	"begin{table}",
+	"begin{equation}",
+	"begin{equation*}",
+	"frac",
+	"item",
+	"usepackage"
+    ],
+    amsmath: [
+	"tfrac",
+	"dfrac",
+	"begin{align}",
+	"begin{align*}",
+	"begin{gather}",
+	"begin{gather*}",
+	"begin{aligned}",
+    ]
+}
