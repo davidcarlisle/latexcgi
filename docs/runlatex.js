@@ -85,11 +85,7 @@ var customCompleter = {
 		    }
 		}
 	    }
-	    if(cmplts.length){
-		callback(null, cmplts);
-	    } else {
-		callback(null, []);
-		return 
+	    callback(null, cmplts);
 	    }
 	} else {
 	    callback(null, []);
