@@ -105,7 +105,6 @@ function llexamples() {
 	request.responseType = 'json';
 	request.onload = function() {
 	    latexcompletions = request.response;
-	    alert(latexcompletions);
 	}
 	request.send();
     }
