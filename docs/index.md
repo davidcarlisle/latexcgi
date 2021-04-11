@@ -24,6 +24,9 @@ It is written as a perl script accepting the post requests via cgi-bin access in
 * [minrunlines feature test cases](test3-sk)
 * [Testing multi-file submission](test-multifile)
 
+#### Testing command completion
+* [Command completion](test-completion)
+
 #### Files testing HTML output.
 * [make4ht HTML examples](test-make4ht)
 * [make4ht HTML examples from Learn LaTeX](test2-make4ht)
