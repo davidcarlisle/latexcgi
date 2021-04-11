@@ -273,6 +273,12 @@ p  ACE editor interface.  This preamble may not be completely correct
    See [this example](https://davidcarlisle.github.io/latexcgi/latexcmds.json)
    to see the format required. If it is an empty string then command completion
    is not enabled in the editor.
+   
+   Curently if this parameter is used you also need to load the ACE extension
+
+   `<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ext-language_tools.js"></script>`
+   
+   (Perhaps runlatex.js should add this automatically when needed).
   
 ## Code blocks without TeX submission
 
