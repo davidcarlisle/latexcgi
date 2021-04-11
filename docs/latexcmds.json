@@ -1,6 +1,6 @@
     
 {
-    latex:[
+    "latex":[
 	"documentclass",
         "begin",
 	"begin{document}",
@@ -15,7 +15,7 @@
 	"item",
 	"usepackage"
     ],
-    amsmath: [
+    "amsmath": [
 	"tfrac",
 	"dfrac",
 	"begin{align}",
