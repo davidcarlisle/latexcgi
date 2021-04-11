@@ -265,6 +265,14 @@ p  ACE editor interface.  This preamble may not be completely correct
    default return mechanims, default text engine and the theme used by
    the ACE editor. If this option is set to false the functions just
    return empty and no cookies will be accesed at all.
+   
+* `runlatex.completionsURI="latexcmds.json"`
+
+   If this parameter is set to a non empty string, it is used as a URI to a JSON
+   file that gives completion data for completing commands in the editor.
+   See [this example](https://davidcarlisle.github.io/latexcgi/latexcmds.json)
+   to see the format required. If it is an empty string then command completion
+   is not enabled in the editor.
   
 ## Code blocks without TeX submission
 
