@@ -39,7 +39,7 @@
 	"section",
 	"subsection",
 	"title",
-	"usepackage",
+	"usepackage"
     ],
     "book": [
 	"chapter"
@@ -71,7 +71,7 @@
     ],
     "xcolor": [
 	"color",
-	"textcolor",
-	"colorbox"
+	"colorbox",
+	"textcolor"
 	]
 }
