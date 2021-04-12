@@ -58,7 +58,7 @@
 	"end{align}",
 	"end{align*}",
 	"end{cases}",
-	"end{aligned}"
+	"end{aligned}",
 	"end{flalign}",
 	"end{flalign*}",
 	"end{gather}",
