@@ -62,9 +62,9 @@
         "end{cases}",
         "end{flalign*}",
         "end{flalign}",
-        "end{gather*}"
+        "end{gather*}",
         "end{gather}",
-        "tfrac",
+        "tfrac"
     ],
     "graphicx": [
         "includegraphics",
