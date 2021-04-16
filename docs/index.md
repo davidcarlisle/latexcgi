@@ -301,10 +301,10 @@ another site using the same code.
 
 If site maintainers using copies of
 `runlatex.js` wish to use the cookie settings they may want to adjust
-the settings options, in particular if your site already has a global
+the setting form. In particular, if your site already has a global
 cookie acceptance mechanism, you may want to not have the
 accept/delete buttons and instead enable the options automatically if
-teh user has already accepted cookies for your site.
+the user has already accepted cookies for your site.
 
 ## Code blocks without TeX submission
 
