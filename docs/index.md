@@ -193,8 +193,8 @@ See [LearnLaTeX lesson 13](https://www.learnlatex.org/en/lesson-13).
 
 A page loading `runlatex.js` can set several parameters as fields in
 the `runlatex` configuration. Many of these parameters were added
-to allow customisation for use in forums such as latex.org or
-texwelt.de managed by Stefan Kottwitz. Unlike the situation with
+to allow customisation for use in forums such as [latex.org](https://latex.org/) or
+[texwelt.de](https://texwelt.de/) managed by Stefan Kottwitz. Unlike the situation with
 curated examples in a tutorial such as learnlatex, forums often have
 incomplete or erroneous examples, and a slightly different interaction
 is required.
@@ -242,7 +242,7 @@ is required.
   If neither `\documentclass` nor a `% !TeX` engine comment appears in
   the example then a default preamble is constructed (based on the
   commands seen in the example) and added to the code block via the
-p  ACE editor interface.  This preamble may not be completely correct
+  ACE editor interface.  This preamble may not be completely correct
   as needed to run the example but is a good "first guess" and will
   save typing boiler plate preambles in the online forum editor. If
   the preamble is edited and re-submitted to the texlive.net server,
@@ -283,6 +283,22 @@ p  ACE editor interface.  This preamble may not be completely correct
    
    (Perhaps runlatex.js should add this automatically when needed).
   
+### Setting default parameters via cookies.
+
+By default no information is stored in cookies or other local storage
+and so each submission is controlled just by the comments in the code
+to be submitted. It is however possible to save alternative default
+values for the engine, return and ACE theme from their initial values of
+`pdfjs`, `pdflatex` and `textmate`.  A sample form to set these cookies
+is available [on this site](settings). Note that the cookies are
+browser and site specific so a value set on this site will not affect
+another site using the same code.  If site maintainers using copies of
+`runlatex.js` wish to use the cookie settings they may want to adjust
+the settings options, in particular if your site already has a global
+cookie acceptance mechanism, you may want to not have the
+accept/delete buttons and instead enable the options automatically if
+teh user has already accepted cookies for your site.
+
 ## Code blocks without TeX submission
 
 * Two special `!TEX` comments may be used, which must be on the first
