@@ -264,10 +264,11 @@ is required.
 
    The `runlatex.js` never sets any cookies but provides some helper
    functions that may be used by hosting sites to set user
-   preferences. By default these cookies woll be read if set to set
+   preferences. By default these cookies will be read if set to set
    default return mechanims, default text engine and the theme used by
    the ACE editor. If this option is set to false the functions just
    return empty and no cookies will be accesed at all.
+   [See the next section](#setting-default-parameters-via-cookies)
    
 * `runlatex.completionsURI=""`
 
