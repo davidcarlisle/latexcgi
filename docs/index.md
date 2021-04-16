@@ -289,10 +289,16 @@ By default no information is stored in cookies or other local storage
 and so each submission is controlled just by the comments in the code
 to be submitted. It is however possible to save alternative default
 values for the engine, return and ACE theme from their initial values of
-`pdfjs`, `pdflatex` and `textmate`.  A sample form to set these cookies
-is available [on this site](settings). Note that the cookies are
+`pdfjs`, `pdflatex` and `textmate`.
+
+A sample form to set these cookies
+is available [on this site](settings).
+
+Note that the cookies are
 browser and site specific so a value set on this site will not affect
-another site using the same code.  If site maintainers using copies of
+another site using the same code.
+
+If site maintainers using copies of
 `runlatex.js` wish to use the cookie settings they may want to adjust
 the settings options, in particular if your site already has a global
 cookie acceptance mechanism, you may want to not have the
