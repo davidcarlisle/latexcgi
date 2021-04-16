@@ -14,8 +14,8 @@
 <p>Cookies are small pieces of data that are stored by your browser. By default no cookies are used by this site, but any options set on this page are stored in cookies.</p>
 <p>Accept cookies here to enable the use of cookies on this site and to enable the menu options below.</p>
 
-<input id="accept" type="button" value="{{ include.accept }}" onclick="rlAllowCookies()">
-<input id="delete" type="button" value="{{ include.reset }}" onclick="rlDeleteCookies()">
+<input id="accept" type="button" value="Accept Cookies" onclick="rlAllowCookies()">
+<input id="delete" type="button" value="Reset: Delete All Cookies" onclick="rlDeleteCookies()">
 <script>
   document.getElementById("accept").disabled=rlallowcookies;
   document.getElementById("delete").disabled=!rlallowcookies;
