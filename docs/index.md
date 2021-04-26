@@ -355,4 +355,5 @@ mobile clients that often do not include a PDF renderer by default.
 
 
 ---
-[privacy policy](privacy)
+[privacy policy](privacy)  
+[https://github.com/sponsors/davidcarlisle/](Copyright 2020&ndash;2021 David Carlisle)
