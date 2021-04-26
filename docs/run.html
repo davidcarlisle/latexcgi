@@ -13,6 +13,8 @@
       div.spacer {
 	  margin-top:16px;
       }
+      a { text-decoration:none; color:#5555FF}
+      a:hover	   {text-decoration:underline}
     </style>
     <script src="runlatex.js"></script>
     <script>
@@ -70,12 +72,13 @@
   <body>
 
 <hr>
-<a href="./">Site index page</a><br>
-<hr>
-
+<div>
 <button onclick="updateURL()">Update/Copy URL</button>
-<a href="https://davidcarlisle.github.io/latexcgi/">LaTeXCGI</a>
-<a href="https://texlive.net/">TeXLive.net</a>
+&nbsp;   
+<a href="https://davidcarlisle.github.io/latexcgi/">Server documentation (GitHub)</a>
+&nbsp;   
+<a href="https://texlive.net/">TeXLive.net Home</a>
+</div>
 <div class="h">
 <pre id="pre0">\documentclass{article}
 \usepackage{amsmath}
@@ -83,5 +86,6 @@
 
 \end{document}</pre>
 </div>
+<hr>
 </body>
   
