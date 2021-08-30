@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>LaTeX CGI tests</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/codemirror.min.css">
+</link>
+
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/codemirror.min.js">
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/mode/stex/stex.js">
+</script>
+<style type="text/css" media="screen">
+      .ace_editor {
+	  border: 1px solid lightgray;
+	  margin-bottom: 1px !important;
+	  width: 100%;
+      }
+      div.spacer {
+	  margin-top:16px;
+      }
+    </style>
+    <script src="runlatex-codemirror.js"></script>
+
+    
+    <style>
+      body {margin:auto; max-width: 70em;}
+      div.h {background-color: #F5F5FF;margin: .5em 0;}
+      pre {background-color: #EEE;margin:0;padding: .5em;}
+    </style>
+    <style>
+      
+  .CodeMirror { height: auto; border: 1px solid #ddd; }
+  .CodeMirror-scroll { max-height: 200px; }
+  .CodeMirror pre { padding-left: 7px; line-height: 1.25; }
+  .banner { background: #ffc; padding: 6px; border-bottom: 2px solid silver; text-align: center }
+
+      </style>
+  </head>
+  <body>
+<hr>
+
+<a href="./">Site index page</a><br>
+<a href="./settings">Site Settings page</a>
+
+<hr>
+
+
+<!--
+codemirror
+
+<div id="editor">
+  \documentclass{article}
+  \begin{document}
+  aaa $x=y$
+  \end{document}
+</div>
+
+<script>
+  var p = document.getElementById('editor');
+  var pcont=p.textContent.replace(/^[ \t\u00A0]+$/gm,'').replace(/\s+$/,'').replace(/^[\n\r]+/,'');
+  p.textContent="";
+  CodeMirror(p, {
+      lineNumbers: true,
+      mode: 'stex',
+      tabSize: 2,
+  value: pcont
+  });
+</script>
+-->
+<h1 id="ll">codemirror  Tests</h1>
+
+
+<h2 id="engine">Engine Parameter</h2>
+<p>By default pdftex, or xelatex if <code>fontspec</code> is used.</p>
+<div class="h">
+<pre>
+  \documentclass{article}
+  \usepackage{iftex}
+  \newcommand\test[1]{\par\expandafter#1\string#1: true\fi}
+  \begin{document}
+   
+  \ttfamily
+  \test\ifpdftex
+  \test\ifluatex
+  \test\ifxetex
+  \test\ifptex
+  \test\ifuptex
+  \end{document}
+</pre>
+</div>
+
+<p>lualatex</p>
+<div class="h">
+<pre>
+%!TEX lualatex
+  \documentclass{article}
+  \usepackage{iftex}
+  \newcommand\test[1]{\par\expandafter#1\string#1: true\fi}
+  \begin{document}
+  \ttfamily
+  \test\ifpdftex
+  \test\ifluatex
+  \test\ifxetex
+  \test\ifptex
+  \test\ifuptex
+  \end{document}
+</pre>
+</div>
+
+
+
+<h3 id="pdf">Marathi</h3>
+<div class="h">
+<pre>
+%!TeX xelatex  
+  \documentclass{article}
+  \usepackage{marathi}
+  \begin{document}
+हा मजकूर देवनागरी लिपीत स्वरांशचिन्हांसह लिहिण्यात आला आहे.
+  \end{document}
+</pre>
+</div>
+
+
+
+<h2 id="makeindex">Makeindex[] Parameter</h2>
+<p>Multiple <code>!TEX makeindex</code> may be used, each sets a <code>makeindex[]</code>
+  parameter in the form submission.</p>
+<div class="h">
+<pre>
+
+% !TEX makeindex document
+% !TEX makeindex -s nomencl.ist -o document.nls -t document.nlg document.nlo
+
+\documentclass[oneside,12pt]{article}
+
+\usepackage{makeidx}
+\makeindex
+
+\usepackage{nomencl}
+\makenomenclature
+
+\begin{document}
+
+Testing\index{testing} nomenclature\index{nomenclature}
+\[
+E = mc^2
+\]
+
+\nomenclature{$E$}{Energy}
+\nomenclature{$m$}{Mass}
+\nomenclature{$c$}{Speed of Light}
+
+\begin{center}
+\begin{minipage}[t]{.45\linewidth}
+\printnomenclature    
+  \end{minipage}\hfill
+  \begin{minipage}[t]{.45\linewidth}
+\renewenvironment{theindex}{%
+\section*{\indexname}}{}
+\printindex
+  \end{minipage}
+\end{center}
+
+\end{document}
+</pre>
+</div>
+</body>
+  
