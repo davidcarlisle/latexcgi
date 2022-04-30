@@ -30,9 +30,10 @@
 
 <hr>
 
-<h1 id="ll">XeTeX/PSTricks test</h1>
+<h1 id="ll">PSTricks test</h1>
 
 
+<h2>XeTeX</h2>
 <p>XeTeX needs a custom configuration to work with pstricks with recent ghostscript releases.</p>
 <div class="h">
 <pre>
@@ -49,8 +50,35 @@
 \pscircle[fillcolor=red,linecolor=red](2;45){2cm}
 \pscircle[fillcolor=blue,linecolor=blue](1;-90){2cm}
 \end{pspicture}
-\end{document}</pre>
+\end{document}
+</pre>
+</div>
+
+<h2>LuaTeX</h2>
+<p>LuaTeX PSTricks needs (April 2022) a latex-dev release and the PDF Management test code</p>
+
+<div class="h">
+<pre>
+% !TeX lualatex-dev
+\RequirePackage{pdfmanagement-testphase}
+\DocumentMetadata{}
+\documentclass[varwidth]{standalone}
+
+
+\usepackage{pstricks-add}
+
+\begin{document}
+\psset{fillstyle=solid,linewidth=0.1,opacity=0.4,strokeopacity=0.7}
+
+\begin{pspicture}(-3.48,-3.06)(3.48,3.48)
+\pscircle[fillcolor=green,linecolor=green](2;135){2cm}
+\pscircle[fillcolor=red,linecolor=red](2;45){2cm}
+\pscircle[fillcolor=blue,linecolor=blue](1;-90){2cm}
+\end{pspicture}
+\end{document}
+</pre>
 </div>
 
 </body>
   
+</html>
