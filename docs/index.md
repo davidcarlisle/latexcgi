@@ -15,7 +15,7 @@ It is written as a perl script accepting the post requests via cgi-bin access in
 * [Basic tests](test).
 * [Larger test examples](test2).
 * [CJK Font test examples](test3).
-* [PSTricks test example](test-psricks).
+* [PSTricks test examples](test-pstricks).
 * [plain tex and non interactive examples](test4).
 * [Experimental context example](testc)
 
