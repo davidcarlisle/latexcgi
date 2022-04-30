@@ -7,10 +7,16 @@ echo "" >  document.log
 NS=""
 REC=""
 MT=""
+ENG="$1"
 
 if [ "X$1X" == "XlualatexX" ]; then
     NS="--nosocket"
 fi
+
+if [ "X$1X" == "XxetexX" ] || [ "X$1X" == "XxelatexX" ] ; then
+  ENG="$1-unsafe"
+fi
+
 
 if [ "X$1X" == "Xmake4htX" ]; then
 #    NS="-d outdir -a debug"
@@ -37,7 +43,7 @@ esac
 # $2 may contain spaces so multiple arguments eg for makeindex
 # calling script checks no shell characters
 # /usr/bin/timeout --kill-after=2s 15s $1 $NS $REC $2 $MT  >> document.log 2> document.err
-/usr/bin/timeout --kill-after=2s 15s $1 $NS $REC $2 $MT > /dev/null 2> /dev/null
+/usr/bin/timeout --kill-after=2s 15s $ENG $NS $REC $2 $MT > /dev/null 2> /dev/null
 R=$?
 
 # allow /usr /tmp and /etc/fonts and /dev/null
