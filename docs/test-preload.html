@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>run tex snippet</title>
+    <title>preload test</title>
     <meta charset="UTF-8">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.min.js"></script>
     <style type="text/css" media="screen">
@@ -36,19 +36,6 @@
       }
 
     </script>
-    <script>
-     function preloadPDF (){
-     var p=0;
-     while (editors["pre"+ p]) {
-     latexcgi("pre" + p);
-     p=p+1;
-     }
-     }
-
-     window.addEventListener('load', preloadPDF, false);
-
-
-    </script>
     <style>
       body {margin:auto; max-width: 70em;}
       pre {background-color: #EEE;margin:0;padding: .5em;}
@@ -67,7 +54,7 @@ A first document.
 
 \end{document}
 </pre>
-<iframe id="pre0ifr" name="pre0ifr" width="100%" height="500em" src="preload1.pdf"></iframe>
+<iframe id="pre0ifr" name="pre0ifr" width="100%" height="500em" src="preload-1.pdf"></iframe>
 
 <h2>some mathematics</h2>
 
@@ -84,7 +71,7 @@ x+y&amp;=z
 \end{align}
 \end{document}
 </pre>
-<iframe id="pre1ifr" name="pre1ifr" width="100%" height="500em" src="preload2.pdf"></iframe>
+<iframe id="pre1ifr" name="pre1ifr" width="100%" height="500em" src="preload-2.pdf"></iframe>
 
 </body>
 </html>
