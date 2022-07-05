@@ -53,7 +53,7 @@ const makeindexregex = /% *!TEX.*[^a-zA-Z]makeindex( [a-z0-9\.\- ]*)\n/ig;
 
 var packageregex = [
     [ /\\includegraphics/,                    "\\usepackage[demo]{graphicx}\n"],
-    [ /\\begin{equation|align|gather|flalign/,"\\usepackage{amsmath}\n"       ],
+    [ /\\begin{equation|align|gather|flalign|\\DeclareMathOperator/,"\\usepackage{amsmath}\n"       ],
     [ /tikz|pgf/,                             "\\usepackage{tikz}\n"          ],
     [ /fancy/,                                "\\usepackage{fancyhdr}\n"      ],
     [ /addplot|axis/,                         "\\usepackage{pgfplots}\n"      ],
@@ -303,7 +303,11 @@ function generatepreamble(t,e) {
     for(var i=0;i<packageregex.length; i++){
 	if(t.match(packageregex[i][0])) e.insert(packageregex[i][1]);
     }
-    e.insert("\n\\begin{document}\n% "  + runlatex.texts["End Added Code"] + "\n\n");
+    if(t.match(/\\begin\{document\}/)){
+	e.insert("\n% "  + runlatex.texts["End Added Code"] + "\n\n");
+    } else {
+	e.insert("\n\\begin{document}\n% "  + runlatex.texts["End Added Code"] + "\n\n");
+    }
     e.navigateFileEnd();
     e.insert("\n\n% " +
 	     runlatex.texts["Added Code"] +
