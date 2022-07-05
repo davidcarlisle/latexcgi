@@ -32,6 +32,10 @@
 	  "End Added Code":   "End code (sk preamble)",
 	  "Top Caption":      ""
       }
+
+      runlatex.packageregex.push(
+	  [/\\qty *[\[{]/, "\\usepackage{siunitx}\n"]
+      );
     </script>
     <style>
       body {margin:auto; max-width: 70em;}
@@ -101,10 +105,18 @@ something \includegraphics[height=1cm]{example-image}
 
 <h2 id="begindocument">snippet with \begin{document} for Denis</h2>
 <div class="h">
-<pre>
+  <pre>
 \DeclareMathOperator*{\Lim}{Lim}
 \begin{document}
 $\Lim f$
+</pre>
+</div>
+
+<h2 id="siunitx">snippet requiring extra package regex</h2>
+<div class="h">
+<pre>
+    \qty[mode = text]{1.23}{J.mol^{-1}.K^{-1}}
+
 </pre>
 </div>
 
