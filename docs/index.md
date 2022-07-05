@@ -284,7 +284,18 @@ is required.
    `<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ext-language_tools.js"></script>`
    
    (Perhaps runlatex.js should add this automatically when needed).
+   
+* `runlatex.packageregex = ` _array of [regex, preamble code] pairs_
   
+   If `adddefaultpreamble` is true this array is used to construct the
+   preamble. If the supplied fragment matches a regex, the associated
+   line (normally a `\usepackage` call) is added.  A document could
+   supply the entire array but normally you just want to add
+   additional packages, so can extend the default array. For example
+   to add the `siunitx` package if `\qty` appears, you could declare:
+   
+   `runlatex.packageregex.push([/\\qty *[\[{]/, "\\usepackage{siunitx}\n"]);`
+
 ### Setting default parameters via cookies.
 
 By default no information is stored in cookies or other local storage
