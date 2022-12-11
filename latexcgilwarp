@@ -18,6 +18,7 @@ pdflatex $2
 
 lwarpmk html 
 
+for i in `grep -o 'ex.*png' $d.html | sort | uniq`; do cp `kpsewhich "$i"` .; done
 
 mkdir outdir
 cp *.{html,svg,png,jpg,css,js} outdir || echo copy
