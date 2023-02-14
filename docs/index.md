@@ -2,8 +2,8 @@
 
 ## Introduction
 
-The TeXLive.net server (formally known as (LaTeX CGI server)
-(currently running at [texlive.net](https://texlive.net)) accepts
+The TeXLive.net server (formally known as LaTeX CGI server and
+currently running at [texlive.net](https://texlive.net)) accepts
 LaTeX documents via an HTTP POST request and returns a PDF document or
 log file in the case of error.
 
@@ -368,4 +368,4 @@ mobile clients that often do not include a PDF renderer by default.
 
 ---
 [privacy policy](privacy)  
-[Copyright 2020&ndash;2022 David Carlisle](https://github.com/sponsors/davidcarlisle/)
+[Copyright 2020&ndash;2023 David Carlisle](https://github.com/sponsors/davidcarlisle/)
