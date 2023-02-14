@@ -5,6 +5,6 @@
 
 engine=${2-pdflatex}
 curl -s -L -o document.pdf -F return=pdf -F engine=$engine \
-     -F filecontents[]=@$1 -F filename[]=document.tex \
-     https://texlive.net/cgi-bin/latexcgi
+     -F "filecontents[]=<$1" -F filename[]=document.tex \
+     https://httpbin.org/post
 file document.pdf
