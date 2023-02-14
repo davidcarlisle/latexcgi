@@ -211,8 +211,8 @@ is required.
    runlatex.texts ={
     "Open in Overleaf": "Overleaf button text",
     "TeXLive.net":      "texlive.net button text",
-    "Delete Output":    "Delete Outpu button textt",
-    "Compiling PDF":    "Compiling PDF span notiocation of submission",
+    "Delete Output":    "Delete Output button text",
+    "Compiling PDF":    "Compiling PDF span notification of submission",
     // The following not used on learnlatex.org
     "edit":             "edit button text",
     "copy":             "copy button text",
@@ -229,7 +229,7 @@ is required.
 *  `runlatex.adddefaultpreamble=false;`
 
     If set true, a default preamble (using packages based on the
-	content fo the fragment) will be inserted if the document has no
+	content of the fragment) will be inserted if the document has no
 	`\documentclass`
 	
 * `runlatex.adddefaultengine=false;`
