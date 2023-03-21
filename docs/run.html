@@ -36,7 +36,7 @@
       }
   function updateURL () {
       var t =  editors["pre0"].getValue();
-      var newl="?" + encodeURI(t);
+      var newl="?" + encodeURI(t).replace(/\$/g,'%24');
       // copy to clipboard
       var nn=document.createElement("textarea");
       nn.value=document.location.protocol + "//" + document.location.host + document.location.pathname + newl;
@@ -46,7 +46,7 @@
       document.body.removeChild(nn);
       // update
       if(newl != document.location.search){
-	  document.location.search = "?" + encodeURI(t);
+	  document.location.search = "?" + encodeURI(t).replace(/\$/g,'%24');
       }
   }
 
