@@ -57,7 +57,7 @@ If the form contains unexpected fields, the whole submission is rejected.
    `lualatex`, `pdflatex`, `xelatex`, `uplatex`, `platex`, `latex`,  
    `lualatex-dev`, `pdflatex-dev`, `xelatex-dev`, `uplatex-dev`, `platex-dev`, `latex-dev`,  
    `luatex`, `pdftex`, `xetex`, `uptex`, `ptex`, `tex`,  
-   `context`.
+   `optex`,`context`.
    
    The default is `pdflatex`.
  * bibcmd
@@ -131,7 +131,7 @@ The known keywords are
 * `lualatex`, `pdflatex`, `xelatex`, `uplatex`, `platex`, `latex`,
   `lualatex-dev`, `pdflatex-dev`, `xelatex-dev`, `uplatex-dev`,
   `platex-dev`, `latex-dev`, `luatex`, `pdftex`, `xetex`,
-  `uptex`, `ptex`, `tex`, `context`.
+  `uptex`, `ptex`, `tex`, `optex`, `context`.
 
    The `engine` parameter is set to the specified keyword (lowercased).
  
