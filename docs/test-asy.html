@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>LaTeX CGI tests</title>
+    <meta charset="UTF-8">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.min.js"></script>
+    <style type="text/css" media="screen">
+      .ace_editor {
+	  border: 1px solid lightgray;
+	  margin-bottom: 1px !important;
+	  width: 100%;
+      }
+      div.spacer {
+	  margin-top:16px;
+      }
+    </style>
+    <script src="runlatex.js"></script>
+    <style>
+      body {margin:auto; max-width: 70em;}
+      div.h {background-color: #F5F5FF;margin: .5em 0;}
+      pre {background-color: #EEE;margin:0;padding: .5em;}
+    </style>
+    
+  </head>
+  <body>
+<hr>
+
+<a href="./">Site index page</a><br>
+<a href="./settings">Site Settings page</a>
+
+<hr>
+
+<h1 id="ll">assymptote test</h1>
+
+<a href="https://tex.stackexchange.com/a/153211/">stackexchange</a>
+
+
+<div class="h">
+  <pre>
+    /*
+    % !TeX asy
+    */
+settings.outformat="pdf";
+real xunit=2cm, yunit=1.4cm;
+unitsize(xunit,yunit);
+defaultpen(basealign);
+picture blank = currentpicture.copy();
+usepackage("amssymb");
+
+string[][] nodestext = {{"$\hat{A}$", "$d$", "$A$"},
+            {"$\sum_i a_i$", "$c$"},
+            {"$\hat{A}$", "$\displaystyle\prod_{n \in \mathbb{Z}} A_n$", "$\displaystyle\prod_{n \in \mathbb{Z}} A_n$", "$A$"},
+            {},
+            {"", "", minipage("node not in math mode",60pt)}};
+
+Label[][] nodes;
+for (int r = 0; r < nodestext.length; ++r) {
+  nodes.push(new Label[nodestext[r].length]);
+  for (int c = 0; c < nodestext[r].length; ++c) {
+    nodes[r][c] = Label(nodestext[r][c], position=(c,-r), align=N);
+    label(nodes[r][c]);
+  }
+}
+
+/*
+ * This function computes the bounding box of a Label by creating a new blank
+ * picture with the same sizing information as the old picture, adding the
+ * Label to that blank picture, and then computing the bounding box of that picture.
+ */
+path boundingbox(Label L) {
+  picture currentpic = blank.copy();
+  label(currentpic, L);
+  pair min = min(currentpic, user=true);  //Without the user=true option, the returned answer would be measured in postscript points.
+  pair max = max(currentpic, user=true);
+  return box(min, max);
+}
+
+path[][] boundingboxes;
+pair[][] centers;
+for (int r = 0; r < nodes.length; ++r) {
+  path[] boundingboxesr;
+  pair[] centersr;
+  for (int c = 0; c < nodes[r].length; ++c) {
+    Label currentnode = nodes[r][c];
+    pair currentpos = (c,-r);
+    boundingboxesr.push(boundingbox(currentnode));
+    centersr.push(currentpos + (0,7pt/yunit));
+  }
+  boundingboxes.push(boundingboxesr);
+  centers.push(centersr);
+}
+
+path truncate(path thepath, int sourcerow, int sourcecol, int up=0, int right=0) {
+  pair source = centers[sourcerow][sourcecol];
+  int destrow = sourcerow - up;
+  int destcol = sourcecol + right;
+  pair dest = centers[destrow][destcol];
+  path toreturn = thepath;
+  toreturn = firstcut(toreturn, knife=boundingboxes[sourcerow][sourcecol]).after;
+  toreturn = lastcut(toreturn, knife=boundingboxes[destrow][destcol]).before;
+  return toreturn;
+}
+
+void cdarrow(int sourcerow, int sourcecol, int up=0, int right=0, Label L="", bool crossingover = false) {
+  pair source = centers[sourcerow][sourcecol];
+  int destrow = sourcerow - up;
+  int destcol = sourcecol + right;
+  pair dest = centers[destrow][destcol];
+  path touse = truncate(source -- dest, sourcerow, sourcecol, up, right);
+  if (crossingover) draw(touse, white+linewidth(3pt));
+  draw(touse, arrow=Arrow(TeXHead), L=L, margin=Margins);
+}
+
+cdarrow(0,0,up=-1,right=1);
+cdarrow(1,0,up=1,right=1,crossingover=true, L=Label("$\scriptstyle h$",align=Relative(0.3W),position=Relative(0.65)));
+cdarrow(1,0,right=1,L=Label("$\scriptstyle f$",align=Relative(E)));
+cdarrow(0,1,right=-1);
+
+cdarrow(2,0,right=1);
+cdarrow(2,1,right=1);
+cdarrow(2,2,right=1);
+
+path curvedarrow = centers[2][0]{SSE} .. tension 0.75 .. {NE} centers[2][2];
+curvedarrow=truncate(curvedarrow, 2, 0, right=2);
+draw(curvedarrow, arrow=Arrow(TeXHead), L=Label("$\scriptstyle g$",align=Relative(E)), margin=Margins);
+
+curvedarrow = centers[0][1] {ESE} .. {ENE} centers[0][2];
+curvedarrow = truncate(curvedarrow, 0,1, right=1);
+draw(curvedarrow, arrow=Arrow(TeXHead), margin=Margins);
+
+curvedarrow = centers[0][1] {ENE} .. {ESE} centers[0][2];
+curvedarrow = truncate(curvedarrow, 0,1, right=1);
+draw(curvedarrow, arrow=Arrow(TeXHead), margin=Margins);
+</pre>
+</div>
+
+</body>
+  
+</html>
