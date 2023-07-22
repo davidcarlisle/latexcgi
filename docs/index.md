@@ -68,6 +68,13 @@ If the form contains unexpected fields, the whole submission is rejected.
    It defaults to empty unless the log of the first run from LaTeX has
    a biblatex message saying
    to run biber or bibtex, or if there is a `No file document.bbl` message.
+
+ * makeglossaries  
+   This field is optional, but if supplied must be one of  
+   `makeglossaries`, `makeglossaries-light`
+
+   It defaults to empty.
+
  * filename[]
  
    There must be at least one of these parameters, each specifying a filename.
@@ -142,6 +149,10 @@ The known keywords are
    The `bibcmd` parameter is set to the specified keyword (lowercased).
   
    If this is not used the `bibcmd` parameter is not set and bibtex or biber may be chosen automatically as described above.
+
+* `makeglossaries`, `makeglossaries-light`.
+
+   The `makeglossaries` parameter is set to the specified keyword (lowercased).
 
 * `pdfjs`, `pdf`, `log`, `make4ht`, `latexml`, `lwarp`.
 

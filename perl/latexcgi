@@ -108,7 +108,7 @@ sub parseform
                     $skipblank=1;
                 } elsif ($name eq "bibcmd") {
                     $skipblank=1;
-                } elsif ($name eq "makeglossariescmd") {
+                } elsif ($name eq "makeglossaries") {
                     $skipblank=1;
                 } elsif ($name eq "return") {
                     $skipblank=1;
