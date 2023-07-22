@@ -13,7 +13,7 @@ use File::Copy;
 my(%FORM,@NAMES,@MAKEINDEX,$n,$m,@files,$file);
 $FORM{'engine'}="pdflatex";
 $FORM{'bibcmd'}="";
-$FORM{'makeglossariescmd'}="";
+$FORM{'makeglossaries'}="";
 $FORM{'return'}="pdfjs";
 
 # currently only support makeindex
@@ -219,7 +219,7 @@ $engine="latexcgilwarp $engine";
         }
 
 
-        my $makeglossariescmd=$FORM{'makeglossariescmd'};
+        my $makeglossariescmd=$FORM{'makeglossaries'};
         if($makeglossariescmd=~/^(makeglossaries(-light)?)$/ ) {
             system("/usr/local/bin/run1", "$makeglossariescmd", "document");
         }
