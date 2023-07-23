@@ -3,8 +3,10 @@
 # uses pdflatex unless engine supplied in optional second argument.
 # result in document.pdf (it may not be PDF!)
 
+# https://httpbin.org/post
+
 engine=${2-pdflatex}
 curl -s -L -o document.pdf -F return=pdf -F engine=$engine \
      -F "filecontents[]=<$1" -F filename[]=document.tex \
-     https://httpbin.org/post
+     https://texlive.net/cgi-bin/latexcgi
 file document.pdf

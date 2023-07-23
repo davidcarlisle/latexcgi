@@ -69,7 +69,7 @@ sub parseform
                         close FH;
                         $getvalue=0;
                     } else {
-                        s/\r\n$//;
+                        s/\r?\n$//;
                         print FH "$_\n";
                     }
                 } elsif(/(.*)\r\n$/) {
