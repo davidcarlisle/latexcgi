@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>run tex for ngPDF</title>
+    <meta charset="UTF-8">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.min.js"></script>
+    <style type="text/css" media="screen">
+      .ace_editor {
+	  border: 1px solid lightgray;
+	  margin-bottom: 1px !important;
+	  width: 100%;
+      }
+      div.spacer {
+	  margin-top:16px;
+      }
+      a { text-decoration:none; color:#5555FF}
+      a:hover	   {text-decoration:underline}
+    </style>
+    <script src="runlatex2.js"></script>
+    <script>
+
+      runlatex.editorlines=40;
+      runlatex.adddefaultpreamble=true;
+      runlatex.adddefaultengine=true;
+
+      runlatex.overleafURI=null;
+      
+      runlatex.texts ={
+	  "Open in Overleaf": "",
+	  "TeXLive.net":      "Generate Tagged PDF", 
+	  "Delete Output":    "Delete Output",
+	  "Compiling PDF":    "Compiling Tagged PDF",
+	  "Added Code":       "",
+	  "End Added Code":   "",
+	  "Top Caption":      ""
+      }
+  function updateURL () {
+      var t =  editors["pre0"].getValue();
+      var newl="?" + encodeURI(t).replace(/\$/g,'%24');
+      // copy to clipboard
+      var nn=document.createElement("textarea");
+      nn.value=document.location.protocol + "//" + document.location.host + document.location.pathname + newl;
+      document.body.appendChild(nn);
+      nn.select();
+      document.execCommand("copy");
+      document.body.removeChild(nn);
+      // update
+      if(newl != document.location.search){
+	  document.location.search = "?" + encodeURI(t).replace(/\$/g,'%24');
+      }
+  }
+
+  function fillForm() {
+  if(document.location.search == "?context") {
+      editors["pre0"].setValue("% !TeX context\n\n\\starttext\n\n\\stoptext\n");
+      editors["pre0"].clearSelection();
+  } else if(document.location.search != "") {
+      editors["pre0"].setValue(decodeURIComponent(document.location.search.substring(1)),0);
+      editors["pre0"].clearSelection();
+      latexcgi("pre0");
+  }
+  }
+
+  window.addEventListener('load', fillForm, false);
+
+
+    </script>
+    <style>
+      body {margin:auto; max-width: 70em;}
+      div.h {background-color: #F5F5FF;margin: .5em 0;}
+      pre {background-color: #EEE;margin:0;padding: .5em;}
+    </style>
+    
+  </head>
+  <body>
+
+<hr>
+<div>
+<button onclick="updateURL()">Update/Copy URL</button>
+&nbsp;&nbsp;
+<a href="https://davidcarlisle.github.io/latexcgi/">Server documentation (GitHub)</a>
+&nbsp;&nbsp;
+<a href="https://texlive.net/">TeXLive.net Home</a>
+</div>
+<hr>
+<div class="h">
+<pre id="pre0">
+\DocumentMetadata{
+ testphase={
+     phase-III
+    ,math,table,title
+     },
+ pdfversion=2.0,
+ pdfstandard=ua-2,
+ uncompress
+}
+\documentclass{article}
+\usepackage{amsmath}
+\begin{document}
+
+\section{Example}
+Some text
+\begin{itemize}
+\item one
+\item two
+\end{itemize}
+\end{document}</pre>
+</div>
+<hr>
+<a href="https://github.com/sponsors/davidcarlisle/">Copyright 2020&ndash;2024 David Carlisle</a>
+</body>
+  
