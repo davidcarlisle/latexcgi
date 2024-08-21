@@ -208,7 +208,10 @@ $engine="latexcgilwarp $engine";
             if(/^\(rerunfilecheck.* Rerun/) {
                 $rerun=1;
             }
-            if(/Warning.*Rerun/) {
+	    if(/reprocess this file/) {
+                $rerun=1;
+            }
+	    if(/Warning.*Rerun/) {
                 $rerun=1;
             }
         }
