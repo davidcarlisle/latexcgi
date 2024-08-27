@@ -191,6 +191,7 @@ $engine="latexcgilwarp $engine";
         open(FHLOG, '<', "document.log") or die $!;
         my $rerun=0;
         my $bibcmd=$FORM{'bibcmd'};
+	my $asyrun=1;
         $return=$FORM{'return'};
         while (<FHLOG>) {
             if(/Package biblatex Warning: Using fall-back BibTeX/) {
@@ -213,6 +214,18 @@ $engine="latexcgilwarp $engine";
             }
 	    if(/Warning.*Rerun/) {
                 $rerun=1;
+            }
+	    # why not this?
+            # if(/asymptote Warning: file `(document-[0-9]+).tex' not found/) {
+            #     $rerun=1;
+            #     system("/usr/local/bin/run1", "asy", "$1");
+            # }
+	    if (/asymptote Warning: file .* not found/) {
+		$rerun=1;
+		while( -e "document-$asyrun.asy") {
+		    system("/usr/local/bin/run1", "asy", "document-$asyrun");
+		    $asyrun++;
+		}
             }
         }
         close(FHLOG);
