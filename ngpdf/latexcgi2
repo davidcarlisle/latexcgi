@@ -275,7 +275,7 @@ $engine="latexcgilwarp $engine";
         chmod(0777,"/var/www/html/latexcgi/dir" . "$tmpstr");
         open my $fh, '>', "/var/www/html/latexcgi/dir" . "$tmpstr" . '/document.html';
         print {$fh} "<p>Open in the <a target='_blank' href='https://ngpdf.com/pdfUrlToHtml?pdfUrl=https://texlive.net/latexcgi/document" . "$tmpstr" . ".pdf&mode=editor'>ng PDF Editor</a></p>";
-        print {$fh} "<p>Open <a target='_blank' href='https://ngpdf.com/pdfUrlToHtml?pdfUrl=https://texlive.net/latexcgi/document" . "$tmpstr" . ".pdf&mode=html'>as derived HTML at ng PPDF</a></p>";
+        print {$fh} "<p>Open <a target='_blank' href='https://ngpdf.com/pdfUrlToHtml?pdfUrl=https://texlive.net/latexcgi/document" . "$tmpstr" . ".pdf&mode=html'>as derived HTML at ng PDF</a></p>";
         print {$fh} "<p>Open <a target='_blank' href='/pdfjs/web/viewer.html?file=/latexcgi/document" . "$tmpstr" . ".pdf'>PDF in a new tab</a></p>";
         print {$fh} "<p>Open <a target='_blank' href='/latexcgi/document" . "$tmpstr" . ".log'>log file in new tab</a></p>";
         close $fh;
