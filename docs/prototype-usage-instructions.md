@@ -31,7 +31,11 @@ list:
     math,
     firstaid}  
 }
-\documentclass{....}
+\documentclass{article}
+\begin{document}
+\section{Start}
+abc
+\end{document}
 ```
 The first four keys in the example set important document metadata,
 like the language, the requested PDF version and the standards the
