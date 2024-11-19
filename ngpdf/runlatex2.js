@@ -19,7 +19,7 @@ runlatex.texts ={
     "Added Code":       "Added code",
     "End Added Code":   "End Added code",
     "Top Caption":      "Edit and run this example:",
-    "metadata":         "\n\\DocumentMetadata{\n lang=en,\n testphase={phase-III,math,table,title},\n pdfversion=2.0,\n pdfstandard=ua-2,\n pdfstandard=a-4f,\n uncompress\n}"
+    "metadata":         "\\DocumentMetadata{\n lang=en,\n testphase={phase-III,math,table,title},\n pdfversion=2.0,\n pdfstandard=ua-2,\n pdfstandard=a-4f,\n uncompress\n}"
 }
 
 runlatex.editorlines=100;
@@ -298,7 +298,7 @@ function deleteoutput(nd){
 
 function generatepreamble(t,e) {
     e.navigateFileStart();
-    e.insert("\n%\n" + runlatex.texts["metadata"] + "\n%\n");
+    e.insert("%\n" + runlatex.texts["metadata"] + "\n");
     if(t.match(/koma|KOMA|addsec|\\scr|scrheadings/)){
         e.insert("\n% " + runlatex.texts["Added Code"] + "\n\\documentclass{scrartcl}\n");
     } else {
