@@ -82,6 +82,12 @@ header rows of the tables so that they can be tagged as `<TH>`
 cells. By default all cells are considered data cells. This can be done
 ```latex
 \tagpdfsetup{table/header-rows={1,2}}
+\begin{tabular}{lr}
+\multicolumn{2}{c}{Example}\\
+Name&Value\\
+This& 11 \\
+That & 2
+\end{tabular}
 ```
 generally (in the preamble) or on a table by table basis before the table.
 
@@ -103,6 +109,7 @@ For this the document should be compiled once with the command
 ```latex
 \tagpdfsetup{math/mathml/write-dummy}
 ```
+{: .norun :}
 
 This will write a file `<file>-mathml-dummy.html` which has a
 prepared section for every equation found in the document. The section
@@ -116,6 +123,8 @@ shows the LaTeX-source and a hash value and an empty
 <math></math>
 </div>
 ```
+{: .noedit :}
+
 The math should be filled with a suitable MathML representation and
 the dummy file should then be renamed to `<file>-mathml.html`.
 
