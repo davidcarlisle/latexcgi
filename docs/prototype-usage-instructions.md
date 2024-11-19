@@ -96,6 +96,10 @@ merely used to ensure that the content is properly aligned, it should
 be turned into a presentation table with
 ```latex
 \tagpdfsetup{table/tagging=presentation}
+\begin{tabular}{ccc}
+\textbullet & \textbullet & \textbullet \\
+--- & --- & ---
+\end{tabular}
 ```
 
 ## Extended math support
