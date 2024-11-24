@@ -58,7 +58,7 @@ If the form contains unexpected fields, the whole submission is rejected.
    `lualatex-dev`, `pdflatex-dev`, `xelatex-dev`, `uplatex-dev`, `platex-dev`, `latex-dev`,  
    `luatex`, `pdftex`, `xetex`, `uptex`, `ptex`, `tex`,  
    `optex`,`context`,  
-   `asy`y.
+   `asy`.
    
    The default is `pdflatex`.
  * bibcmd
@@ -89,7 +89,7 @@ If the form contains unexpected fields, the whole submission is rejected.
 
    This field is optional but if supplied must be one or `pdfjs`, `pdf`, `log` or `make4ht`, `LaTeXML` or `lwarp`.
 
-   The default is `pdfjs` meaning the PDF.js is used to render the PDF.
+   The default is `pdfjs` meaning that PDF.js is used to render the PDF.
 
    `pdf` specifies that the PDF document should be returned, so will use your browser's default PDF renderer.
 
@@ -380,4 +380,4 @@ mobile clients that often do not include a PDF renderer by default.
 
 ---
 [privacy policy](privacy)  
-[Copyright 2020&ndash;2023 David Carlisle](https://github.com/sponsors/davidcarlisle/)
+[Copyright 2020&ndash;2024 David Carlisle](https://github.com/sponsors/davidcarlisle/)
