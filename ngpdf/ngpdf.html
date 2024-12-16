@@ -85,6 +85,7 @@
 <hr>
 <div class="h">
 <pre id="pre0">
+% \DocumentMetadata enables LaTeX tagging support and sets options
 \DocumentMetadata{
  testphase={phase-III,math,table,title},
  pdfversion=2.0,
@@ -92,19 +93,23 @@
  uncompress
 }
 \documentclass{article}
+% Using Unicode fonts for math improves the possibility of good math tagging
 \usepackage{unicode-math}
 \begin{document}
 
+% Text structures such sections and lists are automatically tagged.
 \section{Example}
 Some text
 \begin{itemize}
 \item one
 \item two
 \end{itemize}
+% Display math
 \[
 ax^2+b^x+c=0
 \]
-\end{document}</pre>
+\end{document}
+</pre>
 </div>
 
 <hr>
