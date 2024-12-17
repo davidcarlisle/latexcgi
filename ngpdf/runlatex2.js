@@ -19,7 +19,7 @@ runlatex.texts ={
     "Added Code":       "Added code",
     "End Added Code":   "End Added code",
     "Top Caption":      "Edit and run this example:",
-    "metadata":         "\\DocumentMetadata{\n lang=en,\n testphase={phase-III,math,table,title},\n pdfversion=2.0,\n pdfstandard=ua-2,\n pdfstandard=a-4f,\n uncompress\n}"
+    "metadata":         "\\DocumentMetadata{\n lang=en,\n testphase=latest,\n pdfversion=2.0,\n pdfstandard=ua-2,\n pdfstandard=a-4f,\n uncompress\n}"
 }
 
 runlatex.editorlines=100;
