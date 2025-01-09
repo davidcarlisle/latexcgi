@@ -1,0 +1,54 @@
+#!/usr/bin/perl
+
+use CGI;
+use File::Path ('remove_tree');
+use File::Copy;
+
+
+my $cgi = new CGI;
+ my($tmpdir,$return);
+ $tmpdir="/tmp/showtags-$$";
+ mkdir($tmpdir, 0777) unless (-d $tmpdir);
+
+ my $followmap = $cgi->param('followmap');
+ my $schema = $cgi->param('schema');
+ my $file = $cgi->param('pdffile');
+ $file=~m/^.*(\\|\/)(.*)/;
+ # strip the remote path and keep the filename
+ my $name = "document.pdf";
+ open(LOCAL, ">$tmpdir/$name") or print 'error';
+ my $file_handle = $cgi->upload('pdffile'); 
+ while(<$file_handle>) {    
+    print LOCAL $_;
+ }
+ close($file_handle);                  
+ close(LOCAL);
+ 
+ print $cgi->header( 
+                    -type    => 'text/xml',
+                    -charset => 'charset=UTF-8');
+ print "<!--\n";
+print "$file has been successfully uploaded\n";
+print "follow map: $followmap, schema: $schema\n";
+ print "-->\n";
+     chdir($tmpdir);
+    $ENV{'PATH'}="/usr/local/texlive/2024/bin/x86_64-linux:" . $ENV{'PATH'};
+
+my $mapopt="";
+if ($followmap eq "on" ) {
+    $mapopt = "--map";
+}
+
+my $schemafile = "latex-document.rnc";
+if($schema eq "1.7") {
+    $schemafile = "latex-document17.rnc";
+}
+  system("texlua /home/david/show_pdf_tags/show_pdf_tags.lua --xml $mapopt $name > document.xml");
+
+ print "<!--\nRNV validation\n\n";
+ system("/home/david/rnv /home/david/rnc/$schemafile document.xml 2>&1");
+ print "\n-->\n";
+
+system("sed -e 's/www.w3.org/-www.w3.org/g' document.xml");
+        chdir("..");
+        remove_tree($tmpdir);
