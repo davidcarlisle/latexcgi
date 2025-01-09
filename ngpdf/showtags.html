@@ -3,10 +3,16 @@
   <head>
     <meta charset="UTF-8"/>
     <title>PDF upload</title>
-			      </head>
+    <style>
+     body {max-width: 60em; margin-left:auto;margin-right:auto}
+     </style>
+
+   </head>
   <body>
 <h1>PDF Structure Tree Display</h1>
 
+
+<h2 id="formheading">Upload Tagged PDF</h2>
 <!--
     action="https://httpbin.org/post"
     action="https://texlive.net/cgi-bin/show_pdf_tags"
@@ -17,19 +23,17 @@
          action="https://texlive.net/cgi-bin/showtags"
       id="pdfform"
       name="pdfform"
-      style="margin: 1em; background-color: beige;">
+      style="margin: 1em; padding:.5em;background-color: beige;">
 <div style="margin: 1em;">
-  <label for="pdffile">Select PDF file to upload</label>
-</div>
-<div style="margin: 1em;">
- <input type="file" name="pdffile" id="pdffile"/>
+<label for="pdffile">Select PDF file: </label>
+<input type="file" name="pdffile" id="pdffile" style="min-width:40%;background-color: white; padding:.2em;border: solid black thin"/>
 </div>
 <div style="margin: 1em;">
   <label for="followmap">Follow Role Map: </label>
  <input type="checkbox" checked name="followmap" id="followmap"/>
 </div>
 <div style="margin: 1em;">
-<label for="schema">Validate as : </label>
+<label for="schema">Validate as: </label>
  <input name="schema" type="radio" checked id="schema2.0" value="2.0"/>
 <label for="schema2.0">PDF2.0 WTPDF/UA-2</label>
  <input name="schema" type="radio"  id="schema1.7" value="1.7"/>
@@ -42,6 +46,31 @@
 </div>
 </form>
 
+
+<h2 id="notes">Notes</h2>
+
+<ul>
+<li>
+Select a tagged PDF file to upload.  Drag and drop the PDF file, or browse using the Browse button.
+</li>								    
+<li>By default the generated XML will follow any specified Role
+Mappings so the generated elements should use names from the standard PDF specifications.
+If the <b>Follow Role Map</b> `option is unchecked, the generated elements will use the names
+and namespaces specified in any locally defined Structure elements. The LaTeX-Project Structure Elements
+are declared in the schema used here, but other namespacees result in XML files thatwill not validate
+to the supplied schema.</li>
+<li>The default <b>PDF/UA-2</b> schema uses the PDF 2 and PDF 1 Structure element namespaces. You may instead select a schema for <b>PDF/UA-1</b> which declares PDF 1.7 Strutcure elements (in no-namespace). You may also select <b>None</b> to suppress schema validation.</li>
+</ul>
+
+<h2 id="sources">Sources</h2>
+<p>This web version is intended for small illustrative examples only, and is provided a free service.</p>
+<p>We encourage use of a local installation to allow easier experimentation and to reduce load on this server.</p>
+<p>The full sources are available under Open Source licences.<p>
+<ul>
+ <li><code>show_lua_tags</code> Is a Lua script that just requires the <code>texlua</code> executable that is included in all modern TeX distributions. Source and documentation are on <a href="https://github.com/zauguin/show_pdf_tags">GitHub</a>.</li>
+ <li>The Relax NG Schema are currently developed as part of the LaTeX-Project tagging project, also on <a href="https://github.com/latex3/tagging-project/tree/main/project-examples/scripts">GitHub</a></li>
+ <li>Any Relax NG validator can be used (RNV and Emacs/nxml are used in development). This web form uses RNV available from <a href="http://ftp.davidashen.net/PreTI/RNV/">davidashen.net</a>.</li>
+ 
   </body>
 </html>
 
