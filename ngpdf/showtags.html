@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8"/>
+    <title>PDF upload</title>
+			      </head>
+  <body>
+<h1>PDF Structure Tree Display</h1>
+
+<!--
+    action="https://httpbin.org/post"
+    action="https://texlive.net/cgi-bin/show_pdf_tags"
+    action="https://texlive.net/cgi-bin/showtags"
+  -->
+<form method="post"
+      enctype="multipart/form-data"
+         action="https://texlive.net/cgi-bin/showtags"
+      id="pdfform"
+      name="pdfform"
+      style="margin: 1em; background-color: beige;">
+<div style="margin: 1em;">
+  <label for="pdffile">Select PDF file to upload</label>
+</div>
+<div style="margin: 1em;">
+ <input type="file" name="pdffile" id="pdffile"/>
+</div>
+<div style="margin: 1em;">
+  <label for="followmap">Follow Role Map: </label>
+ <input type="checkbox" checked name="followmap" id="followmap"/>
+</div>
+<div style="margin: 1em;">
+<label for="schema">Validate as : </label>
+ <input name="schema" type="radio" checked id="schema2.0" value="2.0"/>
+<label for="schema2.0">PDF2.0 WTPDF/UA-2</label>
+ <input name="schema" type="radio"  id="schema1.7" value="1.7"/>
+<label for="schema1.7">PDF1.7 UA-1 </label>
+</div>
+<div style="margin: 1em;">
+  <button>Submit</button>
+</div>
+</form>
+
+  </body>
+</html>
+
