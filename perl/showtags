@@ -39,11 +39,12 @@ if ($followmap eq "on" ) {
     $mapopt = "--map";
 }
 
+my $scode=0;
 my $schemafile = "latex-document.rnc";
 if($schema eq "1.7") {
     $schemafile = "latex-document17.rnc";
 }
-  system("texlua /home/david/show_pdf_tags/show_pdf_tags.lua --xml $mapopt $name > document.xml");
+ $scode =  system("texlua /home/david/show_pdf_tags/show_pdf_tags.lua --xml $mapopt $name > document.xml");
 
 if($schema ne "none") {
  print "<!--\nRNV validation\n\n";
@@ -51,6 +52,14 @@ if($schema ne "none") {
  print "\n-->\n";
 }
 
+
+if ($scode!=0) {
+print "\n<error>\n";
+}
 system("sed -e 's/www.w3.org/-www.w3.org/g' document.xml");
+if ($scode!=0) {
+print "\n</error>\n";
+}
+
         chdir("..");
         remove_tree($tmpdir);
