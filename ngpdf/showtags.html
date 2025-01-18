@@ -33,6 +33,10 @@
  <input type="checkbox" checked name="followmap" id="followmap"/>
 </div>
 <div style="margin: 1em;">
+  <label for="download">Download as document.xml: </label>
+ <input type="checkbox"  name="download" id="download"/>
+</div>
+<div style="margin: 1em;">
 <label for="schema">Validate as: </label><br/>
  <input name="schema" type="radio" checked id="schema-auto" value="latex-document-switch"/>
 <label for="schema-auto">Auto</label><br/>
@@ -68,6 +72,8 @@ to the supplied schema.</li>
 <li>The default <b>Auto</b> schema automatically validates a document against
  the <b>PDF/UA-1</b> or <b>PDF/UA-2</b> schemas extended with <b>LaTeX</b> Namespace elements.
   You may instead select a specific schema, or <b>None</b> to suppress schema validation.</li>
+<li>By default, the generated XML will be displayed by your browser. If you select the <b>Download</b>
+    option, it will be downloaded as <code>document.xml</code> to your default download area.</li>
 </ul>
 
 <h2 id="sources">Sources</h2>
@@ -87,7 +93,8 @@ to the supplied schema.</li>
 <!-- Stop an accidental drop loading the pdf file -->
 <script>
 window.addEventListener("dragover",function(e){
-  e = e || event;
+    e = e || event;
+        ev.dataTransfer.dropEffect = "move";
   e.preventDefault();
 },false);
 window.addEventListener("drop",function(e){

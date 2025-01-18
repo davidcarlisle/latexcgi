@@ -10,6 +10,7 @@ my $cgi = new CGI;
  $tmpdir="/tmp/showtags-$$";
  mkdir($tmpdir, 0777) unless (-d $tmpdir);
 
+ my $download = $cgi->param('download');
  my $followmap = $cgi->param('followmap');
  my $schema = $cgi->param('schema');
  my $file = $cgi->param('pdffile');
@@ -24,10 +25,19 @@ my $cgi = new CGI;
  close($file_handle);                  
  close(LOCAL);
  
- print $cgi->header( 
-                    -type    => 'text/xml',
-                    -charset => 'charset=UTF-8');
- print "<!--\n";
+if ($download eq "on" ) {
+    print $cgi->header( 
+	-type    => 'application/x-download',
+	Content_disposition => 'attachment; filename=document.xml',
+	-charset => 'charset=UTF-8',
+	);
+} else {
+    print $cgi->header( 
+	-type    => 'text/xml',
+	-charset => 'charset=UTF-8');
+}
+
+print "<!--\n";
 print "$file has been successfully uploaded\n";
 print "follow map: $followmap, schema: $schema\n";
  print "-->\n";
