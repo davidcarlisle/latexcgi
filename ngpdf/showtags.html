@@ -4,7 +4,13 @@
     <meta charset="UTF-8"/>
     <title>PDF Structure validation</title>
     <style>
-     body {max-width: 60em; margin-left:auto;margin-right:auto}
+      body {max-width: 60em; margin-left:auto;margin-right:auto}
+      form {
+	  margin: 1em; padding:.5em;
+	  background-color: beige;
+	  border-radius: 2em;
+	  border: solid thick green;
+      }
      </style>
 
    </head>
@@ -23,7 +29,7 @@
          action="https://texlive.net/cgi-bin/showtags"
       id="pdfform"
       name="pdfform"
-      style="margin: 1em; padding:.5em;background-color: beige;">
+      >
 <div style="margin: 1em;">
 <label for="pdffile">Select PDF file: </label>
 <input type="file" name="pdffile" id="pdffile" style="min-width:40%;background-color: white; padding:.5em;border: solid black thin"/>
