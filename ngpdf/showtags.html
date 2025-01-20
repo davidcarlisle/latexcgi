@@ -11,6 +11,16 @@
 	  border-radius: 2em;
 	  border: solid thick green;
       }
+      #pdffile {
+	  min-width:40%;
+	  background-color: white;
+	  padding:1em;
+	  border: solid black thin;
+	  border-radius: .5em;
+      }
+      #schemas  {
+	  line-height:115%;
+      }
      </style>
 
    </head>
@@ -32,7 +42,7 @@
       >
 <div style="margin: 1em;">
 <label for="pdffile">Select PDF file: </label>
-<input type="file" name="pdffile" id="pdffile" style="min-width:40%;background-color: white; padding:.5em;border: solid black thin"/>
+<input type="file" name="pdffile" id="pdffile"/>
 </div>
 <div style="margin: 1em;">
   <label for="followmap">Follow Role Map: </label>
@@ -42,7 +52,7 @@
   <label for="download">Download as document.xml: </label>
  <input type="checkbox"  name="download" id="download"/>
 </div>
-<div style="margin: 1em;">
+<div style="margin: 1em;" id="schemas">
 <label for="schema">Validate as: </label><br/>
  <input name="schema" type="radio" checked id="schema-auto" value="latex-document-switch"/>
 <label for="schema-auto">Auto</label><br/>
