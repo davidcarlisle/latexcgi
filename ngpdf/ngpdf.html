@@ -33,7 +33,7 @@
 	  "Added Code":       "",
 	  "End Added Code":   "",
 	  "Top Caption":      "",
-	  "metadata":         "\\DocumentMetadata{\n lang=en,\n testphase=latest,\n pdfversion=2.0,\n pdfstandard=ua-2,\n pdfstandard=a-4f,\n uncompress\n}"
+          "metadata":         "\\DocumentMetadata{\n lang=en,\n testphase=latest,\n pdfversion=2.0,\n pdfstandard=ua-2,\n pdfstandard=a-4f,\n uncompress\n}"
       }
   function updateURL () {
       var t =  editors["pre0"].getValue();
@@ -93,6 +93,9 @@
  pdfstandard=ua-2,
  uncompress
 }
+\tagpdfsetup{
+ math/mathml/structelem,
+  }
 \documentclass{article}
 % Using Unicode fonts for math improves the possibility of good math tagging.
 \usepackage{unicode-math}
@@ -133,6 +136,6 @@ ax^2+b^x+c=0
 generated, and the resulting PDF is deleted after an hour.</p>
 
 <hr>
-<a href="https://github.com/sponsors/davidcarlisle/">Copyright 2020&ndash;2024 David Carlisle</a>
+<a href="https://github.com/sponsors/davidcarlisle/">Copyright 2020&ndash;2025 David Carlisle</a>
 </body>
   

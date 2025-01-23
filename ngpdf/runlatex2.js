@@ -395,7 +395,7 @@ function latexcgi(nd) {
     if(ifr == null) {
 	ifr=document.createElement("iframe");
 	ifr.setAttribute("width","100%");
-	ifr.setAttribute("height","130em");
+	ifr.setAttribute("height","170em");
 	ifr.setAttribute("id",nd + "ifr");
 	ifr.setAttribute("name",nd + "ifr");
         ifr.setAttribute("srcdoc","...");
