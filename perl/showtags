@@ -20,12 +20,15 @@ my $cgi = new CGI;
  if (-e "/var/www/html/latexcgi/" . $pdfdoc . ".pdf") {
      copy("/var/www/html/latexcgi/" . $pdfdoc . ".pdf", $tmpdir . "/$name");
      $file=$pdfdoc;
- } else {
-  open(LOCAL, ">$tmpdir/$name") or print 'error';
-  my $file_handle = $cgi->upload('pdffile'); 
- while(<$file_handle>) {    
-    print LOCAL $_;
- }
+} elsif (-e "/var/www/html/demo/" . $pdfdoc . ".pdf") {
+    copy("/var/www/html/demo/" . $pdfdoc . ".pdf", $tmpdir . "/$name");
+    $file=$pdfdoc;
+} else {
+    open(LOCAL, ">$tmpdir/$name") or print 'error';
+    my $file_handle = $cgi->upload('pdffile'); 
+    while(<$file_handle>) {    
+	print LOCAL $_;
+    }
  close($file_handle);                  
  close(LOCAL);
  }
