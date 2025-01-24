@@ -265,14 +265,6 @@ $engine="latexcgilwarp $engine";
     } elsif($?==0 && (-e ($tmpdir . "/document.pdf")) && ($return ne "log")) {
         move($tmpdir . "/document.pdf","/var/www/html/latexcgi/document" . "$tmpstr" . ".pdf");
         move($tmpdir . "/document.log","/var/www/html/latexcgi/document" . "$tmpstr" . ".log");
-            my $scode = 0;
-	    my $tagstr = "/usr/local/texlive/2024/bin/x86_64-linux/texlua /home/david/show_pdf_tags/show_pdf_tags.lua --xml --w3c- " .
-		"/var/www/html/latexcgi/document" . "$tmpstr" . ".pdf" .
-		" > " .
-		"/var/www/html/latexcgi/document" . "$tmpstr" . ".xml" .
-                " || sed -i -e '1i<error>' -e '\$a</error>' " .
-                "/var/www/html/latexcgi/document" . "$tmpstr" . ".xml" ;
-	    $scode = system ($tagstr);
         chdir("..");
         remove_tree($tmpdir);
         print "Status: 301\n";
@@ -286,7 +278,7 @@ $engine="latexcgilwarp $engine";
         print {$fh} "<p>Open <a target='_blank' href='https://ngpdf.com/pdfUrlToHtml?pdfUrl=https://texlive.net/latexcgi/document" . "$tmpstr" . ".pdf&mathjax=false&prettyprint=false&mode=html'>as derived HTML at ngPDF</a></p>";
         print {$fh} "<p>Open <a target='_blank' href='/pdfjs/web/viewer.html?file=/latexcgi/document" . "$tmpstr" . ".pdf'>PDF in a new tab</a>, Download <a download href='/latexcgi/document" . "$tmpstr" . ".pdf'>PDF</a></p>";
         print {$fh} "<p>Open <a target='_blank' href='/latexcgi/document" . "$tmpstr" . ".log'>log file in new tab</a></p>";
-        print {$fh} "<p>Show <a target='_blank' href='https://texlive.net/latexcgi/document" . "$tmpstr" . ".xml'>structure tree in new tab</a></p>";
+        print {$fh} "<p>Show <a target='_blank' href='https://texlive.net/showtags?doc=document" . $tmpstr . "'>structure tree in new tab</a></p>";
         close $fh;
             print "Location: /latexcgi/dir" . "$tmpstr" . "/document.html\n\n";
         } else {
