@@ -10,21 +10,26 @@ my $cgi = new CGI;
  $tmpdir="/tmp/showtags-$$";
  mkdir($tmpdir, 0777) unless (-d $tmpdir);
 
+ my $name = "document.pdf";
  my $download = $cgi->param('download');
  my $followmap = $cgi->param('followmap');
  my $schema = $cgi->param('schema');
+ my $pdfdoc = $cgi->param('pdfdoc');
  my $file = $cgi->param('pdffile');
- $file=~m/^.*(\\|\/)(.*)/;
- # strip the remote path and keep the filename
- my $name = "document.pdf";
- open(LOCAL, ">$tmpdir/$name") or print 'error';
- my $file_handle = $cgi->upload('pdffile'); 
+ 
+ if (-e "/var/www/html/latexcgi/" . $pdfdoc . ".pdf") {
+     copy("/var/www/html/latexcgi/" . $pdfdoc . ".pdf", $tmpdir . "/$name");
+     $file=$pdfdoc;
+ } else {
+  open(LOCAL, ">$tmpdir/$name") or print 'error';
+  my $file_handle = $cgi->upload('pdffile'); 
  while(<$file_handle>) {    
     print LOCAL $_;
  }
  close($file_handle);                  
  close(LOCAL);
- 
+ }
+
 if ($download eq "on" ) {
     print $cgi->header( 
 	-type    => 'application/x-download',

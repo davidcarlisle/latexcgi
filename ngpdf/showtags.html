@@ -43,6 +43,7 @@
 <div style="margin: 1em;">
 <label for="pdffile">Select PDF file: </label>
 <input type="file" name="pdffile" id="pdffile"/>
+<input type="hidden" name="pdfdoc" id="pdfdoc"/>
 </div>
 <div style="margin: 1em;">
   <label for="followmap">Follow Role Map: </label>
@@ -108,6 +109,17 @@ to the supplied schema.</li>
 
 <!-- Stop an accidental drop loading the pdf file -->
 <script>
+let params = new URLSearchParams(document.location.search);
+let docparam = params.get("doc");
+
+if (docparam) {
+  let indoc=document.getElementById("pdfdoc");
+
+  document.getElementById("pdffile").type="hidden";
+  indoc.type="text";
+  indoc.value=docparam;
+} else {
+
 window.addEventListener("dragover",function(e){
     e = e || event;
         ev.dataTransfer.dropEffect = "move";
@@ -122,6 +134,9 @@ document.getElementById('pdffile').addEventListener("drop",function(e){
     e = e || event;
     e.stopPropagation();
 },false);
+
+
+}
 </script>
 
 </body>
