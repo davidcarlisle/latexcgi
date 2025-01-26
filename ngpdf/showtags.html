@@ -21,8 +21,7 @@
       #schemas  {
 	  line-height:115%;
       }
-     </style>
-
+    </style>
    </head>
   <body>
 <h1>PDF Structure Tree Display and Validation</h1>
@@ -44,6 +43,7 @@
 <label for="pdffile">Select PDF file: </label>
 <input type="file" name="pdffile" id="pdffile"/>
 <input type="hidden" name="pdfdoc" id="pdfdoc"/>
+<input onclick="clearform()" type="button" value="clear"/>
 </div>
 <div style="margin: 1em;">
   <label for="followmap">Follow Role Map: </label>
@@ -109,6 +109,12 @@ to the supplied schema.</li>
 
 <!-- Stop an accidental drop loading the pdf file -->
 <script>
+
+ function clearform() {
+   document.location.search="";
+ }
+
+
 let params = new URLSearchParams(document.location.search);
 let docparam = params.get("doc");
 
