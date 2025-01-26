@@ -75,6 +75,7 @@ padding:1em;
 border: solid thin black;
 border-radius:1em;
 padding:1em;
+white-space: pre-wrap;
 }
     </style>
   </head>
@@ -86,8 +87,8 @@ padding:1em;
 
 <div id="showsettings">
 EOT
-print "<b>$file</b> has been successfully uploaded<br>\n";
-print "follow map: <b>$followmap</b>,<br>\n schema: <b>$schema</b><br>\n";
+print "File uploaded: <b>$file</b><br>\n";
+print "Follow map: <b>$followmap</b><br>\n Schema: <b>$schema</b><br>\n";
 
 print <<EOT;
 </div>
