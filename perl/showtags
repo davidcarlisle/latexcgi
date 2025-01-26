@@ -209,7 +209,9 @@ const errorNode = doc.querySelector("parsererror");
 if (errorNode) {
   console.log("error while parsing");
 } else {
-  printXML(doc.documentElement,document.getElementById('xmlpre'),"");
+  const d = document.createElement("div");
+  printXML(doc.documentElement,d,"");
+  document.getElementById('xmlpre').appendChild(d);
 }
 
 </script>
