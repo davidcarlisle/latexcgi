@@ -111,7 +111,7 @@ my $scode=0;
 $scode =  system("texlua /home/david/show_pdf_tags/show_pdf_tags.lua --xml $mapopt $name > document.xml");
 
 if($schema ne "none") {
- system("/home/david/rnv \"/home/david/rnc/$schema.rnc\" document.xml 2>&1");
+ system("/home/david/rnv \"/home/david/rnc/$schema.rnc\" document.xml 2>&1 && echo Valid");
 }
 
 print <<EOT;
