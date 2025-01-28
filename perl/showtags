@@ -160,7 +160,7 @@ s.innerHTML=indent+"<span class='fold' onclick='elfold(this,"+elcount+")'>+</spa
 hnode.appendChild(s);
 Array.from(xnode.attributes).forEach((attribute) => {// type 2
 const s = document.createElement("span");
-s.innerHTML=indent+"  <span class='attribute'>" + attribute.name + "</span>=\\"<span class='attval'>" + attribute.value +"</span>\\"\\n";
+s.innerHTML=indent+"  <span class='attribute'>" + attribute.name + "</span>=\\"<span class='attval'>" + attribute.value.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;') +"</span>\\"\\n";
 hnode.appendChild(s);
 });
 const ss = document.createElement("span");
@@ -179,7 +179,7 @@ hnode.appendChild(sss);
 } else if (xnode.nodeType==3) {// text
 if (! xnode.nodeValue.match(wsre)) {
 const s = document.createElement("span");
-s.textContent=indent+xnode.nodeValue.replace(/\\n/,' ') +"\\n";
+s.textContent=indent+xnode.nodeValue.replace(/\\n/,' ').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') +"\\n";
 hnode.appendChild(s);
 }
 } else if (xnode.nodeType==4) {// CDATA
