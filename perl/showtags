@@ -82,6 +82,7 @@ white-space: pre-wrap;
   <body>
 <h1>PDF Structure Tree</h1>
 
+<div><button onclick="history.back()">Return to the showtags form</button><br></div>
 
 <h2 id="set">Settings</h2>
 
