@@ -89,7 +89,7 @@ white-space: pre-wrap;
 <div id="showsettings">
 EOT
 print "File uploaded: <b>$file</b><br>\n";
-print "Follow role map: <b>" . ($followmap || "off") . "</b><br>\n Schema: <b>$schema</b><br>\n";
+print "Follow role map: <b>" . ($followmap || "off") . "</b><br>\n Schema: <a href='/rnc/rncview.html?rnc=$schema'><b>$schema</b></a><br>\n";
 
 print <<EOT;
 </div>
