@@ -117,7 +117,13 @@ to the supplied schema.</li>
 
 let params = new URLSearchParams(document.location.search);
 let docparam = params.get("doc");
+let rncparam = params.get("rnc");
 
+if (rncparam) {
+    let sch=document.getElementById("none");
+    sch.value=rncparam;
+    sch.checked=true;
+}
 if (docparam) {
   let indoc=document.getElementById("pdfdoc");
 
