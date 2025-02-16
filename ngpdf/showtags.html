@@ -120,10 +120,11 @@ let docparam = params.get("doc");
 let rncparam = params.get("rnc");
 
 if (rncparam) {
-    let sch=document.getElementById("none");
+    let sch=document.getElementById("schema-auto");
     sch.value=rncparam;
     sch.checked=true;
 }
+
 if (docparam) {
   let indoc=document.getElementById("pdfdoc");
 
