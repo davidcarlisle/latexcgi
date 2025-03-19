@@ -236,6 +236,9 @@ $engine="latexcgilwarp $engine";
             if($?==0){
                 system("/usr/local/bin/run1", "$engine", "$document");
             }
+            if($?==0){
+                system("/usr/local/bin/run1", "$engine", "$document");
+            }
         }
     }
 
