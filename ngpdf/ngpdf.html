@@ -88,14 +88,12 @@
 <pre id="pre0">
 % \DocumentMetadata enables LaTeX tagging support and sets options.
 \DocumentMetadata{
- testphase=latest,
  pdfversion=2.0,
  pdfstandard=ua-2,
+ tagging-setup={math/setup=mathml-SE},
  uncompress
 }
-\tagpdfsetup{
- math/mathml/structelem,
-  }
+
 \documentclass{article}
 % Using Unicode fonts for math improves the possibility of good math tagging.
 \usepackage{unicode-math}
