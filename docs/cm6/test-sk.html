@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Snippet tests</title>
+    <meta charset="UTF-8">
+    <script src="https://texlive.net/cm6-test/cm6.bundle.min.js"></script>
+    <style type="text/css" media="screen">
+      .ace_editor {
+	  border: 1px solid lightgray;
+	  margin-bottom: 1px !important;
+	  width: 100%;
+      }
+      div.spacer {
+	  margin-top:16px;
+      }
+    </style>
+    <script src="runlatex-cm6.js"></script>
+    <script>
+      runlatex.editorlines=40;
+      runlatex.adddefaultpreamble=true;
+      runlatex.adddefaultengine=true;
+      runlatex.usecaptions=true;
+
+      runlatex.overleafURI=null;
+      
+      runlatex.texts ={
+	  "Open in Overleaf": "Open in Overleaf",
+	  "TeXLive.net":      "TeXLive.net", /// or "run latex" or whatever
+	  "Delete Output":    "Delete Output",
+	  "Compiling PDF":    "Compiling PDF or HTML",
+	  "Added Code":       "Added code (sk preamble)",
+	  "End Added Code":   "End code (sk preamble)",
+	  "Top Caption":      ""
+      }
+
+      runlatex.packageregex.push(
+	  [/\\qty *[\[{]/, "\\usepackage{siunitx}\n"]
+      );
+    </script>
+    <style>
+      body {margin:auto; max-width: 70em;}
+      div.h {background-color: #F5F5FF;margin: .5em 0;}
+      pre {background-color: #EEE;margin:0;padding: .5em;}
+      button.llbutton {background-color:yellow;}
+    </style>
+    
+  </head>
+  <body>
+
+<h1 id="ll">Snippet Testing</h1>
+
+<hr>
+<a href="./">Site index page</a><br>
+<a href="./settings">Site Settings page</a>
+<hr>
+
+<p>Testing a <a href="runlatex.js">runlatex JavaScript</a>
+  Parameterised as requested by Stefan for his forum sites.
+  This drops the Overleaf link, just posting to <a href="https://texlive.net">TeXLive.net</a>  and supports
+  adding a guessed default preamble to fragments that have no <code>\documentclass</code> or <code>% !TEX ... ??tex</code> comment.</p>
+
+<h2 id="engine">full doc</h2>
+<div class="h">
+<pre>
+  \documentclass{article}
+ 
+  \usepackage{graphicx}
+  \begin{document}
+  
+ something  \includegraphics[height=1cm]{example-image}
+
+  \end{document}
+</pre>
+</div>
+
+
+<h2>snippet (graphics)</h2>
+<div class="h">
+<pre>
+something \includegraphics[height=1cm]{example-image}
+</pre>
+</div>
+
+<h2 id="math">snippet (math)</h2>
+<div class="h">
+<pre>
+  something \includegraphics[height=1cm]{example-image}
+
+  something
+  \begin{align}
+  x+y&=1\\
+  y&=2
+  \end{align}
+</pre>
+</div>
+
+
+<h2 id="tikz">snippet (tikz)</h2>
+<div class="h">
+<pre>
+\tikz \draw[thick,rounded corners=8pt]
+(0,0) -- (0,2) -- (1,3.25) -- (2,2) -- (2,0) -- (0,2) -- (2,2) -- (0,0) -- (2,0);
+</pre>
+</div>
+
+<h2 id="begindocument">snippet with \begin{document} for Denis</h2>
+<div class="h">
+  <pre>
+\DeclareMathOperator*{\Lim}{Lim}
+\begin{document}
+$\Lim f$
+</pre>
+</div>
+
+<h2 id="siunitx">snippet requiring extra package regex</h2>
+<div class="h">
+<pre>
+    \qty[mode = text]{1.23}{J.mol^{-1}.K^{-1}}
+
+</pre>
+</div>
+
+
+<h2 id="latex">default latex (for pstricks)</h2>
+ <p> An example from <a href="https://texwelt.de/fragen/24448/pstricks-kurve-auf-seite-verschieben">texwelt.de</a>.</p>
+<div class="h">
+ <pre>
+\documentclass[a4paper]{scrartcl}
+
+\usepackage{pstricks} 
+\usepackage{pstricks-add} 
+\usepackage[scale=1]{geometry}
+
+\begin{document}
+
+\begin{pspicture}[linecolor=red,linewidth=5pt](0,5)(0,0) 
+\pscurve[showpoints=false](4.6,5.1)(3.9,3)(2.8,1.5)(1,0.3)(-0.05,-0.1) 
+\end{pspicture}
+
+\begin{pspicture}[linecolor=blue,linewidth=5pt](0,-1)(0,0) 
+\pscurve[showpoints=false](3.7,5.05)(3.2,3)(2.4,1.3)(1,-0.4)(0,-1.2) 
+\end{pspicture}
+
+\end{document}
+</pre>
+</div>
+
+<h2 id="lualatex">default lualatex (for \directlua)</h2>
+ <p> An example from <a href="https://www.learnlatex.org/en/more-14">learn LaTeX</a>.</p>
+<div class="h">
+ <pre>
+\documentclass{article}
+
+\begin{document}
+
+$ 2\pi \approx \directlua{ tex.print(2 * math.pi) } $
+
+\end{document}
+</pre>
+</div>
+
+
+<h2 id="none">Editor but no texlive button</h2>
+<div class="h">
+ <pre>
+# !TEX none
+
+# Editable bash script
+export TEXINPUTS=zzzz
+export PATH=somewhere
+</pre>
+</div>
+
+
+<h2 id="noedit">Raw pre, no editing</h2>
+<div class="h">
+ <pre>
+/* !TEX noedit
+*/
+
+void noneEditC(int x);
+
+</pre>
+</div>
+
+</body>
+  
