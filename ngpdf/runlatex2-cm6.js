@@ -170,26 +170,35 @@ function llexamples() {
 		pretext=pretext.replace(/^[ \t\u00A0]+$/gm,'');
 	    }
 	    p[i].textContent=pretext.replace(/\s+$/,'');
-	    p[i].style.height="1em"; // force redisplay in Opera zoom
-	    ace.config.set('basePath', 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12') ;
-	    editor = ace.edit(p[i]);
-	    editor.setTheme(rlacetheme);
-	    editor.getSession().setMode(acemode);
-	    editor.setOption("minLines",runlatex);
-	    editor.setOption("maxLines",runlatex.editorlines);
-	    editor.setShowPrintMargin(false);
-	    // allow browser to handle tab use ctrl-] to tab indent in browser
-	    editor.commands.bindKey("Tab", null)
-	    editor.commands.bindKey("Shift-Tab", null)
-	    if(runlatex.completionsURI != ""){
-		langTools=ace.require("ace/ext/language_tools");
-		langTools.setCompleters([customCompleter]);
-		editor.setOptions({
-		    enableBasicAutocompletion: true,
-		    enableLiveAutocompletion: true
-		});
-	    }
-	    editor.resize();
+	    const txt=p[i].innerText;
+	    p[i].innerText="";
+	    let cm6options = {};
+	    if(rlcm6theme!="") 	cm6options[rlcm6theme] = true;
+	    const editor = cm6.createEditorView(undefined, p[i]);
+            const initialState = cm6.createEditorState(txt,cm6options);
+	    editor.setState(initialState);
+            p[i].style.maxHeight=Math.round(1.4*runlatex.editorlines)+"em"          
+            p[i].style.overflow="scroll"          
+// ace	    p[i].style.height="1em"; // force redisplay in Opera zoom
+// ace	    ace.config.set('basePath', 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12') ;
+// ace	    editor = ace.edit(p[i]);
+// ace	    editor.setTheme(rlacetheme);
+// ace	    editor.getSession().setMode(acemode);
+// ace	    editor.setOption("minLines",runlatex);
+// ace	    editor.setOption("maxLines",runlatex.editorlines);
+// ace	    editor.setShowPrintMargin(false);
+// ace	    // allow browser to handle tab use ctrl-] to tab indent in browser
+// ace	    editor.commands.bindKey("Tab", null)
+// ace	    editor.commands.bindKey("Shift-Tab", null)
+// ace	    if(runlatex.completionsURI != ""){
+// ace		langTools=ace.require("ace/ext/language_tools");
+// ace		langTools.setCompleters([customCompleter]);
+// ace		editor.setOptions({
+// ace		    enableBasicAutocompletion: true,
+// ace		    enableLiveAutocompletion: true
+// ace		});
+// ace	    }
+// ace	    editor.resize();
 	    editors["pre" + i]=editor;
 	}
     }
@@ -224,7 +233,7 @@ function openinoverleaf(nd) {
     var fm = document.getElementById('form-' + nd);
     fm.innerHTML="";
     var p = document.getElementById(nd);
-    var t = editors[nd].getValue();
+    var t = editors[nd].state.doc.toString();
 
     var engv=rldefaultengine;
     var eng=t.match(engineregex);
@@ -248,7 +257,7 @@ function openinoverleaf(nd) {
 		if(editors[prop]==null) {
 		    addinput(fm,"encoded_snip[]",document.getElementById(prop).textContent);
 		} else {
-		    addinput(fm,"encoded_snip[]",editors[prop].getValue());
+		    addinput(fm,"encoded_snip[]",editors[prop].state.doc.toString());
 		}
 		addinput(fm,"snip_name[]",incl[prop]);
 	    }
@@ -299,29 +308,34 @@ function deleteoutput(nd){
     ifr.parentNode.removeChild(ifr);
 }
 
+function rlInsert(e,n,s) {
+    e.dispatch({ changes: { from: n, insert: s}});
+    return n + s.length;
+}
+
 function generatepreamble(t,e) {
-    e.navigateFileStart();
-    e.insert("%\n" + runlatex.texts["metadata"] + "\n");
+    var offset = 0;
     if(t.match(/koma|KOMA|addsec|\\scr|scrheadings/)){
-        e.insert("\n% " + runlatex.texts["Added Code"] + "\n\\documentclass{scrartcl}\n");
+        offset = rlInsert(e,offset,"\n% " + runlatex.texts["Added Code"] + "\n\\documentclass{scrartcl}\n");
     } else {
-	e.insert("\n% " + runlatex.texts["Added Code"] + "\n\\documentclass{article}\n");
+	offset = rlInsert(e,offset,"\n% " + runlatex.texts["Added Code"] + "\n\\documentclass{article}\n");
     }
     for(var i=0;i<runlatex.packageregex.length; i++){
-	if(t.match(runlatex.packageregex[i][0])) e.insert(runlatex.packageregex[i][1]);
+	if(t.match(runlatex.packageregex[i][0])) {
+	    offset = rlInsert(e,offset,runlatex.packageregex[i][1]);
+	}
     }
     if(t.match(/\\begin\{document\}/)){
-	e.insert("\n% "  + runlatex.texts["End Added Code"] + "\n\n");
+	offset = rlInsert(e,offset,"\n% "  + runlatex.texts["End Added Code"] + "\n\n");
     } else {
-	e.insert("\n\\begin{document}\n% "  + runlatex.texts["End Added Code"] + "\n\n");
+	offset = rlInsert(e,offset,"\n\\begin{document}\n% "  + runlatex.texts["End Added Code"] + "\n\n");
     }
-    e.navigateFileEnd();
-    e.insert("\n\n% " +
+    offset = rlInsert(e,e.state.doc.length,"\n\n% " +
 	     runlatex.texts["Added Code"] +
 	     "\n\\end{document}\n% "  +
 	     runlatex.texts["End Added Code"] +
 	     "\n");
-    return e.getValue();
+    return e.state.doc.toString();
 }
 
 function defaultengine(t) {
@@ -338,7 +352,7 @@ function latexcgi(nd) {
     var fm = document.getElementById('form2-' + nd);
     fm.innerHTML="";
     var p = document.getElementById(nd);
-    var t = editors[nd].getValue();
+    var t = editors[nd].state.doc.toString();
     var engv=rldefaultengine;
     var eng=t.match(engineregex);
     if(runlatex.adddefaultpreamble) {
@@ -355,7 +369,7 @@ function latexcgi(nd) {
 		if(editors[prop]==null) {
 		    addtextarea(fm,"filecontents[]",document.getElementById(prop).textContent);
 		} else {
-		    addtextarea(fm,"filecontents[]",editors[prop].getValue());
+		    addtextarea(fm,"filecontents[]",editors[prop].state.doc.toString());
 		}
 		addinputnoenc(fm,"filename[]",incl[prop]);
 	    }
@@ -426,6 +440,14 @@ function latexcgi(nd) {
 }
 
 
+function rlselectline (preid,n) {
+    if(editors[preid] != null)  {
+	const line = editors[preid].state.doc.line(n);
+	editors[preid].dispatch({
+	    selection: { head: line.from, anchor: line.to },
+	});
+    }
+}  
 
 
 
