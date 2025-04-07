@@ -235,7 +235,7 @@ function openinoverleaf(nd) {
     }
     if(eng != null) {
 	engv=eng[1].toLowerCase();
-	if(engv == "pdftex" || engv == "luatex" || engv == "xetex" || engv == "ptex" || engv == "uptex") {
+	if(engv == "pdftex" || engv == "luatex" || engv == "xetex" || engv == "ptex" || engv == "uptex" || engv == "context") {
 	    addinput(fm,"main_document","document.tex");
 	}    
     }
@@ -259,6 +259,9 @@ function openinoverleaf(nd) {
 	    addinput(fm,"encoded_snip[]","$latex = '" + engv + "';\n$bibtex = 'pbibtex';\n$dvipdf = 'dvipdfmx %O -o %D %S';");
 	    addinput(fm,"snip_name[]","latexmkrc");
 	    engv="latex_dvipdf";
+	} else if(engv == "context") {
+	    addinput(fm,"encoded_snip[]","$pdflatex = 'context --result=output ';");
+	    addinput(fm,"snip_name[]","latexmkrc");
 	} else if(engv == "pdftex" || engv == "luatex" || engv == "xetex") {
 	    addinput(fm,"encoded_snip[]","$pdflatex = '" + engv + "';");
 	    addinput(fm,"snip_name[]","latexmkrc");
@@ -470,9 +473,9 @@ function rlSetEngine(n) {
 var rldefaultengine=getCookie('runlatex-engine');
 if(rldefaultengine=="") rldefaultengine="lualatex-dev";
 
-
 var rlacetheme=getCookie('runlatex-acetheme');
 if(rlacetheme=="") rlacetheme="ace/theme/textmate";
+var rlcm6theme=getCookie('runlatex-cm6theme');
 
 function rlAllowCookies() {
   createCookie('runlatex-cookies',"true",100);
@@ -484,6 +487,7 @@ function rlDeleteCookies() {
  createCookie('runlatex-return',"",-999);
  createCookie('runlatex-engine',"",-999);
  createCookie('runlatex-acetheme',"",-999);
+ createCookie('runlatex-cm6theme',"",-999);
  window.location.reload(false);
 }
 
