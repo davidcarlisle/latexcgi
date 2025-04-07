@@ -12,25 +12,25 @@ It is written as a perl script accepting the post requests via cgi-bin access in
 ## Example Documents
 
 #### Files with default `runlatex` settings, as for learnlatex.org
-* [Basic tests](test).
-* [Larger test examples](test2).
-* [CJK Font test examples](test3).
-* [PSTricks test examples](test-pstricks).
-* [plain tex and non interactive examples](test4).
-* [Experimental context example](testc)
+* Basic tests: [ACE](test) [CodeMirror6](cm6/test).
+* Larger test examples: [ACE](test2) [CodeMirror6](cm6/test2).
+* CJK Font test examples: [ACE](test3) [CodeMirror6](cm6/test3).
+* PSTricks test examples: [ACE](test-pstricks) [CodeMirror6](cm6/test-pstricks).
+* plain tex and non interactive examples: [ACE](test4) [CodeMirror6](cm6/test4).
+* Experimental context example: [ACE](testc) [CodeMirror6](cm6/testc).
 
 #### Files with parameter settings similar to latex.org or texwelt.de.
-* [Snippet/Document Fragment examples](test-sk)
-* [Snippet/Document Fragment test cases](test2-sk)
-* [minrunlines feature test cases](test3-sk)
-* [Testing multi-file submission](test-multifile)
+* Snippet/Document Fragment examples: [ACE](test-sk) [CodeMirror6](cm6/test-sk).
+* Snippet/Document Fragment test cases: [ACE](test2-sk) [CodeMirror6](cm6/test2-sk).
+* minrunlines feature test cases: [ACE](test3-sk) [CodeMirror6](cm6/test3-sk).
+* Testing multi-file submission: [ACE](test-multifile) [CodeMirror6](cm6/test-multifile).
 
 #### Testing command completion
-* [Command completion](test-completion)
+* Command completion: [ACE](test-completion) [CodeMirror6](cm6/test-completion).
 
 #### Files testing HTML output.
-* [make4ht HTML examples](test-make4ht)
-* [make4ht HTML examples from Learn LaTeX](test2-make4ht)
+* make4ht HTML examples: [ACE](test-make4ht) [CodeMirror6](cm6/test-make4ht).
+* make4ht HTML examples from Learn LaTeX: [ACE](test2-make4ht) [CodeMirror6](cm6/test2-make4ht).
 
 #### Generate URI corresponding to examples.
 * [run examples and generate URL](run)

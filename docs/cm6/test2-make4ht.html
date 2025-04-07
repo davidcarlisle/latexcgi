@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>make4ht tests (from learnlatex)</title>
+    <meta charset="UTF-8">
+    <script src="https://texlive.net/cm6-test/cm6.bundle.min.js"></script>
+    <style type="text/css" media="screen">
+      .ace_editor {
+	  border: 1px solid lightgray;
+	  margin-bottom: 1px !important;
+	  width: 100%;
+      }
+      div.spacer {
+	  margin-top:16px;
+      }
+      div p {margin: 1em 2em}
+    </style>
+    <script src="runlatex-cm6.js"></script>
+    <script>
+      runlatex.editorlines=40;
+      runlatex.adddefaultpreamble=true;
+      runlatex.adddefaultengine=true;
+      runlatex.usecaptions=true;
+
+      runlatex.overleafURI=null;
+
+      runlatex.texts ={
+	  "Open in Overleaf": "",
+	  "TeXLive.net":      "TeXLive.net", 
+	  "Delete Output":    "Delete Output",
+	  "Compiling PDF":    "Compiling HTML",
+	  "Added Code":       "Added code",
+	  "End Added Code":   "End code",
+	  "Top Caption":      ""
+      }
+    </script>
+
+    <style>
+      body {margin:auto; max-width: 70em;}
+      div.h {background-color: #F5F5FF;margin: .5em 0;}
+      pre {background-color: #EEE;margin:0;padding: .5em;}
+      button.llbutton {background-color:#EFE;}
+      iframe {background-color:white}
+    </style>
+    
+  </head>
+  <body>
+
+<hr>
+<a href="./">Site index page</a><br>
+<a href="./settings">Site Settings page</a>
+<hr>
+
+<h1 id="ll">Testing make4ht (from learnlatex)</h1>
+
+<p>This page has examples from
+  <a href="https://learnlatex.org">LearnLaTeX.org</a> which failed to produce
+  resaonable output with the the default <code>make4ht</code> configuration
+  <code>2,mathjax</code>.</p>
+<p><a href="https://github.com/davidcarlisle/latexcgi/tree/main/make4ht">Configuration files have been
+  added</a>
+  to address these issues. Not successful in all cases, and quite
+  possibly not using the best make4ht/tex4ht configuration
+  technique. Improvements welcome!</p>
+
+
+<h2 id="doc3">math diff</h2>
+<div class="h">
+<pre>
+% !TeX make4ht
+\documentclass{article}
+\usepackage[T1]{fontenc}
+\newcommand{\diff}{\mathop{}\!d}            % For italic
+% \newcommand{\diff}{\mathop{}\!\mathrm{d}} % For upright
+\begin{document}
+A paragraph about a larger equation
+\[
+\int_{-\infty}^{+\infty} e^{-x^2} \diff x
+\]
+\end{document}
+</pre>
+
+<p>This now works with the current <code>learnlatex4ht,2,mathml,mathjax,svg</code>
+  configuration which expands all TeX macros during the conversion. 
+   It also worked with <code>learnlatex4ht,2,mathjax,svg</code> with a
+    configuration that inserted the current definition
+    of <code>\diff</code> at begin document inside math so MathJax
+    saw it.</p>
+</div>
+
+
+<h2 id="doc4">math bm</h2>
+<div class="h">
+<pre>
+% !TeX make4ht
+\documentclass[a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{bm}
+
+\begin{document}
+
+$(x+\mathbf{y})(x-\mathbf{y})=x^{2}-{\mathbf{y}}^{2}$
+
+$(x+\bm{y})(x-\bm{y}) \bm{=} x^{2}-{\bm{y}}^{2}$
+
+$\alpha + \bm{\alpha} < \beta + \bm{\beta}$
+
+\end{document}
+</pre>
+<p> A <code>bm.4ht</code> file added that defines <code>\bm</code> to
+  be <code>\boldsymbol</code>, this is the recommended definition for
+  MathJax, although a more generic <code>bm.4ht</code> that did not
+  mask the system supplied one would be better.</p>
+</div>
+
+
+<h2 id="doc5">mathtools pmatrix*</h2>
+<div class="h">
+<pre>
+% !TeX make4ht
+\documentclass[a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{mathtools}
+
+\begin{document}
+
+\[
+\begin{pmatrix*}[r]
+  10&11\\
+   1&2\\
+  -5&-6
+\end{pmatrix*}
+\]
+
+\end{document}
+</pre>
+<p>The <code>mathtools</code> package is not supported by MathJax by default. The
+  AMS had
+  a <a href="https://github.com/AmerMathSoc/mathjax-mathtools">MathJax2
+    extension</a>
+  There is discussion of updating that to MathJax3  (there is a
+  mathjax3 branch at that GitHub) see also 
+  at <a href="https://stackoverflow.com/questions/63428119/upgrading-from-mathjax-2-7-5-to-3-0-trying-to-preserve-a-custom-tex-environment">Stackexchange</a> 
+</div>
+
+
+<h2 id="doc6">luatex unicode-math</h2>
+<div class="h">
+<pre>
+% !TeX make4ht
+% !TEX lualatex
+\documentclass[a4paper]{article}
+\usepackage{unicode-math}
+\setmainfont{TeX Gyre Pagella}
+\setmathfont{TeX Gyre Pagella Math}
+
+\begin{document}
+
+One two three
+\[
+\log \alpha + \log \beta = \log(\alpha\beta)
+\]
+
+Unicode Math Alphanumerics
+\[A + \symfrak{A}+\symbf{A}+ \symcal{A} + \symscr{A}+ \symbb{A}\]
+
+\end{document}
+</pre>
+<p>a local unicode-math-hooks.4ht suppresses font loading (to match the fontspec configurig and aliases \sym... to \math...</p>
+</div>
+
+
+<h2 id="doc7">xetex fonts</h2>
+<div class="h">
+<pre>
+% !TeX make4ht
+% !TEX xelatex
+\documentclass{article}
+\usepackage{fontspec}
+\setmainfont{texgyretermes-regular.otf}
+\newfontfamily\cjkfont{FandolSong-Regular.otf}
+\begin{document}
+
+ABC → αβγ → {\cjkfont 你好}
+
+\end{document}
+</pre>
+<p>This example now works after adding <code>\xeuniuseblock</code> declarations
+  to <code>learnlatex4ht.cfg</code> as suggested by Michal.</p>
+</div>
+
+
+<h2 id="doc8">directlua in math</h2>
+<div class="h">
+<pre>
+% !TeX make4ht
+%!TEX lualatex
+\documentclass{article}
+
+\begin{document}
+
+$ 2\pi \approx \directlua{ tex.print(2 * math.pi) } $
+
+\directlua{tex.print('$ 4\string\\pi \string\\approx' .. 4 * math.pi .. '$')}
+
+\end{document}
+</pre>
+<p>This fails if the tex syntax mathjax configuration is used, but passes now with `mathml,mathjax` as the math is expanded by TeX.</p>
+</div>
+
+
+<h2 id="doc9">mhchem</h2>
+<div class="h">
+<pre>
+% !TeX make4ht
+\documentclass{article}
+\usepackage[T1]{fontenc}
+\usepackage{mhchem}
+\begin{document}
+\ce{Hg^2+ ->[I-] HgI2 ->[I-] [Hg^{II}I4]^2-}
+\end{document}
+</pre>
+<p> For the current <code>mathml,mathjax</code> configuration
+  <code>mhchem.4ht</code> wraps itself in <code>\(\)</code> so seen my MathJax TeX input parser.
+  For tex-mathjax configuration <code>mhchem.4ht</code> redefined<code>\ce</code>
+  to wrap itself in <code>\ensuremath</code> so it is seen by MathJax
+  which has existing <code>mhchem</code> support.</p>
+</div>
+
+
+<h2 id="doc10">forest</h2>
+<div class="h">
+<pre>
+% !TeX make4ht
+\documentclass{article}
+\usepackage[T1]{fontenc}
+\usepackage[linguistics]{forest}
+\begin{document}
+\begin{forest}
+[VP
+  [DP\\John ]
+  [V’
+    [V\\sent ]
+    [DP\\Mary ]
+    [DP[D\\a][NP\\letter]]
+  ]
+]
+\end{forest}
+\end{document}
+</pre>
+<p>This now works using the svg option and <a href="https://github.com/michal-h21/dvisvgm4ht/blob/master/pgfsys-dvisvgm4ht.def">Michal's svg driver</a></p>
+</div>
+
+
+<h2 id="doc11">chess</h2>
+<div class="h">
+<pre>
+% !TeX make4ht
+\documentclass{article}
+\usepackage[T1]{fontenc}
+\usepackage{xskak}
+\begin{document}
+\newchessgame
+\mainline{1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6}
+
+\xskakset{moveid=2w}%
+\chessboard[setfen=\xskakget{nextfen}]\\[1ex]
+Position after 2.\,\xskakget{lan}
+
+\chessboard[pgfstyle=cross,
+color=blue,
+setfen=\xskakget{nextfen},
+getpiecelists,
+markfields={\cblistP,\cblistp}]
+
+\end{document}
+</pre>
+<p>A <code>xskak.4ht</code> is provided that almost gets this right,
+  generating images for the xskak commands The board has
+  an <code>alt</code> text that is the fen description of the board
+  position (Ulrike tells me that chess people know what this means).</p>
+</div>
+
+
+<h2 id="doc12">pgfplots</h2>
+<div class="h">
+<pre>
+% !TeX make4ht
+\documentclass{article}
+\usepackage[T1]{fontenc}
+\usepackage{pgfplots}
+\pgfplotsset{width=7cm,compat=1.17}
+
+\begin{document}
+
+\begin{tikzpicture}
+\begin{axis}[]
+      % density of Normal distribution:
+      \addplot [
+            red,
+            domain=-3e-3:3e-3,
+            samples=201,
+      ]
+            {exp(-x^2 / (2e-3^2)) / (1e-3 * sqrt(2*pi))};
+\end{axis}
+\end{tikzpicture}
+
+\end{document}
+</pre>
+<p><p>This now works using the svg option and <a href="https://github.com/michal-h21/dvisvgm4ht/blob/master/pgfsys-dvisvgm4ht.def">Michal's svg driver</a></p>
+</div>
+
+
+<h2 id="doc13">music</h2>
+<div class="h">
+<pre>
+% !TeX make4ht
+\documentclass{article}
+\usepackage[T1]{fontenc}
+\usepackage{musixtex}
+
+\begin{document}
+
+\begin{music}
+\parindent10mm
+\instrumentnumber{1}
+% a single instrument
+\setname1{Piano}
+% whose name is Piano
+\setstaffs1{2}
+% with two staffs
+\generalmeter{\meterfrac44}
+% 4/4 meter chosen
+\startextract
+% starting real score
+\Notes\ibu0f0\qb0{cge}\tbu0\qb0g|\hl j\en
+\Notes\ibu0f0\qb0{cge}\tbu0\qb0g|\ql l\sk\ql n\en
+\bar
+\Notes\ibu0f0\qb0{dgf}|\qlp i\en
+\notes\tbu0\qb0g|\ibbl1j3\qb1j\tbl1\qb1k\en
+\Notes\ibu0f0\qb0{cge}\tbu0\qb0g|\hl j\en
+\zendextract
+% terminate excerpt
+\end{music}
+
+\end{document}
+</pre>
+<p>A Configuration <code>musixtex.4ht</code> is provided so that <code>music</code> environments
+generate an image.
+</div>
+
+
+<p><br></p>
+
+<hr>
+
+</body>
+</html>
+
+
+

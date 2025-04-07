@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>preload test</title>
+    <meta charset="UTF-8">
+    <script src="https://texlive.net/cm6-test/cm6.bundle.min.js"></script>
+    <style type="text/css" media="screen">
+      .ace_editor {
+	  border: 1px solid lightgray;
+	  margin-bottom: 1px !important;
+	  width: 100%;
+      }
+      div.spacer {
+	  margin-top:16px;
+      }
+      a { text-decoration:none; color:#5555FF}
+      a:hover	   {text-decoration:underline}
+    </style>
+    <script src="runlatex-cm6.js"></script>
+    <script>
+
+      runlatex.editorlines=40;
+      runlatex.adddefaultpreamble=true;
+      runlatex.adddefaultengine=true;
+
+      runlatex.overleafURI=null;
+      
+      runlatex.texts ={
+	  "Open in Overleaf": "",
+	  "TeXLive.net":      "TeXLive.net", 
+	  "Delete Output":    "Delete Output",
+	  "Compiling PDF":    "Compiling PDF or HTML",
+	  "Added Code":       "",
+	  "End Added Code":   "",
+	  "Top Caption":      ""
+      }
+
+    </script>
+    <style>
+      body {margin:auto; max-width: 70em;}
+      pre {background-color: #EEE;margin:0;padding: .5em;}
+    </style>
+    
+  </head>
+  <body>
+
+<hr/>
+<h2>a first example</h2>
+ <pre>
+\documentclass{article}
+\begin{document}
+
+A first document.
+
+\end{document}
+</pre>
+<iframe id="pre0ifr" name="pre0ifr" width="100%" height="500em" src="preload-1.pdf"></iframe>
+
+<h2>some mathematics</h2>
+
+<pre>
+\documentclass{article}
+\usepackage{amsmath,amsfonts}
+\begin{document}
+
+A math display:
+\begin{align}
+\mathbb{C}&amp;=\mathbb{R}\times\mathbb{R} \\
+\mathcal{L}&amp;=A+B\\
+x+y&amp;=z
+\end{align}
+\end{document}
+</pre>
+<iframe id="pre1ifr" name="pre1ifr" width="100%" height="500em" src="preload-2.pdf"></iframe>
+
+</body>
+</html>
+
+ 
+  
