@@ -166,7 +166,7 @@ sub debugreturn {
 
 sub dolatex () {
     chdir($tmpdir);
-    $ENV{'PATH'}="/usr/local/texlive/2024/bin/x86_64-linux:" . $ENV{'PATH'};
+    $ENV{'PATH'}="/usr/local/texlive/2025/bin/x86_64-linux:" . $ENV{'PATH'};
 
     my $engine=$FORM{'engine'};
     my $document="document";
