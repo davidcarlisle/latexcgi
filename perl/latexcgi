@@ -1,7 +1,7 @@
 #!/usr/bin/env perl
 
 # LaTeXCGI cgi-bin http POST endpoint for TeXLive.net LaTeX server.
-# Copyright 2020 2021 David Carlisle
+# Copyright 2020-2025 David Carlisle
 # Licence: MIT
 
 use strict;
@@ -166,7 +166,7 @@ sub debugreturn {
 
 sub dolatex () {
     chdir($tmpdir);
-    $ENV{'PATH'}="/usr/local/texlive/2020/bin/x86_64-linux:" . $ENV{'PATH'};
+    $ENV{'PATH'}="/usr/local/texlive/2025/bin/x86_64-linux:" . $ENV{'PATH'};
 
     my $engine=$FORM{'engine'};
     my $document="document";
