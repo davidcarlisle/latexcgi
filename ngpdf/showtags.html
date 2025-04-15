@@ -41,7 +41,7 @@
       >
 <div style="margin: 1em;">
 <label for="pdffile">Select PDF file: </label>
-<input type="file" name="pdffile" id="pdffile"/>
+<input type="file" accept=".pdf,application/pdf" name="pdffile" id="pdffile"/>
 <input type="hidden" name="pdfdoc" id="pdfdoc"/>
 <input onclick="clearform()" type="button" value="clear"/>
 </div>
@@ -145,7 +145,12 @@ window.addEventListener("drop",function(e){
 
 document.getElementById('pdffile').addEventListener("drop",function(e){
     e = e || event;
-    e.stopPropagation();
+    if (e.dataTransfer.items && e.dataTransfer.items[0].type=="application/pdf") {
+	e.stopPropagation();
+    } else {
+	e.preventDefault();
+    }
+  
 },false);
 
 
