@@ -336,7 +336,7 @@ function latexcgi(nd) {
     var fm = document.getElementById('form2-' + nd);
     fm.innerHTML="";
     var p = document.getElementById(nd);
-    var t = editors[nd].getValue();
+    var t = editors[nd].getValue().replaceAll('\r\n','\n');
     var engv=rldefaultengine;
     var eng=t.match(engineregex);
     if(runlatex.adddefaultpreamble) {
