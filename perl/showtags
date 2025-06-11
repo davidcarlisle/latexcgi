@@ -55,6 +55,7 @@ print <<EOT;
      body {margin-left:2em}
     .element {color: darkred;font-weight: bold;}
     .attribute {color: black;font-weight: bold;}
+    .comment {color: black;font-weight: bold;font-style: italic;background-color:beige;}
     .attval {color: blue}
     .procinst {color: darkgreen;font-weight: bold;}
     .ellipsis {display:none;background-color:yellow;}
@@ -99,8 +100,9 @@ print <<EOT;
 <pre id="val">
 EOT
    
-     chdir($tmpdir);
-    $ENV{'PATH'}="/usr/local/texlive/2024/bin/x86_64-linux:" . $ENV{'PATH'};
+chdir($tmpdir);
+    $ENV{'LUAINPUTS'}="/home/david/show-pdf-tags/:";
+    $ENV{'PATH'}="/usr/local/texlive/2025/bin/x86_64-linux:" . $ENV{'PATH'};
 
 my $mapopt="";
 if ($followmap eq "on" ) {
@@ -109,10 +111,10 @@ if ($followmap eq "on" ) {
 
 my $scode=0;
 
-$scode =  system("texlua /home/david/show_pdf_tags/show_pdf_tags.lua --xml $mapopt $name > document.xml");
+$scode =  system("texlua /home/david/show-pdf-tags/show-pdf-tags.lua --xml $mapopt $name > document.xml");
 
 if($schema ne "none") {
- system("/home/david/rnv \"/home/david/rnc/$schema.rnc\" document.xml 2>&1 && echo Valid");
+ system("rnv \"/home/david/rnc/$schema.rnc\" document.xml 2>&1 && echo Valid");
 }
 
 print <<EOT;
@@ -195,7 +197,8 @@ s.innerHTML= indent+"&lt;?<span class='procinst'>" + xnode.nodeName + "</span> "
 hnode.appendChild(s);
 } else if (xnode.nodeType==8) {// Comment
 const s = document.createElement("span");
-s.textContent= indent+"<!--" + xnode.nodeName + " " + xnode.nodeValue + "-->\\n";
+s.className="comment";
+s.textContent= indent+"<!--" + xnode.nodeValue + "-->\\n";
 hnode.appendChild(s);
 } else {
 alert(xnode.nodeType);
