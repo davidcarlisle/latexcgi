@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="UTF-8"/>
+  <title>Relax NG display</title>
+  <style>
+   body {margin-left: 1em}
+   a:visited {color: darkblue}
+   a         {color: darkblue}
+   *:target  {background-color:beige}
+  </style>
+  </head>
+  <body>
+   <h1 id="title">rnc viewer</h1>
+
+   <p id="download">Download</p>
+   
+   <h2>Index</h2>
+   <p id="index">
+   </p>
+
+   <h2>Schema</h2>
+   
+   <pre id="rnc">
+   </pre>
+
+   <script>
+    let params = new URLSearchParams(document.location.search);
+    let rncURL = params.get("rnc") || 'document-pdf-ua2';
+     document.querySelector("#title").textContent="Relax NG: " + rncURL;
+     rncURL=rncURL + ".rnc";
+     document.querySelector("#download").innerHTML="<b>Download: </b><a download href='" + rncURL + "'>" + rncURL + "</a>";
+    const names={};
+    function addlink(a,b,t) {
+    if (names[t]==1) {
+    return b + '<a href="#rnc_' + t.replace('.','_') + '">' +t +'</a>';
+    } else {
+    return a;
+    }
+    }
+    function addanchor(a,n,e) {
+    names[n]=1;
+	return '<b id="rnc_' + n.replace('.','_') + '">' + n + '</b>' + e;
+    }
+        function relaxhl (s) {
+        var s2=s.replaceAll(/(\n|^)([^'#\n]*)(#[^\n]*)/g,'$1$2\x3cspan style="color:brown">$3\x3c/span>');
+        s2=s2.replaceAll(/([a-z0-9\\.A-Z\-_]+)(\s*=\s*[^"])/g,addanchor);
+	s2=s2.replaceAll(/ id="rnc_(pattern|right|local|anyElement|bvar|m|h|[a-z_\-]*percentage|[a-z]+\.(attributes|content|type))"/g,'');
+        s2=s2.replaceAll(/(include|external) *"([^"]*)[.]rnc"/g,'<span style="color:green">$1</span> "<a href="./rncview.html?rnc=$2">$2.rnc</a>"');
+	s2=s2.replaceAll(/([^>"a-z0-9\.A-Z\-_])([a-z0-9\.A-Z\-]+)/g,addlink);
+	
+	Object.keys(names).sort().forEach((n) => {idxc = idxc + ' <a href="#rnc_' + n.replace('.','_') + '">' + n + '</a>';});
+        return  s2;
+    }
+
+    const idx = document.querySelector("#index");
+    const pre = document.querySelector("#rnc");
+	let idxc="";
+
+fetch(rncURL)
+    .then( r => (r.ok ? r.text() :"no file"))
+  .then( t => {
+  const tt=relaxhl(t);
+      idx.innerHTML=idxc;
+      pre.innerHTML=tt;
+  } )
+   </script>
+  </body>
+</html>
