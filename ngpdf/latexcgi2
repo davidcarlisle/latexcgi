@@ -274,11 +274,17 @@ $engine="latexcgilwarp $engine";
         if($return eq 'pdf') {
             print "Location: /latexcgi/document" . "$tmpstr" . ".pdf\n\n";
         }elsif ($return eq 'ngpdf') {
+        my $nottagged=system("pdfinfo " . "/var/www/html/latexcgi/document" . "$tmpstr" . ".pdf | grep 'Tagged.*yes'");
         mkdir("/var/www/html/latexcgi/dir" . "$tmpstr",0777);
         chmod(0777,"/var/www/html/latexcgi/dir" . "$tmpstr");
         open my $fh, '>', "/var/www/html/latexcgi/dir" . "$tmpstr" . '/document.html';
+	if ($nottagged) {
+	    print {$fh} "<p><b>The document is not Tagged PDF: ngpdf and show_pdf_tags will not show any structure</b></p>";
+	}
         print {$fh} "<p>Open in the <a target='_blank' href='https://ngpdf.com/pdfUrlToHtml?pdfUrl=https://texlive.net/latexcgi/document" . "$tmpstr" . ".pdf&mathjax=false&prettyprint=false&mode=editor'>ngPDF Editor</a></p>";
-        print {$fh} "<p>Open <a target='_blank' href='https://ngpdf.com/pdfUrlToHtml?pdfUrl=https://texlive.net/latexcgi/document" . "$tmpstr" . ".pdf&mathjax=false&prettyprint=false&mode=html'>as derived HTML at ngPDF</a></p>";
+        if (! $nottagged) {
+	    print {$fh} "<p>Open <a target='_blank' href='https://ngpdf.com/pdfUrlToHtml?pdfUrl=https://texlive.net/latexcgi/document" . "$tmpstr" . ".pdf&mathjax=false&prettyprint=false&mode=html'>as derived HTML at ngPDF</a></p>";
+	}
         print {$fh} "<p>Open <a target='_blank' href='/pdfjs/web/viewer.html?file=/latexcgi/document" . "$tmpstr" . ".pdf'>PDF in a new tab</a>, Download <a download href='/latexcgi/document" . "$tmpstr" . ".pdf'>PDF</a></p>";
         print {$fh} "<p>Open <a target='_blank' href='/latexcgi/document" . "$tmpstr" . ".log'>log file in new tab</a></p>";
         print {$fh} "<p>Show <a target='_blank' href='https://texlive.net/showtags?doc=document" . $tmpstr . "'>structure tree in new tab</a></p>";
