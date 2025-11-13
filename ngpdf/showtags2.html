@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8"/>
+    <title>PDF Structure validation</title>
+    <style>
+      body {max-width: 60em; margin-left:auto;margin-right:auto}
+      form {
+	  margin: 1em; padding:.5em;
+	  background-color: beige;
+	  border-radius: 2em;
+	  border: solid thick green;
+      }
+      #pdffile {
+	  min-width:40%;
+	  background-color: white;
+	  padding:1em;
+	  border: solid black thin;
+	  border-radius: .5em;
+      }
+      #schemas  {
+	  line-height:115%;
+      }
+    </style>
+   </head>
+  <body>
+<h1>PDF Structure Tree Display and Validation</h1>
+
+
+<h2 id="formheading">Upload Tagged PDF</h2>
+<!--
+    action="https://httpbin.org/post"
+    action="https://texlive.net/cgi-bin/show-pdf-tags"
+    action="https://texlive.net/cgi-bin/showtags"
+  -->
+<form method="post"
+      enctype="multipart/form-data"
+         action="https://texlive.net/cgi-bin/showtags2"
+      id="pdfform"
+      name="pdfform"
+      >
+<div style="margin: 1em;">
+<label for="pdffile">Select PDF file: </label>
+<input type="file" accept=".pdf,application/pdf" name="pdffile" id="pdffile"/>
+<input type="hidden" name="pdfdoc" id="pdfdoc"/>
+<input onclick="clearform()" type="button" value="clear"/>
+</div>
+<div style="margin: 1em;">
+  <label for="followmap">Follow Role Map: </label>
+ <input type="checkbox" checked name="followmap" id="followmap"/>
+</div>
+<div style="margin: 1em;">
+  <label for="download">Download as document.xml: </label>
+ <input type="checkbox"  name="download" id="download"/>
+</div>
+<div style="margin: 1em;" id="schemas">
+<label for="schema">Validate as: </label><br/>
+ <input name="schema" type="radio" checked id="schema-auto" value="latex-document-switch"/>
+<label for="schema-auto">Auto</label><br/>
+ <input name="schema" type="radio" id="schema2.0" value="document-pdf-ua2"/>
+<label for="schema2.0">PDF2.0 WTPDF/UA-2</label><br/>
+ <input name="schema" type="radio" id="schema1.7" value="document-pdf-ua1"/>
+<label for="schema1.7">PDF1.7 UA-1</label><br/>
+ <input name="schema" type="radio" id="schemalatex2.0" value="latex-document"/>
+<label for="schemalatex2.0">LaTeX UA-2 namespace</label><br/>
+ <input name="schema" type="radio" id="schemalatex1.7" value="latex-document17"/>
+<label for="schemalatex1.7">LaTeX UA-1 namespace</label><br/>
+ <input name="schema" type="radio" id="none" value="none"/>
+<label for="none">None</label>
+</div>
+<div style="margin: 1em;">
+  <button>Submit</button>
+</div>
+</form>
+
+
+<h2 id="notes">Notes</h2>
+
+<ul>
+<li>
+Select a tagged PDF file to upload.  Drag and drop the PDF file, or browse using the Browse button.
+</li>								    
+<li>By default the generated XML will follow any specified Role
+Mappings so the generated elements should use names from the standard PDF specifications.
+If the <b>Follow Role Map</b> option is unchecked, the generated elements will use the names
+and namespaces specified in any locally defined Structure Elements. The LaTeX-Project Structure Elements
+are declared in the schema used here, but other namespaces result in XML files that will not validate
+to the supplied schema.</li>
+<li>The default <b>Auto</b> schema automatically validates a document against
+ the <b>PDF/UA-1</b> or <b>PDF/UA-2</b> schemas extended with <b>LaTeX</b> Namespace elements.
+  You may instead select a specific schema, or <b>None</b> to suppress schema validation.</li>
+<li>By default, the generated XML will be displayed by your browser. If you select the <b>Download</b>
+    option, it will be downloaded as <code>document.xml</code> to your default download area.</li>
+</ul>
+
+<h2 id="sources">Sources</h2>
+<p>This web version is intended for small illustrative examples only, and is provided as a free service.</p>
+<p>We encourage use of a local installation to allow easier experimentation and to reduce load on this server.</p>
+<p>The full sources are available under Open Source licences.</p>
+<ul>
+ <li><code>show-pdf-tags</code> is a Lua script that just requires the <code>texlua</code> executable that is included in all modern TeX distributions. Source and documentation are on <a href="https://github.com/latex3/pdf_structure">GitHub</a>.</li>
+ <li>The Relax NG Schema are developed in the same GitHub repository as the Lua script, <a href="https://github.com/latex3/pdf_structure">GitHub</a>.</li>
+ <li>Any Relax NG validator can be used (RNV and Emacs/nxml are used in development). This web form uses RNV available from <a href="http://ftp.davidashen.net/PreTI/RNV/">davidashen.net</a>.</li>
+</ul>
+
+<hr/>
+<p>Copyright 2024–2025 LaTeX Project</p>
+
+
+<!-- Stop an accidental drop loading the pdf file -->
+<script>
+
+ function clearform() {
+   document.location.search="";
+ }
+
+
+let params = new URLSearchParams(document.location.search);
+let docparam = params.get("doc");
+let rncparam = params.get("rnc");
+
+if (rncparam) {
+    let sch=document.getElementById("schema-auto");
+    sch.value=rncparam;
+    sch.checked=true;
+}
+
+if (docparam) {
+  let indoc=document.getElementById("pdfdoc");
+
+  document.getElementById("pdffile").type="hidden";
+  indoc.type="text";
+  indoc.value=docparam;
+} else {
+
+window.addEventListener("dragover",function(e){
+    e = e || event;
+    e.dataTransfer.dropEffect = "move";
+    e.preventDefault();
+},false);
+window.addEventListener("drop",function(e){
+    e = e || event;
+    e.preventDefault();
+},false);
+
+document.getElementById('pdffile').addEventListener("drop",function(e){
+    e = e || event;
+    if (e.dataTransfer.items && e.dataTransfer.items[0].type=="application/pdf") {
+	e.stopPropagation();
+    } else {
+	e.preventDefault();
+    }
+  
+},false);
+
+
+}
+</script>
+
+</body>
+</html>
+

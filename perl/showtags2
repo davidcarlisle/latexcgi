@@ -1,0 +1,242 @@
+#!/usr/bin/perl
+
+use CGI;
+use File::Path ('remove_tree');
+use File::Copy;
+
+
+my $cgi = new CGI;
+ my($tmpdir,$return);
+ $tmpdir="/tmp/showtags-$$";
+ mkdir($tmpdir, 0777) unless (-d $tmpdir);
+
+ my $name = "document.pdf";
+ my $download = $cgi->param('download');
+ my $followmap = $cgi->param('followmap');
+ my $schema = $cgi->param('schema');
+ my $pdfdoc = $cgi->param('pdfdoc');
+ my $file = $cgi->param('pdffile');
+ 
+ if (-e "/var/www/html/latexcgi/" . $pdfdoc . ".pdf") {
+     copy("/var/www/html/latexcgi/" . $pdfdoc . ".pdf", $tmpdir . "/$name");
+     $file=$pdfdoc;
+} elsif (-e "/var/www/html/demo/" . $pdfdoc . ".pdf") {
+    copy("/var/www/html/demo/" . $pdfdoc . ".pdf", $tmpdir . "/$name");
+    $file=$pdfdoc;
+} else {
+    open(LOCAL, ">$tmpdir/$name") or print 'error';
+    my $file_handle = $cgi->upload('pdffile'); 
+    while(<$file_handle>) {    
+	print LOCAL $_;
+    }
+ close($file_handle);                  
+ close(LOCAL);
+ }
+
+if ($download eq "on" ) {
+    print $cgi->header( 
+	-type    => 'application/x-download',
+	Content_disposition => 'attachment; filename=document.xml',
+	-charset => 'charset=UTF-8',
+	);
+} else {
+    print $cgi->header( 
+	-type    => 'text/html',
+	-charset => 'charset=UTF-8');
+}
+
+print <<EOT;
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>showtags: $file</title>
+    <meta charset="UTF-8"/>
+    <style>
+     body {margin-left:2em}
+    .element {color: darkred;font-weight: bold;}
+    .attribute {color: black;font-weight: bold;}
+    .comment {color: black;font-weight: bold;font-style: italic;background-color:beige;}
+    .attval {color: blue}
+    .procinst {color: darkgreen;font-weight: bold;}
+    .ellipsis {display:none;background-color:yellow;}
+    .fold {color: black;font-weight: bold; background-color:#EEE;padding: 0 .5em;margin-left:-1em}
+
+#showsettings {
+border: solid thin black;
+border-radius:1em;
+padding:1em;
+}
+#val, #puml {
+border: solid thin black;
+border-radius:1em;
+background-color: #EEE;
+padding:1em;
+}
+#xmlpre {
+border: solid thin black;
+border-radius:1em;
+padding:1em;
+white-space: pre-wrap;
+}
+    </style>
+  </head>
+  <body>
+<h1>PDF Structure Tree</h1>
+
+<div><button onclick="history.back()">Return to the showtags form</button><br></div>
+
+<h2 id="set">Settings</h2>
+
+<div id="showsettings">
+EOT
+print "File uploaded: <b>$file</b><br>\n";
+print "Follow role map: <b>" . ($followmap || "off") . "</b><br>\n Schema: <a href='/rnc/rncview.html?rnc=$schema'><b>$schema</b></a><br>\n";
+
+print <<EOT;
+</div>
+
+<h2 id="rnv">RNV Validation</h2>
+
+<pre id="val">
+EOT
+   
+chdir($tmpdir);
+    $ENV{'LUAINPUTS'}="/home/david/show-pdf-tags/:";
+    $ENV{'PATH'}="/usr/local/texlive/2025/bin/x86_64-linux:" . $ENV{'PATH'};
+
+my $mapopt="";
+if ($followmap eq "on" ) {
+    $mapopt = "--map";
+}
+
+my $scode=0;
+
+$scode =  system("texlua /home/david/show-pdf-tags/show-pdf-tags.lua --xml $mapopt $name > document.xml");
+
+if($schema ne "none") {
+ system("rnv \"/home/david/rnc/$schema.rnc\" document.xml 2>&1 && echo Valid");
+}
+
+print <<EOT;
+</pre>
+
+<h2 id="plantuml">Open at PlantUML.com</h2>
+<div id="puml">
+<a target="_blank" href="https://editor.plantuml.com/uml/
+EOT
+
+my $pumlcode=0;
+$pumlcode=system("java -jar ~david/jars/Saxon-HE-10.9.jar document.xml ~david/plantuml.xsl 2>/dev/null > document.puml ");
+my $pumlcode2=0;
+$pumlcode=system("java -jar ~david/jars/plantuml-1.2025.10.jar -encodeurl document.puml 2>/dev/null");
+
+print <<EOT;
+">Open at plantuml.com in a new tab</a>
+</div>
+
+
+<h2 id="xml">XML Display</h2>
+
+<pre id="xmlpre"></pre>
+<script>
+const xmlStr =`
+EOT
+
+if ($scode!=0) {
+print "\n<error><![CDATA[\n";
+}
+system("sed -e 's/\\\\/\\\\\\\\/g' -e 's/`/\\\\`/g' document.xml");
+if ($scode!=0) {
+print "\n]]></error>\n";
+}
+
+print <<EOT;
+`;
+
+function elfold (b,n) {
+const e = document.getElementById("el"+n);
+const ne = document.getElementById("noel"+n);
+//if(getComputedStyle(e).getPropertyValue("display") != "block"){
+if(b.textContent == "−"){
+	e.style.display = "block";
+	ne.style.display = "none";
+	b.textContent="+";
+    } else {
+	e.style.display = "none";
+	ne.style.display = "inline";
+	b.textContent="−";
+    }
+}
+const wsre = /^\\s+\$/;
+let elcount = 0;
+
+function  printXML(xnode,hnode,indent) {
+if(xnode.nodeType==1) {// element
+elcount++;
+const s = document.createElement("span");
+s.innerHTML=indent+"<span class='fold' onclick='elfold(this,"+elcount+")'>+</span>&lt;<span class='element'>" + xnode.tagName +"</span>\\n";
+hnode.appendChild(s);
+Array.from(xnode.attributes).forEach((attribute) => {// type 2
+const s = document.createElement("span");
+s.innerHTML=indent+"  <span class='attribute'>" + attribute.name + "</span>=\\"<span class='attval'>" + attribute.value.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;') +"</span>\\"\\n";
+hnode.appendChild(s);
+});
+const ss = document.createElement("span");
+ss.innerHTML=indent+"><span class='ellipsis' id='noel" + elcount +"'>...</span>\\n";
+hnode.appendChild(ss);
+const schild = document.createElement("span");
+schild.id="el"+elcount;
+Array.from(xnode.childNodes).forEach((c) => {
+	printXML(c,schild,indent+"  ");
+	});
+hnode.appendChild(schild);		
+const sss = document.createElement("span");
+sss.innerHTML=indent+"&lt;/<span class='element'>" + xnode.tagName +"</span>&gt;\\n";
+hnode.appendChild(sss);
+	
+} else if (xnode.nodeType==3) {// text
+if (! xnode.nodeValue.match(wsre)) {
+const s = document.createElement("span");
+s.textContent=indent+xnode.nodeValue.replace(/\\n/,' ').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') +"\\n";
+hnode.appendChild(s);
+}
+} else if (xnode.nodeType==4) {// CDATA
+if (! xnode.nodeValue.match(wsre)) {
+const s = document.createElement("span");
+s.textContent=indent+"<![CDATA[" + xnode.nodeValue.replace(/\\n/,' ') +"]]>\\n";
+hnode.appendChild(s);
+}
+} else if (xnode.nodeType==7) {// Process Instruction
+const s = document.createElement("span");
+s.innerHTML= indent+"&lt;?<span class='procinst'>" + xnode.nodeName + "</span> " + xnode.nodeValue + "?&gt;\\n";
+hnode.appendChild(s);
+} else if (xnode.nodeType==8) {// Comment
+const s = document.createElement("span");
+s.className="comment";
+s.textContent= indent+"<!--" + xnode.nodeValue + "-->\\n";
+hnode.appendChild(s);
+} else {
+alert(xnode.nodeType);
+}
+}
+
+const parser = new DOMParser();
+const doc = parser.parseFromString(xmlStr, "application/xml");
+
+// print the name of the root element or error message
+const errorNode = doc.querySelector("parsererror");
+if (errorNode) {
+  console.log("error while parsing");
+} else {
+  const d = document.createElement("div");
+  printXML(doc.documentElement,d,"");
+  document.getElementById('xmlpre').appendChild(d);
+}
+
+</script>
+
+  </body>
+</html>
+EOT
+        chdir("..");
+        remove_tree($tmpdir);
