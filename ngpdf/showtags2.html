@@ -147,12 +147,24 @@ to the supplied schema.</li>
 let params = new URLSearchParams(document.location.search);
 let docparam = params.get("doc");
 let rncparam = params.get("rnc");
+let maxdepth= params.get("maxdepth");
+let maxsiblings= params.get("maxsiblings");
+let RootElem= params.get("RootElem");
+let RootElemOcc= params.get("RootElemOcc");
+let ElideElem= params.get("ElideElem");
+let maxattlength= params.get("maxattlength");
 
 if (rncparam) {
-    let sch=document.getElementById("schema-auto");
-    sch.value=rncparam;
-    sch.checked=true;
+    let sch=document.getElementById(rncparam);
+    if(sch) sch.checked=true;
 }
+if (maxdepth) document.getElementById("maxdepth").value=maxdepth;
+if (maxsiblings) document.getElementById("maxsiblings").value=maxsiblings;
+if (RootElem) document.getElementById("RootElem").value=RootElem;
+if (RootElemOcc) document.getElementById("RootElemOcc").value=RootElemOcc;
+if (ElideElem) document.getElementById("ElideElem").value=ElideElem;
+if (maxattlength) document.getElementById("maxattlength").value=maxattlength;
+
 
 if (docparam) {
   let indoc=document.getElementById("pdfdoc");
