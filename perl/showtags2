@@ -18,6 +18,7 @@ my $cgi = new CGI;
  my $file = $cgi->param('pdffile');
  
  my $maxdepth = $cgi->param('maxdepth');
+ my $maxsiblings = $cgi->param('maxsiblings');
  my $RootElem = $cgi->param('RootElem');
  my $RootElemOcc = $cgi->param('RootElemOcc');
  my $ElideElem = $cgi->param('ElideElem');
@@ -134,6 +135,7 @@ EOT
 my $pumlcode=0;
 my $xslopts="";
 if ($maxdepth =~ /^[0-9]+$/) {$xslopts=$xslopts . " maxdepth=$maxdepth";}
+if ($maxsiblings =~ /^[0-9]+$/) {$xslopts=$xslopts . " maxsiblings=$maxsiblings";}
 if ($RootElemOcc =~ /^[0-9]+$/) {$xslopts=$xslopts . " occurrence=$RootElemOcc";}
 if ($RootElem =~ /^[a-zA-Z0-9]+$/) {$xslopts=$xslopts . " rootelem=$RootElem";}
 if ($ElideElem =~ /^[a-zA-Z0-9 ,]+$/) {$xslopts=$xslopts . " elidecontent='$ElideElem'";}
