@@ -80,7 +80,7 @@ below this depth</i>)<br/>
 <input name="RootElem" type="text" id="RootElem" value=""/>
 <label for="RootElem">Root Element</label> (<i>Name of element at which to
 start the tree display</i>)<br/>
-<input name="RootElemOcc" type="text" id="RootElem" value="1"/>
+<input name="RootElemOcc" type="text" id="RootElemOcc" value="1"/>
 <label for="RootElemOcc">Root Element Occurrence</label> (<i>Only show
 the nth "root element"</i>)<br/>
 <input name="ElideElem" type="text" id="ElideElem" value=""/>
@@ -158,6 +158,7 @@ if (rncparam) {
     let sch=document.getElementById(rncparam);
     if(sch) sch.checked=true;
 }
+
 if (maxdepth) document.getElementById("maxdepth").value=maxdepth;
 if (maxsiblings) document.getElementById("maxsiblings").value=maxsiblings;
 if (RootElem) document.getElementById("RootElem").value=RootElem;
