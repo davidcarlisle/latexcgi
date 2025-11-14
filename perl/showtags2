@@ -17,6 +17,12 @@ my $cgi = new CGI;
  my $pdfdoc = $cgi->param('pdfdoc');
  my $file = $cgi->param('pdffile');
  
+ my $maxdepth = $cgi->param('maxdepth');
+ my $RootElem = $cgi->param('RootElem');
+ my $RootElemOcc = $cgi->param('RootElemOcc');
+ my $ElideElem = $cgi->param('ElideElem');
+ my $maxattlength = $cgi->param('maxattlength');
+
  if (-e "/var/www/html/latexcgi/" . $pdfdoc . ".pdf") {
      copy("/var/www/html/latexcgi/" . $pdfdoc . ".pdf", $tmpdir . "/$name");
      $file=$pdfdoc;
@@ -126,7 +132,14 @@ print <<EOT;
 EOT
 
 my $pumlcode=0;
-$pumlcode=system("java -jar ~david/jars/Saxon-HE-10.9.jar document.xml ~david/plantuml.xsl 2>/dev/null > document.puml ");
+my $xslopts="";
+if ($maxdepth =~ /^[0-9]+$/) {$xslopts=$xslopts . " maxdepth=$maxdepth";}
+if ($RootElemOcc =~ /^[0-9]+$/) {$xslopts=$xslopts . " occurrence=$RootElemOcc";}
+if ($RootElem =~ /^[a-zA-Z0-9]+$/) {$xslopts=$xslopts . " rootelem=$RootElem";}
+if ($ElideElem =~ /^[a-zA-Z0-9 ,]+$/) {$xslopts=$xslopts . " elidecontent='$ElideElem'";}
+if ($maxattlength =~ /^[0-9]+$/) {$xslopts=$xslopts . " maxattlength=$maxattlength";}
+
+$pumlcode=system("java -jar ~david/jars/Saxon-HE-10.9.jar document.xml ~david/plantuml.xsl $xslopts 2>/dev/null > document.puml ");
 my $pumlcode2=0;
 $pumlcode=system("java -jar ~david/jars/plantuml-1.2025.10.jar -encodeurl document.puml 2>/dev/null");
 
