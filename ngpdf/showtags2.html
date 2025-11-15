@@ -86,6 +86,9 @@ the nth "root element"</i>)<br/>
 <input name="ElideElem" type="text" id="ElideElem" value=""/>
 <label for="ElideElem">Elide Element Content</label> (<i>List of tag
   names, whose children replaced by <b>...</b></i>)<br/>
+<input name="OmitAtts" type="text" id="OmitAtts" value=""/>
+<label for="OmitAtts">Omit Attributes</label> (<i>List of Attribute
+  names to omit from the display</i>)<br/>
 <input name="maxattlength" type="text" id="maxattlength" value="20"/>
 <label for="maxattlength">Max Attribute Length</label> (<i>Truncate
   long attribute values and append <b>...</b></i>)<br/>
@@ -152,6 +155,7 @@ let maxsiblings= params.get("maxsiblings");
 let RootElem= params.get("RootElem");
 let RootElemOcc= params.get("RootElemOcc");
 let ElideElem= params.get("ElideElem");
+let OmitAtts= params.get("OmitAtts");
 let maxattlength= params.get("maxattlength");
 
 if (rncparam) {
@@ -164,6 +168,7 @@ if (maxsiblings) document.getElementById("maxsiblings").value=maxsiblings;
 if (RootElem) document.getElementById("RootElem").value=RootElem;
 if (RootElemOcc) document.getElementById("RootElemOcc").value=RootElemOcc;
 if (ElideElem) document.getElementById("ElideElem").value=ElideElem;
+if (OmitAtts) document.getElementById("OmitAtts").value=OmitAtts;
 if (maxattlength) document.getElementById("maxattlength").value=maxattlength;
 
 
