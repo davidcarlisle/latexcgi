@@ -24,6 +24,7 @@ my $cgi = new CGI;
  my $ElideElem = $cgi->param('ElideElem');
  my $OmitAtts = $cgi->param('OmitAtts');
  my $maxattlength = $cgi->param('maxattlength');
+ my $ShowEmptyAtts = $cgi->param('ShowEmptyAtts');
 
  if (-e "/var/www/html/latexcgi/" . $pdfdoc . ".pdf") {
      copy("/var/www/html/latexcgi/" . $pdfdoc . ".pdf", $tmpdir . "/$name");
@@ -142,6 +143,7 @@ if ($RootElem =~ /^[a-zA-Z0-9]+$/) {$xslopts=$xslopts . " rootelem=$RootElem";}
 if ($ElideElem =~ /^[a-zA-Z0-9 ,]+$/) {$xslopts=$xslopts . " elidecontent='$ElideElem'";}
 if ($OmitAtts =~ /^[a-zA-Z0-9 ,]+$/) {$xslopts=$xslopts . " omitatts='$OmitAtts'";}
 if ($maxattlength =~ /^[0-9]+$/) {$xslopts=$xslopts . " maxattlength=$maxattlength";}
+if ($ShowEmptyAtts eq "on") {$xslopts=$xslopts . " showemptyatts=yes";}
 
 $pumlcode=system("java -jar ~david/jars/Saxon-HE-10.9.jar document.xml ~david/plantuml.xsl $xslopts 2>/dev/null > document.puml ");
 my $pumlcode2=0;

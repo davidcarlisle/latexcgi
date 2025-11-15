@@ -71,28 +71,32 @@
 <details style="margin: 1em;" id="schemas">
 <summary>PlantUML Settings</summary>
 
-<input name="maxdepth" type="text" id="maxdepth" value="100"/>
-<label for="maxdepth">Max Depth</label> (<i>Show <b>...</b> for elements
-below this depth</i>)<br/>
-<input name="maxsiblings" type="text" id="maxsiblings" value="100"/>
-<label for="maxsiblings">Max Siblings</label> (<i>Show <b>...</b> for
-  child elements after this many children</i>)<br/>
-<input name="RootElem" type="text" id="RootElem" value=""/>
-<label for="RootElem">Root Element</label> (<i>Name of element at which to
-start the tree display</i>)<br/>
-<input name="RootElemOcc" type="text" id="RootElemOcc" value="1"/>
-<label for="RootElemOcc">Root Element Occurrence</label> (<i>Only show
-the nth "root element"</i>)<br/>
-<input name="ElideElem" type="text" id="ElideElem" value=""/>
-<label for="ElideElem">Elide Element Content</label> (<i>List of tag
-  names, whose children replaced by <b>...</b></i>)<br/>
-<input name="OmitAtts" type="text" id="OmitAtts" value=""/>
-<label for="OmitAtts">Omit Attributes</label> (<i>List of Attribute
-  names to omit from the display</i>)<br/>
-<input name="maxattlength" type="text" id="maxattlength" value="20"/>
-<label for="maxattlength">Max Attribute Length</label> (<i>Truncate
-  long attribute values and append <b>...</b></i>)<br/>
-
+<table>
+<tr><td><input name="maxdepth" type="text" id="maxdepth" value="100"/></td>
+<td><label for="maxdepth">Max Depth</label> (<i>Show <b>...</b> for elements
+below this depth</i>)</td></tr>
+<tr><td><input name="maxsiblings" type="text" id="maxsiblings" value="100"/></td>
+<td><label for="maxsiblings">Max Siblings</label> (<i>Show <b>...</b> for
+  child elements after this many children</i>)</td></tr>
+<tr><td><input name="RootElem" type="text" id="RootElem" value=""/></td>
+<td><label for="RootElem">Root Element</label> (<i>Name of element at which to
+start the tree display</i>)</td></tr>
+<tr><td><input name="RootElemOcc" type="text" id="RootElemOcc" value="1"/></td>
+<td><label for="RootElemOcc">Root Element Occurrence</label> (<i>Only show
+the nth "root element"</i>)</td></tr>
+<tr><td><input name="ElideElem" type="text" id="ElideElem" value=""/></td>
+<td><label for="ElideElem">Elide Element Content</label> (<i>List of tag
+  names, whose children replaced by <b>...</b></i>)</td></tr>
+<tr><td><input name="OmitAtts" type="text" id="OmitAtts" value=""/></td>
+<td><label for="OmitAtts">Omit Attributes</label> (<i>List of Attribute
+  names to omit from the display</i>)</td></tr>
+<tr><td><input name="maxattlength" type="text" id="maxattlength" value="20"/></td>
+<td><label for="maxattlength">Max Attribute Length</label> (<i>Truncate
+  long attribute values and append <b>...</b></i>)</td></tr>
+<tr><td><input type="checkbox"  name="ShowEmptyAtts" id="ShowEmptyAtts"/></td>
+<td><label for="ShowEmptyAtts">Show Empty Atts</label> (<i>Show Attributes
+  with empty value</i>)</td></tr>
+<table>
 </details>
 <div style="margin: 1em;">
   <button>Submit</button>
@@ -157,6 +161,7 @@ let RootElemOcc= params.get("RootElemOcc");
 let ElideElem= params.get("ElideElem");
 let OmitAtts= params.get("OmitAtts");
 let maxattlength= params.get("maxattlength");
+let ShowEmptyAtts= params.get("ShowEmptyAtts");
 
 if (rncparam) {
     let sch=document.getElementById(rncparam);
@@ -170,6 +175,7 @@ if (RootElemOcc) document.getElementById("RootElemOcc").value=RootElemOcc;
 if (ElideElem) document.getElementById("ElideElem").value=ElideElem;
 if (OmitAtts) document.getElementById("OmitAtts").value=OmitAtts;
 if (maxattlength) document.getElementById("maxattlength").value=maxattlength;
+if (ShowEmptyAtts=="yes") document.getElementById("ShowEmptyAtts").checked=true;
 
 
 if (docparam) {
