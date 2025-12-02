@@ -4,6 +4,7 @@
     <title>run tex snippet</title>
     <meta charset="UTF-8">
     <script src="https://texlive.net/cm6-test/cm6.bundle.min.js"></script>
+    <script src="https://mathfonts.github.io/lz-string/lz-string.min.js"></script>
     <style type="text/css" media="screen">
       .ace_editor {
 	  border: 1px solid lightgray;
@@ -35,8 +36,8 @@
 	  "Top Caption":      ""
       }
   function updateURL () {
-      var t =  editors["pre0"].getValue();
-      var newl="?" + encodeURI(t).replace(/\$/g,'%24');
+      var t =  editors["pre0"].state.doc.toString();
+      var newl="?z=" + LZString.compressToEncodedURIComponent(t);
       // copy to clipboard
       var nn=document.createElement("textarea");
       nn.value=document.location.protocol + "//" + document.location.host + document.location.pathname + newl;
@@ -46,17 +47,19 @@
       document.body.removeChild(nn);
       // update
       if(newl != document.location.search){
-	  document.location.search = "?" + encodeURI(t).replace(/\$/g,'%24');
+	  document.location.search = newl;
       }
   }
 
   function fillForm() {
       if(document.location.search == "?context") {
-	  editors["pre0"].setValue("% !TeX context\n\n\\starttext\n\n\\stoptext\n");
-	  editors["pre0"].clearSelection();
+	  editors["pre0"].state.update({changes: {from: 0, to: state.doc.length, insert: "% !TeX context\n\n\\starttext\n\n\\stoptext\n"}});
       } else if(document.location.search != "") {
-	  editors["pre0"].setValue(decodeURIComponent(document.location.search.substring(1)),0);
-	  editors["pre0"].clearSelection();
+	  if(document.location.search.substring(0,3)=="?z=") {
+	      editors["pre0"].dispatch({changes: {from: 0, to: editors["pre0"].state.doc.length, insert: LZString.decompressFromEncodedURIComponent(document.location.search.substring(3))}});
+	      } else {
+		  editors["pre0"].dispatch({changes: {from: 0, to: editors["pre0"].state.doc.length, insert: decodeURIComponent(document.location.search.substring(1))}});
+	  }
 	  latexcgi("pre0");
       }
   }
