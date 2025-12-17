@@ -4,6 +4,7 @@
     <title>run tex for ngPDF</title>
     <meta charset="UTF-8">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.min.js"></script>
+    <script src="https://mathfonts.github.io/lz-string/lz-string.min.js"></script>
     <style type="text/css" media="screen">
       .ace_editor {
 	  border: 1px solid lightgray;
@@ -37,7 +38,7 @@
       }
   function updateURL () {
       var t =  editors["pre0"].getValue();
-      var newl="?" + encodeURI(t).replace(/\$/g,'%24').replace(/#/g,'%23');
+      var newl="?z=" + LZString.compressToEncodedURIComponent(t);
       // copy to clipboard
       var nn=document.createElement("textarea");
       nn.value=document.location.protocol + "//" + document.location.host + document.location.pathname + newl;
@@ -47,7 +48,7 @@
       document.body.removeChild(nn);
       // update
       if(newl != document.location.search){
-	  document.location.search = "?" + encodeURI(t).replace(/\$/g,'%24').replace(/#/g,'%23');
+	  document.location.search = newl;
       }
   }
 
@@ -56,7 +57,11 @@
       editors["pre0"].setValue("% !TeX context\n\n\\starttext\n\n\\stoptext\n");
       editors["pre0"].clearSelection();
   } else if(document.location.search != "") {
-      editors["pre0"].setValue(decodeURIComponent(document.location.search.substring(1)),0);
+	      if(document.location.search.substring(0,3)=="?z=") {
+		  editors["pre0"].setValue(LZString.decompressFromEncodedURIComponent(document.location.search.substring(3)),0);
+	      } else {
+		  editors["pre0"].setValue(decodeURIComponent(document.location.search.substring(1)),0);
+	  }
       editors["pre0"].clearSelection();
       latexcgi("pre0");
   }
