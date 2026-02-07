@@ -13,6 +13,7 @@ my $cgi = new CGI;
  my $name = "document.pdf";
  my $download = $cgi->param('download');
  my $followmap = $cgi->param('followmap');
+ my $showxmp = $cgi->param('showxmp');
  my $schema = $cgi->param('schema');
  my $pdfdoc = $cgi->param('pdfdoc');
  my $file = $cgi->param('pdffile');
@@ -90,7 +91,9 @@ white-space: pre-wrap;
 <div id="showsettings">
 EOT
 print "File uploaded: <b>$file</b><br>\n";
-print "Follow role map: <b>" . ($followmap || "off") . "</b><br>\n Schema: <a href='/rnc/rncview.html?rnc=$schema'><b>$schema</b></a><br>\n";
+print "Follow role map: <b>" . ($followmap || "off") .
+    "</b><br>Show XMP: <b>" . ($showxmp || "off") .
+    "</b><br>\n Schema: <a href='/rnc/rncview.html?rnc=$schema'><b>$schema</b></a><br>\n";
 
 print <<EOT;
 </div>
@@ -109,9 +112,14 @@ if ($followmap eq "on" ) {
     $mapopt = "--map";
 }
 
+my $xmpopt="";
+if ($showxmp eq "on" ) {
+    $xmpopt = "--xmp";
+}
+
 my $scode=0;
 
-$scode =  system("texlua /home/david/show-pdf-tags/show-pdf-tags.lua --xml $mapopt $name > document.xml");
+$scode =  system("texlua /home/david/show-pdf-tags/show-pdf-tags.lua --xml $mapopt $xmpopt $name > document.xml");
 
 if($schema ne "none") {
  system("rnv \"/home/david/rnc/$schema.rnc\" document.xml 2>&1 && echo Valid");
