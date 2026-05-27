@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8"/>
-    <title>PDF Structure validation</title>
+    <title>PDF Structure Tree Diagrams</title>
     <style>
       body {max-width: 60em; margin-left:auto;margin-right:auto}
       form {
@@ -35,7 +35,7 @@
   -->
 <form method="post"
       enctype="multipart/form-data"
-         action="https://texlive.net/cgi-bin/showtags2"
+         action="https://texlive.net/cgi-bin/plantuml"
       id="pdfform"
       name="pdfform"
       >
@@ -73,20 +73,27 @@ the nth "root element"</i>)</td></tr>
 <tr><td><input type="checkbox"  name="ShowEmptyAtts" id="ShowEmptyAtts"/></td>
 <td><label for="ShowEmptyAtts">Show Empty Atts</label> (<i>Show Attributes
     with empty value</i>)</td></tr>
-<tr><td><input type="checkbox"  name="ShowRoleMap" id="ShowRoleMap"/></td>  
-  <td><label for="ShowRoleMap">Show RoleMap</label></td></tr>
-<tr><td><input type="checkbox"  name="ShowNS" id="ShowNS"/></td>  
-  <td><label for="ShowNS">Show Namespace prefixes</label></td></tr>
+<tr><td><input type="text"  name="NameStyle" id="NameStyle" value="0"/></td>  
+  <td><label for="NameStyle">Style for names
+    <b>&#160;0: </b>  <code>latex:section->pdf2:H1</code>
+    <b>&#160;1: </b>  <code>latex:section->H1</code>     
+    <b>&#160;2: </b>  <code>section->H1</code>
+    <b>&#160;3: </b>  <code>section</code>      
+    <b>&#160;4: </b>  <code>H1</code></label></td></tr>
+<tr><td><input name="MaxStringLength" type="text" id="MaxStringLength"  value="0"/></td>  
+<td><label for="MaxStringLength">Max String Length</label> (<i>If  &gt; 0, show element content up to this length</i>)</td></tr>
+
 <tr style="vertical-align:baseline">
   <td style="text-align:right">Prefix<br/><textarea rows="5" cols="10">pdf1&#10;pdf2&#10;mml&#10;latex</textarea></td>
   <td>Namespace<br/><textarea rows="5" cols="40">http://iso.org/pdf/ssn&#10;http://iso.org/pdf2/ssn&#10;http://www.w3.org/1998/Math/MathML&#10;https://www.latex-project.org/ns/dflt</textarea></td>
 </tr>
 
+<!--
 <tr style="vertical-align:baseline">
   <td style="text-align:right">Name<br/><textarea rows="5" cols="10">P1&#10;pdf2&#10;mml&#10;latex</textarea></td>
   <td>Description<br/><textarea rows="5" cols="40">paragraph</textarea></td>
 </tr>
-
+-->
 </table>
 
 <div style="margin: 2em;padding:0.5em;">
@@ -140,6 +147,8 @@ let ElideElem= params.get("ElideElem");
 let OmitAtts= params.get("OmitAtts");
 let maxattlength= params.get("maxattlength");
 let ShowEmptyAtts= params.get("ShowEmptyAtts");
+let NameStyle= params.get("NameStyle");
+let MaxStringLength= params.get("MaxStringLength");
 
 
 if (maxdepth) document.getElementById("maxdepth").value=maxdepth;
@@ -150,7 +159,8 @@ if (ElideElem) document.getElementById("ElideElem").value=ElideElem;
 if (OmitAtts) document.getElementById("OmitAtts").value=OmitAtts;
 if (maxattlength) document.getElementById("maxattlength").value=maxattlength;
 if (ShowEmptyAtts=="yes") document.getElementById("ShowEmptyAtts").checked=true;
-
+if (NameStyle) document.getElementById("NameStyle").value=NameStyle;
+if (MaxStringLength) document.getElementById("MaxStringLength").value=MaxStringLength;
 
 if (docparam) {
   let indoc=document.getElementById("pdfdoc");
