@@ -63,6 +63,8 @@ print <<EOT;
     .comment {color: black;font-weight: bold;font-style: italic;background-color:beige;}
     .attval {color: blue}
     .procinst {color: darkgreen;font-weight: bold;}
+    span.adoc {background-color: #DDD;}
+    span.md {background-color: #EEE;}
 
 #showsettings {
 border: solid thin black;
@@ -84,10 +86,9 @@ white-space: pre-wrap;
     </style>
 <script>
 function  simpleuml() {
-const p = document.getElementById("plantuml");
+const p = document.getElementById("plantumlpre");
 let t = p.textContent;
 t=t.replace(/^[^!]*T[!]/,"[tagtree]\\n....").replaceAll(/[*][*]/g,'');
-alert(t);
 p.textContent=t;
 }
 </script>
@@ -95,7 +96,7 @@ p.textContent=t;
   <body>
 <h1>PlantUML Structure Tree Diagrams</h1>
 
-<div><button onclick="history.back()">Return to the plantuml form</button><br></div>
+<div><button type="button" onclick="history.back()">Return to the plantuml form</button><br></div>
 
 <h2 id="set">Settings</h2>
 
@@ -154,17 +155,18 @@ system("sed -e 's/</&lt;/g' document-ns.txt");
 print <<EOT;
 </pre>
 
-<h2>Table layout</h2>
+<h2>Table Layout</h2>
+(Showing header markup for both Asciidoc and Markdown, delete one.)
 <pre>
 EOT
-system("sed -e 's/</&lt;/g' document-table.txt");
+system("sed -e 's/</&lt;/g' -e 's/span class=/<span class=/' -e 's:/span:</span:' document-table.txt");
 print <<EOT;
 </pre>
 
 
 <h2>PlantUML Layout</h2>
-<button onclick="simpleuml()">simplify uml</button>
-<pre id="plantuml">
+<button type="button" onclick="simpleuml()">simplify uml</button>
+<pre id="plantumlpre">
 EOT
 system("sed -e 's/</&lt;/g' document.puml");
 print <<EOT;
