@@ -70,22 +70,22 @@ the nth "root element"</i>)</td></tr>
 <tr><td><input name="maxattlength" type="text" id="maxattlength" value="20"/></td>
 <td><label for="maxattlength">Max Attribute Length</label> (<i>Truncate
   long attribute values and append <b>...</b></i>)</td></tr>
+<tr><td><input name="MaxStringLength" type="text" id="MaxStringLength"  value="0"/></td>  
+<td><label for="MaxStringLength">Max String Length</label> (<i>If  &gt; 0, show element content up to this length</i>)</td></tr>
 <tr><td><input type="checkbox"  name="ShowEmptyAtts" id="ShowEmptyAtts"/></td>
 <td><label for="ShowEmptyAtts">Show Empty Atts</label> (<i>Show Attributes
     with empty value</i>)</td></tr>
 <tr><td><input type="text"  name="NameStyle" id="NameStyle" value="0"/></td>  
   <td><label for="NameStyle">Style for names
-    <b>&#160;0: </b>  <code>latex:section->pdf2:H1</code>
+(<i><b>&#160;0: </b>  <code>latex:section->pdf2:H1</code>
     <b>&#160;1: </b>  <code>latex:section->H1</code>     
     <b>&#160;2: </b>  <code>section->H1</code>
     <b>&#160;3: </b>  <code>section</code>      
-    <b>&#160;4: </b>  <code>H1</code></label></td></tr>
-<tr><td><input name="MaxStringLength" type="text" id="MaxStringLength"  value="0"/></td>  
-<td><label for="MaxStringLength">Max String Length</label> (<i>If  &gt; 0, show element content up to this length</i>)</td></tr>
+    <b>&#160;4: </b>  <code>H1</code></i>)</label></td></tr>
 
 <tr style="vertical-align:baseline">
-  <td style="text-align:right">Prefix<br/><textarea rows="5" cols="10">pdf1&#10;pdf2&#10;mml&#10;latex</textarea></td>
-  <td>Namespace<br/><textarea rows="5" cols="40">http://iso.org/pdf/ssn&#10;http://iso.org/pdf2/ssn&#10;http://www.w3.org/1998/Math/MathML&#10;https://www.latex-project.org/ns/dflt</textarea></td>
+  <td style="text-align:right"><label for="nsPrefix">Prefix</label><br/><textarea rows="5" cols="10" name="nsPrefix" id="nsPrefix" spellcheck="false">pdf1&#10;pdf2&#10;mml&#10;ltx</textarea></td>
+  <td><label for="nsURI">Namespace</label> (<i>Prefixes to use for Namespaces, otherwise uses n1, n2, ...</i>)<br/><textarea rows="5" cols="40"name="nsURI" id="nsURI" >http://iso.org/pdf/ssn&#10;http://iso.org/pdf2/ssn&#10;http://www.w3.org/1998/Math/MathML&#10;https://www.latex-project.org/ns/dflt</textarea></td>
 </tr>
 
 <!--
@@ -149,7 +149,8 @@ let maxattlength= params.get("maxattlength");
 let ShowEmptyAtts= params.get("ShowEmptyAtts");
 let NameStyle= params.get("NameStyle");
 let MaxStringLength= params.get("MaxStringLength");
-
+let nsPrefix = params.get("nsPrefix");
+let nsURI = params.get("nsURI");
 
 if (maxdepth) document.getElementById("maxdepth").value=maxdepth;
 if (maxsiblings) document.getElementById("maxsiblings").value=maxsiblings;
@@ -161,6 +162,8 @@ if (maxattlength) document.getElementById("maxattlength").value=maxattlength;
 if (ShowEmptyAtts=="yes") document.getElementById("ShowEmptyAtts").checked=true;
 if (NameStyle) document.getElementById("NameStyle").value=NameStyle;
 if (MaxStringLength) document.getElementById("MaxStringLength").value=MaxStringLength;
+if (nsPrefix) document.getElementById("nsPrefix").value=nsPrefix;
+if (nsURI) document.getElementById("nsPrefix").value=nsURI;
 
 if (docparam) {
   let indoc=document.getElementById("pdfdoc");

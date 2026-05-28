@@ -26,6 +26,8 @@ my $cgi = new CGI;
  my $ShowEmptyAtts = $cgi->param('ShowEmptyAtts');
  my $NameStyle  = $cgi->param('NameStyle');
  my $MaxStringLength  = $cgi->param('MaxStringLength');
+ my $nsPrefix  = $cgi->param('nsPrefix');
+ my $nsURI  = $cgi->param('nsURI');
 
  if (-e "/var/www/html/latexcgi/" . $pdfdoc . ".pdf") {
      copy("/var/www/html/latexcgi/" . $pdfdoc . ".pdf", $tmpdir . "/$name");
@@ -122,6 +124,8 @@ if ($maxattlength =~ /^[0-9]+$/) {$xslopts=$xslopts . " maxattlength=$maxattleng
 if ($ShowEmptyAtts eq "on") {$xslopts=$xslopts . " showemptyatts=yes";}
 if ($NameStyle =~ /^[0-9]+$/) {$xslopts=$xslopts . " namestyle=$NameStyle";}
 if ($MaxStringLength =~ /^[0-9]+$/) {$xslopts=$xslopts . " maxstringlength=$MaxStringLength";}
+if ($nsPrefix =~ /^[^';<>"]+$/) {$xslopts=$xslopts . " nsprefix='$nsPrefix'";}
+if ($nsURI =~ /^[^';<>"]+$/) {$xslopts=$xslopts . " nsuri='$nsURI'";}
 
 
 chdir($tmpdir);
