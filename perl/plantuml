@@ -165,7 +165,7 @@ print <<EOT;
 
 
 <h2>PlantUML Layout</h2>
-<button type="button" onclick="simpleuml()">simplify uml</button>
+<button type="button" onclick="simpleuml()">Simplify PlantUML</button>
 <pre id="plantumlpre">
 EOT
 system("sed -e 's/</&lt;/g' document.puml");
