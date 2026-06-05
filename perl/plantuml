@@ -23,6 +23,7 @@ my $cgi = new CGI;
  my $ElideElem = $cgi->param('ElideElem');
  my $OmitAtts = $cgi->param('OmitAtts');
  my $maxattlength = $cgi->param('maxattlength');
+ my $scale = $cgi->param('scale');
  my $ShowEmptyAtts = $cgi->param('ShowEmptyAtts');
  my $NameStyle  = $cgi->param('NameStyle');
  my $MaxStringLength  = $cgi->param('MaxStringLength');
@@ -88,7 +89,8 @@ white-space: pre-wrap;
 function  simpleuml() {
 const p = document.getElementById("plantumlpre");
 let t = p.textContent;
-t=t.replace(/^[^!]*T[!]/,"[tagtree]\\n....").replaceAll(/[*][*]/g,'');
+t=t.replace(/^[^!]*T[!]/,"[tagtree]\\n....").replaceAll(/[*][*]/g,'')
+   .replace(/\\s*[}]\\s*[}]\\s*\@endsalt\\s*/,'\\n');
 p.textContent=t;
 }
 </script>
@@ -122,6 +124,7 @@ if ($RootElem =~ /^[a-zA-Z0-9]+$/) {$xslopts=$xslopts . " rootelem=$RootElem";}
 if ($ElideElem =~ /^[a-zA-Z0-9 ,]+$/) {$xslopts=$xslopts . " elidecontent='$ElideElem'";}
 if ($OmitAtts =~ /^[a-zA-Z0-9 ,]+$/) {$xslopts=$xslopts . " omitatts='$OmitAtts'";}
 if ($maxattlength =~ /^[0-9]+$/) {$xslopts=$xslopts . " maxattlength=$maxattlength";}
+if ($scale =~ /^[0-9.]+$/) {$xslopts=$xslopts . " scale=$scale";}
 if ($ShowEmptyAtts eq "on") {$xslopts=$xslopts . " showemptyatts=yes";}
 if ($NameStyle =~ /^[0-9]+$/) {$xslopts=$xslopts . " namestyle=$NameStyle";}
 if ($MaxStringLength =~ /^[0-9]+$/) {$xslopts=$xslopts . " maxstringlength=$MaxStringLength";}
@@ -151,7 +154,7 @@ print <<EOT;
 
 <pre id="nspre">
 EOT
-system("sed -e 's/</&lt;/g' document-ns.txt");
+system("sed -e 's/</\\&lt;/g' document-ns.txt");
 print <<EOT;
 </pre>
 
@@ -159,7 +162,7 @@ print <<EOT;
 (Showing header markup for both Asciidoc and Markdown, delete one.)
 <pre>
 EOT
-system("sed -e 's/</&lt;/g' -e 's/span class=/<span class=/' -e 's:/span:</span:' document-table.txt");
+system("sed -e 's/</\\&lt;/g' -e 's/span class=/<span class=/' -e 's:/span:</span:' document-table.txt");
 print <<EOT;
 </pre>
 
@@ -168,7 +171,7 @@ print <<EOT;
 <button type="button" onclick="simpleuml()">Simplify PlantUML</button>
 <pre id="plantumlpre">
 EOT
-system("sed -e 's/</&lt;/g' document.puml");
+system("sed -e 's/</\\&lt;/g' document.puml");
 print <<EOT;
 </pre>
 
