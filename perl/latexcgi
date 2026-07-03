@@ -1,7 +1,7 @@
 #!/usr/bin/env perl
 
 # LaTeXCGI cgi-bin http POST endpoint for TeXLive.net LaTeX server.
-# Copyright 2020-2025 David Carlisle
+# Copyright 2020 2021 David Carlisle
 # Licence: MIT
 
 use strict;
@@ -166,10 +166,11 @@ sub debugreturn {
 
 sub dolatex () {
     chdir($tmpdir);
-    $ENV{'PATH'}="/usr/local/texlive/2025/bin/x86_64-linux:" . $ENV{'PATH'};
+    $ENV{'PATH'}="/usr/local/texlive/2026/bin/x86_64-linux:" . $ENV{'PATH'};
 
     my $engine=$FORM{'engine'};
     my $document="document";
+    my $file="";
     if($FORM{'return'} eq "make4ht"){
 	if($engine eq "xelatex") {
 	    $document="-x document";
@@ -184,14 +185,21 @@ $engine="latexcgilwarp $engine";
 }
 
 
+    if($engine eq "asy") {
+	system("/usr/local/bin/run1", "$engine", "$document.tex");
+	open(FHL, '>', "$document.log");
+	print FHL "asy\n";
+	close(FHL);
+    } else {   
+	system("/usr/local/bin/run1", "$engine", "$document");
+    }
 
-    system("/usr/local/bin/run1", "$engine", "$document");
 
     if($?==0) {
         open(FHLOG, '<', "document.log") or die $!;
         my $rerun=0;
         my $bibcmd=$FORM{'bibcmd'};
-	my $asyrun=1;
+        my $asyrun=1;
         $return=$FORM{'return'};
         while (<FHLOG>) {
             if(/Package biblatex Warning: Using fall-back BibTeX/) {
@@ -209,10 +217,10 @@ $engine="latexcgilwarp $engine";
             if(/^\(rerunfilecheck.* Rerun/) {
                 $rerun=1;
             }
-	    if(/reprocess this file/) {
+            if(/reprocess this file/) {
                 $rerun=1;
             }
-	    if(/Warning.*Rerun/) {
+            if(/Warning.*Rerun/) {
                 $rerun=1;
             }
 	    # why not this?
@@ -220,13 +228,13 @@ $engine="latexcgilwarp $engine";
             #     $rerun=1;
             #     system("/usr/local/bin/run1", "asy", "$1");
             # }
-	    if (/asymptote Warning: file .* not found/) {
-		$rerun=1;
-		while( -e "document-$asyrun.asy") {
-		    system("/usr/local/bin/run1", "asy", "document-$asyrun");
-		    $asyrun++;
-		}
-            }
+         if (/asymptote Warning: file .* not found/) {
+            $rerun=1;
+            while( -e "document-$asyrun.asy") {
+	      system("/usr/local/bin/run1", "asy", "document-$asyrun");
+	      $asyrun++;
+	      }
+	    }
         }
         close(FHLOG);
 
