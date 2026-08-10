@@ -186,6 +186,7 @@ $engine="latexcgilwarp $engine";
 
 
     system("/usr/local/bin/run1", "$engine", "$document");
+    system("/usr/local/bin/run1", "$engine", "$document");
 
     if($?==0) {
         open(FHLOG, '<', "document.log") or die $!;
