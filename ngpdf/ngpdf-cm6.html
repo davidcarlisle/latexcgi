@@ -37,7 +37,7 @@
           "metadata":         "\\DocumentMetadata{\n lang=en,\n testphase=latest,\n pdfversion=2.0,\n pdfstandard=ua-2,\n pdfstandard=a-4f,\n uncompress\n}"
       }
   function updateURL () {
-      var t =  editors["pre0"].getValue();
+      var t =  editors["pre0"].state.doc.toString();
       var newl="?z=" + LZString.compressToEncodedURIComponent(t);
       // copy to clipboard
       var nn=document.createElement("textarea");
@@ -58,11 +58,10 @@
       editors["pre0"].clearSelection();
   } else if(document.location.search != "") {
 	      if(document.location.search.substring(0,3)=="?z=") {
-		  editors["pre0"].setValue(LZString.decompressFromEncodedURIComponent(document.location.search.substring(3)),0);
+		  editors["pre0"].dispatch({changes: {from: 0, to: editors["pre0"].state.doc.length, insert: LZString.decompressFromEncodedURIComponent(document.location.search.substring(3))}});
 	      } else {
 		  editors["pre0"].setValue(decodeURIComponent(document.location.search.substring(1)),0);
 	  }
-      editors["pre0"].clearSelection();
       latexcgi("pre0");
   }
   }

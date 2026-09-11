@@ -340,7 +340,7 @@ function generatepreamble(t,e) {
 
 function defaultengine(t) {
 	if ((t.indexOf("\\usepackage{lua") !== -1) || (t.indexOf("\\directlua") !== -1) ){
-	    return "lualatex";
+	    return "lualatex-dev";
 	} else if (t.indexOf("fontspec") !== -1) {
 	    return "xelatex";
 	} else if (t.indexOf("pstricks") !==-1) {
